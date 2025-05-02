@@ -58,7 +58,7 @@
         <div class="flex items-center">
             <img src="{{ asset('images/Logo_Kabupaten_kuningan.png') }}" alt="Logo Kabupaten Kuningan"
                 class="w-10 h-10 object-cover rounded-full mr-3" />
-            <span class="text-white text-xl font-bold">Desa Karangmangu/span>
+            <span class="text-white text-xl font-bold">Kelurahan Winduherang</span>
         </div>
         <div class="hidden md:flex space-x-6">
             @foreach ($items as $item)

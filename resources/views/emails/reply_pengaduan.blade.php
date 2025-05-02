@@ -10,7 +10,7 @@
     <!-- Header -->
     <div style="background:#14532D; padding:20px; text-align:center; color:#fff;">
       <img src="{{ url('images/Logo_Kabupaten_kuningan.png') }}" alt="Logo" style="width:50px; height:50px; border-radius:50%; margin-bottom:10px;">
-      <h1 style="margin:0; font-size:24px;">Kelurahan Winduherang</h1>
+      <h1 style="margin:0; font-size:24px;">Desa Karangmangu</h1>
     </div>
     
     <!-- Konten Utama -->
@@ -48,7 +48,7 @@
 
       <!-- Penutup -->
       <p style="margin-top:20px;">Terima kasih atas partisipasi Anda.</p>
-      <p>Salam,<br><strong>Tim Kelurahan Winduherang</strong></p>
+      <p>Salam,<br><strong>Tim Desa Karangmangu</strong></p>
     </div>
 
   </div>

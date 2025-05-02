@@ -52,73 +52,90 @@
 
             <!-- Sejarah -->
             <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Sejarah</h2>
+                <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Sejarah Desa Karangmangu</h2>
                 <div class="text-gray-700 leading-relaxed text-justify space-y-4">
-                    <p class="text-center">Assalamualaikum Wr. Wb</p>
-                    <p class="text-center">Bismillahirrahmanirrahim</p>
                     <p>
-                        Nama Winduherang berasal dari dua suku kata yaitu kata ‘Windu’ dan kata ‘Herang’. ‘Windu’ mempunyai
-                        arti delapan tahun,
-                        namun di sini tidak memiliki arti hitungan melainkan memiliki makna “masa” atau waktu dan bisa pula
-                        diartikan “periode”
-                        dalam arti “tanda” yaitu untuk menandai perbedaan antara waktu sebelumnya dengan waktu yang akan
-                        datang, atau masa berikutnya.
+                        Desa Karangmangu merupakan salah satu desa di wilayah Kecamatan Kramatmulya dari 14 desa yang ada.
+                        Sejak zaman dahulu hingga sekarang, Desa Karangmangu terkenal dengan industri rumahannya, yaitu
+                        pengrajin bata merah dan produksi kupat/ketupat terbesar di Kabupaten Kuningan.
                     </p>
                     <p>
-                        “Herang” berasal dari kata bahasa Sunda yang artinya “bersih” yang mempunyai makna “bersih lahir dan
-                        batin”.
-                        Dan ‘Herang’ mempunyai arti lain yaitu bening, caang, bengras, terlihat dengan jelas tidak
-                        samar-samar dan tidak meragukan.
+                        Bicara tentang asal mula Desa Karangmangu, hingga saat ini belum ada catatan resmi kapan dan
+                        bagaimana desa ini lahir. Cerita yang beredar hanya “katanya-katanya” dari para sesepuh. Berikut
+                        ringkasan sejarah berdasarkan sumber lisan tersebut.
                     </p>
                     <p>
-                        Jadi pengertian pokok dari kata ‘WINDUHERANG’ yaitu masa atau waktu yang membedakan antara yang hak
-                        dengan yang batil,
-                        antara yang benar dengan yang salah atau Winduherang bisa juga bermakna tuntunan hidup dari Allah
-                        yang merupakan misi
-                        perjuangan Sinuhun Syech Syarif Hidayatullah untuk meng-Islamkan Gedeng Kamuning beserta rakyatnya,
-                        dan seluruh keturunannya
-                        memeluk agama Islam sampai hari kiamat nanti.
+                        Dahulu Karangmangu merupakan bagian dari wilayah Desa Cikaso, sebuah pemerintahan besar yang
+                        dipimpin oleh Tumenggung Argawijaya dengan patih Nagareja. Salah satu bukti adalah keberadaan makam
+                        kedua tokoh tersebut yang kini dikeramatkan di Desa Karangmangu, tepatnya di area yang kini disebut
+                        “Blok Tumenggung”.
                     </p>
                     <p>
-                        Melakukan hijrah keyakinan dan ketauhidan dari ajaran yang menggelapkan kepada ajaran yang benar dan
-                        terang benderang
-                        dalam keimanan kepada Allah SWT: <strong>“Yuhrijukum minadzulumati ilannuur”</strong>.
+                        Nama “Karangmangu” konon berasal dari gabungan kata “karang” (halaman luas yang bersih dan rindang)
+                        dan “manggu” (bahasa Sunda untuk pohon mangga). Di tengah-tengah desa terdapat pohon mangga besar
+                        tempat anak-anak bermain dan para pedagang beristirahat. Dari situ lahirlah nama “Karangmanggu”,
+                        yang kemudian disederhanakan menjadi Karangmangu.
                     </p>
                     <p>
-                        Maka sejak tanggal 14 Muharram 1481 M, Pedukuhan Gedeng Kamuning diganti dengan Winduherang dan
-                        orang yang pertama masuk Islam
-                        adalah Gedeng Kamuning. Sebagai bukti peninggalan sejarah adalah Makam Gedeng Kamuning yang terletak
-                        di Hulu Dayeuh dekat Mata
-                        Air Winduherang yang letaknya membujur ke Barat atau ke arah Kiblat.
+                        Desa Karangmangu dipimpin oleh seorang kuwu. Berikut periode kepemimpinan yang dapat dihimpun:
+                    </p>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Kuwu Tuba (–1925) <em>(tahun tidak tercatat)</em></li>
+                        <li>Kuwu Sumarja (1925–1961)</li>
+                        <li>Kuwu H. Ahmad Djusa (1961–1973)</li>
+                        <li>Kuwu Soekarno (1973–1981)</li>
+                        <li>Kuwu E. Kusmayadi (1981–1999)</li>
+                        <li>Kuwu Aksan Dana Sasmita (1999–2007)</li>
+                        <li>Kuwu H. Endang Ahid (2007–2013)</li>
+                        <li>Penjabat Sementara Nanda Sunanda (2013–2014)</li>
+                        <li>Penjabat Sementara Dodo Juanda (2015)</li>
+                        <li>Penjabat Sementara Mulyadi (2015)</li>
+                        <li>Kuwu Supandi (2016–2021)</li>
+                    </ul>
+                    <p>
+                        Meskipun sumber tertulis masih terbatas, warisan budaya dan kisah lisan tentang Desa Karangmangu
+                        terus dijaga dan diceritakan dari generasi ke generasi.
                     </p>
                 </div>
             </div>
 
 
-            <!-- Visi & Misi -->
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Visi &amp; Misi</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-xl font-semibold text-green-700 mb-2">Visi</h3>
-                        <p class="italic text-gray-700"> “ Terwujudnya Kelurahan Winduherang sebagai Destinasi Wisata Religi
-                            “</p>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-green-700 mb-2">Misi</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-700">
-                            <li>Menata Lembaga/Organisasi Kemasyarakat.</li>
-                            <li>Meningkatkan Infra Struktur Menuju Lokasi Wisata.</li>
-                            <li>Mengembangkan UKM (Dengan Mengedepankan Produk Lokal).</li>
-                            <li>Meningkatkan SDM Di Bidang Religi.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <h3 class="text-xl font-semibold text-green-700 mt-6">Moto</h3>
-                    <p class="italic text-gray-700"> “ Winduherang Bersatu, Bangkit Dan Sejahtera“</p>
-                </div>
-            </div>
+
+<!-- Visi & Misi Desa Karangmangu -->
+<div class="bg-white rounded-lg shadow-lg p-8">
+    <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Visi &amp; Misi Desa Karangmangu</h2>
+    
+    <div class="text-gray-700 leading-relaxed text-justify space-y-4 mb-8">
+      <p>
+        Demokratisasi memiliki makna bahwa penyelenggaraan pemerintahan dan pelaksanaan pembangunan di desa harus mengakomodasi aspirasi masyarakat melalui Badan Permusyawaratan Desa dan lembaga kemasyarakatan yang ada sebagai mitra Pemerintah Desa. Hal ini diharapkan mendorong peran aktif masyarakat sehingga setiap warga bertanggung jawab atas perkembangan kehidupan bersama, meningkatkan taraf hidup dan kesejahteraan melalui kebijakan, program, dan kegiatan yang sesuai esensi masalah serta prioritas kebutuhan masyarakat.
+      </p>
+      <p>
+        Berdasarkan pertimbangan tersebut, untuk jangka waktu 6 (enam) tahun ke depan, proses pembangunan desa, penyelenggaraan pemerintahan, pemberdayaan dan partisipasi masyarakat, serta tunjangan Operasional Pemerintah Desa, BPD, dan insentif RT/RW akan berlandaskan prinsip keterbukaan dan partisipasi. Dengan demikian, Desa Karangmangu diharapkan mengalami kemajuan dan kesejahteraan yang merata.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Visi -->
+      <div>
+        <h3 class="text-xl font-semibold text-green-700 mb-2">Visi</h3>
+        <p class="italic text-gray-700">
+          “TERCIPTANYA TATA KELOLA PEMERINTAHAN DESA YANG BAIK, BERSIH, DAN TRANSPARAN GUNA MEWUJUDKAN DESA KARANGMANGU YANG ADIL, MAKMUR, SEJAHTERA, DAN BERMARTABAT”
+        </p>
+      </div>
+      <!-- Misi -->
+      <div>
+        <h3 class="text-xl font-semibold text-green-700 mb-2">Misi</h3>
+        <ul class="list-disc list-inside space-y-2 text-gray-700">
+          <li>Meningkatkan pelayanan prima untuk seluruh masyarakat.</li>
+          <li>Menciptakan Pemerintah Desa yang tanggap terhadap aspirasi masyarakat.</li>
+          <li>Meningkatkan sarana dan prasarana umum guna mendukung kelancaran perekonomian masyarakat.</li>
+          <li>Pemerataan pembangunan fisik dan non-fisik agar tidak terjadi kesenjangan sosial.</li>
+          <li>Koordinasi dan kerja sama dengan semua unsur kelembagaan desa guna memberikan pelayanan terbaik kepada masyarakat.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
 
             <!-- Struktur Organisasi -->
             <div class="bg-white rounded-lg shadow-lg p-8">

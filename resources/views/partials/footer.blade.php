@@ -5,9 +5,9 @@
 
         <!-- Kolom 1: Logo dan alamat -->
         <div>
-            <img src="{{ asset('images/Logo_Kabupaten_kuningan.png') }}" alt="Logo Kelurahan Winduherang"
+            <img src="{{ asset('images/Logo_Kabupaten_kuningan.png') }}" alt="Logo Desa Karangmangu"
                 class="h-12 mb-3">
-            <p class="text-gray-300 leading-relaxed">Jalan Ramajaksa No. 11, Kelurahan Winduherang, Kecamatan Cigugur,
+            <p class="text-gray-300 leading-relaxed">Jalan Ramajaksa No. 11, Desa Karangmangu, Kecamatan Cigugur,
                 Kabupaten Kuningan</p>
         </div>
 
@@ -75,7 +75,7 @@
         Redesigned By &copy;
         <script>
             document.write(new Date().getFullYear());
-        </script> Kelurahan Winduherang. All rights reserved.
+        </script> Desa Karangmangu. All rights reserved.
         <br>
         Dibuat oleh <span class="text-green-500 font-semibold">Inovindo Digital Media</span>.
     </div>

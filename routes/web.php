@@ -54,6 +54,9 @@ Route::post('/pengaduan', [ContactController::class,'store'])->name('pengaduan.s
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::resource('goverment', App\Http\Controllers\GovermentController::class);
+
+
     Route::resource('admin/content/article', ArticleController::class)->names('admin.article');
     Route::resource('admin/content/gallery', GalleryItemController::class)->names('admin.gallery');
 
