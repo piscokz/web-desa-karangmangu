@@ -22,6 +22,10 @@ Route::get('/profil', function () {
     return view('profil');
 })->name('profil');
 
+Route::get('/umkm', function () {
+    return view('umkm');
+})->name('umkm');
+
 Route::get('/berita', [ArticleController::class, 'frontIndex'])
      ->name('news');
 

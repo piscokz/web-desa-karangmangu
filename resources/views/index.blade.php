@@ -20,7 +20,7 @@
         <!-- Slides -->
         <template x-for="(src, i) in slides" :key="i">
             <div x-show="current === i" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
-                :style="`background-image:url(${src});`"></div>
+                :style="background - image::url($ { src });"></div>
         </template>
 
         <!-- Overlay -->
@@ -101,8 +101,8 @@
                             <div class="bg-green-100 text-green-600 rounded-full p-2 flex-shrink-0">
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L9 11.586 5.707 8.293a1
-                                     1 0 00-1.414 1.414l4 4a1 1 0 001.414
-                                     0l7-7a1 1 0 000-1.414z" clip-rule="evenodd" />
+                                         1 0 00-1.414 1.414l4 4a1 1 0 001.414
+                                         0l7-7a1 1 0 000-1.414z" clip-rule="evenodd" />
                                 </svg>
                             </div>
                             <p class="text-gray-700 text-lg font-medium">{{ $item }}</p>
@@ -268,7 +268,7 @@
     {{-- resources/views/partials/berita_section.blade.php --}}
     @php
         use App\Models\Article;
-        // ambil 3 berita terbaru berdasarkan kolom `date`
+        // ambil 3 berita terbaru berdasarkan kolom date
         $latestArticles = Article::orderByDesc('date')->take(3)->get();
     @endphp
 
@@ -519,80 +519,31 @@
     @endpush
 
 
+    <!-- Leaflet CSS (di <head> atau sebelum penggunaan map) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <!-- Leaflet JS (di bawah, sebelum </body>) -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
     @php
         $locations = [
             // Kantor & umum
             ['name' => 'Kantor Desa Karangmangu', 'coords' => [-7.044712, 108.594932], 'cat' => 'office'],
             ['name' => 'Balai Dusun Karangmangu', 'coords' => [-7.0445, 108.5955], 'cat' => 'public'],
-
             // Pendidikan
             ['name' => 'PAUD Mekar Sari', 'coords' => [-7.0449, 108.5948], 'cat' => 'edu'],
             ['name' => 'TK Karangmangu Ceria', 'coords' => [-7.0452, 108.5953], 'cat' => 'edu'],
             ['name' => 'SD Negeri 1 Karangmangu', 'coords' => [-7.0446, 108.595], 'cat' => 'edu'],
             ['name' => 'SD Negeri 2 Karangmangu', 'coords' => [-7.045, 108.596], 'cat' => 'edu'],
             ['name' => 'SMP Negeri Terdekat', 'coords' => [-7.0435, 108.5965], 'cat' => 'edu'],
-
             // Ibadah
             ['name' => 'Masjid Jami Karangmangu', 'coords' => [-7.0448, 108.595], 'cat' => 'worship'],
             ['name' => 'Musholla Al-Hidayah', 'coords' => [-7.0451, 108.5947], 'cat' => 'worship'],
-
             // Pariwisata
             ['name' => 'Curug Putri Karangmangu', 'coords' => [-7.0425, 108.598], 'cat' => 'tourism'],
             ['name' => 'Kolam Pemandian Alam', 'coords' => [-7.043, 108.5975], 'cat' => 'tourism'],
             ['name' => 'Taman Desa Karangmangu', 'coords' => [-7.044, 108.5962], 'cat' => 'tourism'],
         ];
     @endphp
-
-    <script>
-        const locations = @json($locations);
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('locSearch');
-            const locList = document.getElementById('locList');
-            const locationButtons = locList.querySelectorAll('.location-btn');
-
-            // Initialize map
-            const map = L.map('map').setView(locations[0].coords, 15);
-
-            // Add OpenStreetMap tile layer
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
-
-            // Store markers in an array
-            const markers = [];
-
-            locations.forEach((loc, idx) => {
-                const marker = L.marker(loc.coords)
-                    .addTo(map)
-                    .bindPopup(`<strong>${loc.name}</strong>`);
-                markers.push(marker);
-            });
-
-            // Search filter
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                locationButtons.forEach(button => {
-                    const name = button.textContent.toLowerCase();
-                    if (name.includes(searchTerm)) {
-                        button.parentElement.style.display = 'block';
-                    } else {
-                        button.parentElement.style.display = 'none';
-                    }
-                });
-            });
-
-            // Button click to zoom to marker
-            locationButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const idx = parseInt(button.getAttribute('data-idx'));
-                    const marker = markers[idx];
-                    map.setView(marker.getLatLng(), 18);
-                    marker.openPopup();
-                });
-            });
-        });
-    </script>
 
     <div class="max-w-7xl mx-auto px-4 py-10 border-t border-green-200">
         <div class="text-center mb-6">
@@ -601,121 +552,131 @@
         </div>
 
         <div class="flex flex-col md:flex-row gap-6">
-            {{-- Sidebar --}}
+            <!-- Sidebar -->
             <aside id="sidebar" class="w-full md:w-64 bg-green-50 rounded-xl p-4 shadow border border-green-100">
                 <input id="locSearch" type="text" placeholder="Cari lokasi..."
                     class="w-full px-3 py-2 mb-4 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400" />
-
                 <ul id="locList" class="space-y-2 max-h-48 overflow-y-auto text-sm pr-2">
                     @foreach ($locations as $idx => $loc)
                         <li>
                             <button data-idx="{{ $idx }}"
-                                class="location-btn w-full text-left px-3 py-2 rounded-lg hover:bg-green-100">
-                                {{ $loc['name'] }}
-                            </button>
+                                class="location-btn w-full text-left px-3 py-2 rounded-lg hover:bg-green-100 transition">{{ $loc['name'] }}</button>
                         </li>
                     @endforeach
                 </ul>
-
-
                 <div class="mt-6 text-xs text-gray-500">
                     Klik titik di peta atau nama lokasi untuk navigasi.
                 </div>
             </aside>
 
-            {{-- Map --}}
+            <!-- Map -->
             <div class="flex-1 h-[70vh] rounded-xl overflow-hidden shadow border border-gray-200">
                 <div id="map" class="w-full h-full"></div>
             </div>
         </div>
     </div>
 
-    {{-- Leaflet & CSS --}}
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-
     <script>
-        const locations = @json($locations);
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ambil data dari PHP
+            const locations = @json($locations);
 
-        const map = L.map('map', {
-            zoomControl: false
-        }).setView(locations[0].coords, 17);
+            // Inisialisasi peta
+            const map = L.map('map').setView(locations[0].coords, 15);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
+            // Icon berwarna per kategori (opsional)
+            const icons = {
+                office: L.icon({
+                    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-green.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41]
+                }),
+                public: L.icon({
+                    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-yellow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41]
+                }),
+                edu: L.icon({
+                    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-blue.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41]
+                }),
+                worship: L.icon({
+                    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-red.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41]
+                }),
+                tourism: L.icon({
+                    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-violet.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41]
+                }),
+            };
 
-        L.control.zoom({
-            position: 'bottomright'
-        }).addTo(map);
+            // Layer per kategori untuk kontrol
+            const layers = {
+                office: L.layerGroup().addTo(map),
+                public: L.layerGroup().addTo(map),
+                edu: L.layerGroup().addTo(map),
+                worship: L.layerGroup().addTo(map),
+                tourism: L.layerGroup().addTo(map),
+            };
 
-        const icons = {
-            office: L.icon({
-                iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-green.png',
-                iconSize: [25, 41],
-                iconAnchor: [12, 41]
-            }),
-            public: L.icon({
-                iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-yellow.png',
-                iconSize: [25, 41],
-                iconAnchor: [12, 41]
-            }),
-            edu: L.icon({
-                iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-blue.png',
-                iconSize: [25, 41],
-                iconAnchor: [12, 41]
-            }),
-        };
-
-        const layers = {
-            office: L.layerGroup().addTo(map),
-            public: L.layerGroup().addTo(map),
-            edu: L.layerGroup().addTo(map),
-        };
-
-        locations.forEach(loc => {
-            L.marker(loc.coords, {
-                    icon: icons[loc.cat]
-                })
-                .bindPopup(`<strong>${loc.name}</strong>`)
-                .addTo(layers[loc.cat]);
-        });
-
-        L.control.layers(null, {
-            'Kantor Desa': layers.office,
-            'Fasilitas Umum': layers.public,
-            'Pendidikan': layers.edu
-        }, {
-            collapsed: false,
-            position: 'topright'
-        }).addTo(map);
-
-        document.querySelectorAll('.location-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const idx = btn.dataset.idx;
-                const loc = locations[idx];
-                map.flyTo(loc.coords, 18, {
-                    duration: 1
-                });
-                L.popup().setLatLng(loc.coords).setContent(`<strong>${loc.name}</strong>`).openOn(map);
-                document.querySelectorAll('.location-btn').forEach(b => b.classList.remove('bg-green-100'));
-                btn.classList.add('bg-green-100');
+            // Buat marker dan simpan referensi
+            const markers = locations.map((loc, i) => {
+                const m = L.marker(loc.coords, {
+                        icon: icons[loc.cat] || icons.public
+                    })
+                    .bindPopup(`<strong>${loc.name}</strong>`)
+                    .addTo(layers[loc.cat]);
+                return m;
             });
-        });
 
-        document.getElementById('locSearch').addEventListener('input', e => {
-            const q = e.target.value.toLowerCase();
-            document.querySelectorAll('#locList li').forEach(li => {
-                li.style.display = li.textContent.toLowerCase().includes(q) ? 'block' : 'none';
+            // Kontrol layer
+            L.control.layers(null, {
+                'Kantor Desa': layers.office,
+                'Fasilitas Umum': layers.public,
+                'Pendidikan': layers.edu,
+                'Ibadah': layers.worship,
+                'Pariwisata': layers.tourism
+            }, {
+                collapsed: false,
+                position: 'topright'
+            }).addTo(map);
+
+            // Fungsi filter list sidebar
+            const searchInput = document.getElementById('locSearch');
+            searchInput.addEventListener('input', () => {
+                const q = searchInput.value.toLowerCase();
+                document.querySelectorAll('#locList li').forEach(li => {
+                    li.style.display = li.textContent.toLowerCase().includes(q) ? 'block' : 'none';
+                });
+            });
+
+            // Klik tombol navigasi
+            document.querySelectorAll('.location-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = +btn.dataset.idx;
+                    const loc = locations[idx];
+                    map.flyTo(loc.coords, 17, {
+                        duration: 0.7
+                    });
+                    markers[idx].openPopup();
+                    // highlight aktif
+                    document.querySelectorAll('.location-btn').forEach(b => b.classList.remove(
+                        'bg-green-100'));
+                    btn.classList.add('bg-green-100');
+                });
             });
         });
     </script>
+
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <script>
-        // nothing else needed  here; Alpine init is automatic
-    </script>
     <section class="bg-gray-100 py-12">
         <div class="container mx-auto px-4">
             <div class="max-w-md mx-auto space-y-4">

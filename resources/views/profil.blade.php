@@ -19,7 +19,7 @@
     }" x-init="init()" class="relative h-64 md:h-96 overflow-hidden">
         <template x-for="(src,i) in slides" :key="i">
             <div x-show="current===i" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
-                :style="`background-image:url(${src});`"></div>
+                :style="background - image::url($ { src });"></div>
         </template>
         <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white px-4">
             <h1 class="text-3xl md:text-5xl font-bold">Profil Desa Karangmangu</h1>
@@ -101,6 +101,7 @@
 
 
 
+<<<<<<< HEAD
 <!-- Visi & Misi Desa Karangmangu -->
 <div class="bg-white rounded-lg shadow-lg p-8">
     <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Visi &amp; Misi Desa Karangmangu</h2>
@@ -136,6 +137,55 @@
     </div>
   </div>
   
+=======
+            <!-- Visi & Misi Desa Karangmangu -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Visi &amp; Misi Desa Karangmangu</h2>
+
+                <div class="text-gray-700 leading-relaxed text-justify space-y-4 mb-8">
+                    <p>
+                        Demokratisasi memiliki makna bahwa penyelenggaraan pemerintahan dan pelaksanaan pembangunan di desa
+                        harus mengakomodasi aspirasi masyarakat melalui Badan Permusyawaratan Desa dan lembaga
+                        kemasyarakatan yang ada sebagai mitra Pemerintah Desa. Hal ini diharapkan mendorong peran aktif
+                        masyarakat sehingga setiap warga bertanggung jawab atas perkembangan kehidupan bersama, meningkatkan
+                        taraf hidup dan kesejahteraan melalui kebijakan, program, dan kegiatan yang sesuai esensi masalah
+                        serta prioritas kebutuhan masyarakat.
+                    </p>
+                    <p>
+                        Berdasarkan pertimbangan tersebut, untuk jangka waktu 6 (enam) tahun ke depan, proses pembangunan
+                        desa, penyelenggaraan pemerintahan, pemberdayaan dan partisipasi masyarakat, serta tunjangan
+                        Operasional Pemerintah Desa, BPD, dan insentif RT/RW akan berlandaskan prinsip keterbukaan dan
+                        partisipasi. Dengan demikian, Desa Karangmangu diharapkan mengalami kemajuan dan kesejahteraan yang
+                        merata.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Visi -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-green-700 mb-2">Visi</h3>
+                        <p class="italic text-gray-700">
+                            “TERCIPTANYA TATA KELOLA PEMERINTAHAN DESA YANG BAIK, BERSIH, DAN TRANSPARAN GUNA MEWUJUDKAN
+                            DESA KARANGMANGU YANG ADIL, MAKMUR, SEJAHTERA, DAN BERMARTABAT”
+                        </p>
+                    </div>
+                    <!-- Misi -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-green-700 mb-2">Misi</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li>Meningkatkan pelayanan prima untuk seluruh masyarakat.</li>
+                            <li>Menciptakan Pemerintah Desa yang tanggap terhadap aspirasi masyarakat.</li>
+                            <li>Meningkatkan sarana dan prasarana umum guna mendukung kelancaran perekonomian masyarakat.
+                            </li>
+                            <li>Pemerataan pembangunan fisik dan non-fisik agar tidak terjadi kesenjangan sosial.</li>
+                            <li>Koordinasi dan kerja sama dengan semua unsur kelembagaan desa guna memberikan pelayanan
+                                terbaik kepada masyarakat.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+>>>>>>> bcc0c3d (feat: mempercantik halaman UMKM dengan desain ala web olshop modern dan responsif)
+
 
             <!-- Struktur Organisasi -->
             <div class="bg-white rounded-lg shadow-lg p-8">
@@ -149,361 +199,164 @@
                 </div>
             </div>
 
-            <!-- Program & Kegiatan -->
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Program &amp; Kegiatan</h2>
-                <div class="space-y-12">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                        <div>
-                            <h3 class="text-2xl font-semibold text-green-700 mb-2">Kegiatan Jumat Bersih</h3>
-                            <p class="text-gray-700 leading-relaxed">
-                                Kegiatan yang dilaksanakan setiap hari Jumat dengan tujuan untuk membersihkan lingkungan
-                                sekitar.
-                                Program ini biasanya melibatkan berbagai elemen masyarakat, termasuk RT, RW, dan berbagai
-                                pihak terkait,
-                                untuk secara bersama-sama menjaga kebersihan lingkungan. Kegiatan ini sangat efektif untuk
-                                mempererat hubungan
-                                antarwarga serta meningkatkan rasa peduli terhadap lingkungan sekitar.
-                            </p>
-                        </div>
-                        <img src="{{ asset('storage/kegiatan1.jpg') }}" alt="Kegiatan Jumat Bersih"
-                            class="rounded-lg shadow-md w-full h-48 object-cover" />
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                        <img src="{{ asset('storage/kegiatan2.jpg') }}" alt="Kegiatan Posyandu"
-                            class="rounded-lg shadow-md w-full h-48 object-cover" />
-                        <div>
-                            <h3 class="text-2xl font-semibold text-green-700 mb-2">Kegiatan Posyandu</h3>
-                            <p class="text-gray-700 leading-relaxed">
-                                Kegiatan Posyandu Pusat Pelayanan Terpadu diadakan di Balai Kader Kelurahan Winduherang.
-                                Fokus utamanya adalah pelayanan kesehatan ibu dan anak, meliputi penimbangan balita,
-                                pemberian imunisasi, serta konsultasi kesehatan bagi lansia. Kegiatan ini mendukung tumbuh
-                                kembang balita
-                                dan kesehatan masyarakat setempat.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                        <div>
-                            <h3 class="text-2xl font-semibold text-green-700 mb-2">Program Pendukung Usaha bagi UMKM</h3>
-                            <p class="text-gray-700 leading-relaxed">
-                                Program ini bertujuan untuk mendukung pertumbuhan produk dan pemasaran hasil usaha kecil,
-                                seperti olahan makanan dan produk rumahan. Melalui program ini, diharapkan UMKM lokal dapat
-                                meningkatkan
-                                daya saingnya di pasar yang lebih luas dengan produk-produk khas dan inovatif.
-                            </p>
-                        </div>
-                        <img src="{{ asset('storage/kegiatan3.jpg') }}" alt="Program UMKM"
-                            class="rounded-lg shadow-md w-full h-48 object-cover" />
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Kondisi Geografis -->
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Kondisi Geografis 🌏</h2>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    Luas wilayah Kelurahan Winduhareng Kecamatan Cigugur adalah kurang lebih 90,674 Ha 📏.
-                </p>
-                <p class="text-gray-700 leading-relaxed">
-                    Kelurahan Winduhareng berbatasan dengan:
-                    <br>- Sebelah Utara : Kelurahan Cirendang 🧭
-                    <br>- Sebelah Selatan : Kelurahan Kuningan 🏡
-                    <br>- Sebelah Timur : Kelurahan Purwawinangun 🌳
-                    <br>- Sebelah Barat : Kelurahan Cipari 🏞️
-                    <br><br>
-                    Kelurahan Winduhareng berada di ketinggian sekitar 600 m dpl, suhu udara 23°C-32°C 🌡️, curah hujan
-                    2000-2500 mm/tahun ☔.
-                    <br>Jarak tempuh:
-                    <br>- Ke ibu kota kecamatan ±2 Km 🚶‍♂️
-                    <br>- Ke ibu kota kabupaten ±1 Km 🛵
-                    <br>- Ke ibu kota provinsi ±200 Km 🚗
-                    <br>- Ke ibu kota negara ±270 Km ✈️
-                    <br><br>
-                    Kelurahan Winduhareng Kecamatan Cigugur beriklim sedang ☀️🌧️.
-                </p>
-            </div>
-
-
-            @php
-                use App\Models\Resident;
-                use App\Models\FamilyCard;
-                use Illuminate\Support\Facades\DB;
-                use Illuminate\Support\Str;
-
-                //
-                // 1) Data Demografi
-                //
-                $total = Resident::count();
-                $male = Resident::where('jenis_kelamin', 'Laki-laki')->count();
-                $female = Resident::where('jenis_kelamin', 'Perempuan')->count();
-                $heads = FamilyCard::count(); // Kepala keluarga
-
-                //
-                // 2) Data Agama
-                //
-                $religionStats = Resident::select('agama', DB::raw('COUNT(*) as count'))->groupBy('agama')->get();
-
-                //
-                // 3) Data Pekerjaan
-                //
-                $jobStats = Resident::select('pekerjaan', DB::raw('COUNT(*) as count'))
-                    ->whereNotNull('pekerjaan')
-                    ->groupBy('pekerjaan')
-                    ->get();
-
-                //
-                // Helpers: pilih emoji berdasarkan teks
-                //
-                function getReligionEmoji($r)
-                {
-                    return match (Str::lower($r)) {
-                        'islam' => '🕌',
-                        'kristen', 'katolik' => '⛪',
-                        'hindu' => '🕉️',
-                        'buddha' => '☸️',
-                        'konghucu' => '☯️',
-                        default => '❓',
-                    };
-                }
-                function getJobEmoji($j)
-                {
-                    $j = Str::lower($j);
-                    return match (true) {
-                        Str::contains($j, ['tani', 'kebun']) => '🌱',
-                        Str::contains($j, ['ternak']) => '🐄',
-                        Str::contains($j, ['ikan', 'laut', 'perikanan']) => '🐟',
-                        Str::contains($j, ['hutan']) => '🌳',
-                        Str::contains($j, ['industri']) => '🏭',
-                        Str::contains($j, ['konstruksi', 'bangunan']) => '👷‍♂️',
-                        Str::contains($j, ['teknisi', 'teknik']) => '🛠️',
-                        Str::contains($j, ['sopir', 'supir']) => '🚗',
-                        Str::contains($j, ['dagang', 'jualan']) => '🛒',
-                        Str::contains($j, ['jasa']) => '💼',
-                        Str::contains($j, ['wisata']) => '🏨',
-                        Str::contains($j, ['dokter']) => '👨‍⚕️',
-                        Str::contains($j, ['perawat']) => '👩‍⚕️',
-                        Str::contains($j, ['apoteker']) => '💊',
-                        Str::contains($j, ['guru']) => '🎓',
-                        Str::contains($j, ['dosen']) => '👩‍🎓',
-                        Str::contains($j, ['peneliti', 'riset']) => '🔬',
-                        Str::contains($j, ['pns', 'pegawai negeri']) => '🏛️',
-                        Str::contains($j, ['tni', 'polri']) => '👮‍♂️',
-                        Str::contains($j, ['buruh']) => '🔨',
-                        Str::contains($j, ['karyawan', 'pegawai', 'pt']) => '🏢',
-                        Str::contains($j, ['wirausaha', 'wiraswasta']) => '🚀',
-                        Str::contains($j, ['pelajar', 'mahasiswa', 'sekolah']) => '🧑‍🎓',
-                        Str::contains($j, ['ibu rumah tangga']) => '🏠',
-                        default => '❓',
-                    };
-                }
-
-                // Palet warna untuk charts
-                $colors = ['#22C55E', '#3B82F6', '#F59E0B', '#EC4899', '#8B5CF6', '#F97316', '#EAB308', '#6B7280'];
-            @endphp
-
-            {{-- =======================
-     Section: Total Penduduk
-======================= --}}
-            <section id="total-penduduk" class="py-12 px-4 bg-gray-50">
-                <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6">
-                    <h2 class="text-3xl font-bold text-green-800 text-center">Total Penduduk</h2>
-
-                    @if ($total > 0)
-                        <div class="flex flex-col lg:flex-row items-center gap-8">
-                            {{-- Chart --}}
-                            <div class="w-full max-w-sm mx-auto">
-                                <canvas id="demografiChart"></canvas>
-                            </div>
-
-                            {{-- Kartu ringkasan --}}
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
-                                <div class="p-4 bg-green-50 rounded-lg text-center">
-                                    <p class="text-gray-700 font-medium">Total</p>
-                                    <p class="text-green-700 text-2xl font-bold">{{ number_format($total, 0, ',', '.') }}
-                                    </p>
-                                </div>
-                                <div class="p-4 bg-blue-50 rounded-lg text-center">
-                                    <p class="text-gray-700 font-medium">Laki-laki</p>
-                                    <p class="text-blue-700 text-2xl font-bold">{{ number_format($male, 0, ',', '.') }}</p>
-                                </div>
-                                <div class="p-4 bg-pink-50 rounded-lg text-center">
-                                    <p class="text-gray-700 font-medium">Perempuan</p>
-                                    <p class="text-pink-700 text-2xl font-bold">{{ number_format($female, 0, ',', '.') }}
-                                    </p>
-                                </div>
-                                <div class="p-4 bg-amber-50 rounded-lg text-center">
-                                    <p class="text-gray-700 font-medium">KK</p>
-                                    <p class="text-amber-700 text-2xl font-bold">{{ number_format($heads, 0, ',', '.') }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    @else
-                        <p class="text-center text-gray-500">Belum ada data penduduk yang masuk.</p>
-                    @endif
-                </div>
-            </section>
-
-            {{-- =======================
-     Section: Agama
-======================= --}}
-            <section id="agama" class="py-12 px-4 bg-gray-100">
-                <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6">
-                    <h2 class="text-3xl font-bold text-green-800 text-center">Agama</h2>
-
-                    @php
-                        $allReligions = ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'];
-                    @endphp
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                        @foreach ($allReligions as $agama)
-                            @php
-                                $stat = $religionStats->firstWhere('agama', $agama);
-                                $count = $stat ? $stat->count : 0;
-                                $pct = $total > 0 ? round(($count / $total) * 100, 1) : 0;
-                                $icon = getReligionEmoji($agama);
-                            @endphp
-                            <div class="text-center p-4 bg-gray-50 rounded-lg">
-                                <span class="text-4xl block mb-1">{{ $icon }}</span>
-                                <p class="font-semibold text-gray-800">{{ $agama }}</p>
-                                <p class="text-green-700 font-bold">{{ $count }} ({{ $pct }}%)</p>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-
-            {{-- =======================
-     Section: Pekerjaan
-======================= --}}
-            <section id="pekerjaan" class="py-12 px-4 bg-gray-50">
-                <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6">
-                    <h2 class="text-3xl font-bold text-green-800 text-center">Pekerjaan</h2>
-
-                    @if ($jobStats->isNotEmpty())
-                        <div class="flex flex-col-reverse lg:flex-row items-start gap-8">
-                            {{-- Grid kartu --}}
-                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 flex-1">
-                                @foreach ($jobStats as $row)
-                                    @php
-                                        $icon = getJobEmoji($row->pekerjaan);
-                                    @endphp
-                                    <div class="text-center p-4 bg-green-50 rounded-lg shadow-sm">
-                                        <span class="text-4xl block mb-2">{{ $icon }}</span>
-                                        <p class="font-semibold text-gray-800">{{ $row->pekerjaan }}</p>
-                                        <p class="text-green-700 font-bold">{{ number_format($row->count, 0, ',', '.') }}
-                                            Orang</p>
-                                    </div>
-                                @endforeach
-                            </div>
-
-                            {{-- Chart --}}
-                            <div class="w-full max-w-sm mx-auto">
-                                <canvas id="pekerjaanChart"></canvas>
-                            </div>
-                        </div>
-                    @else
-                        <p class="text-center text-gray-500">Belum ada data pekerjaan yang masuk.</p>
-                    @endif
-                </div>
-            </section>
-
-            {{-- =======================
-     Scripts: Chart.js + DataLabels
-======================= --}}
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    Chart.register(ChartDataLabels);
-
-                    // 1) Demografi Chart
-                    @if ($total > 0)
-                        new Chart(document.getElementById('demografiChart'), {
-                            type: 'doughnut',
-                            data: {
-                                labels: ['Laki-laki', 'Perempuan', 'KK'],
-                                datasets: [{
-                                    data: [{{ $male }}, {{ $female }},
-                                        {{ $heads }}
-                                    ],
-                                    backgroundColor: @json(array_slice($colors, 0, 3)),
-                                    borderColor: '#fff',
-                                    borderWidth: 2,
-                                    hoverOffset: 10
-                                }]
-                            },
-                            options: {
-                                cutout: '60%',
-                                responsive: true,
-                                plugins: {
-                                    datalabels: {
-                                        formatter: (v, ctx) => ((v / ctx.chart.data.datasets[0].data.reduce((a,
-                                            b) => a + b, 0)) * 100).toFixed(1) + '%',
-                                        color: '#fff',
-                                        font: {
-                                            weight: '600',
-                                            size: 12
-                                        }
-                                    },
-                                    legend: {
-                                        position: 'bottom'
-                                    }
-                                },
-                                animation: {
-                                    duration: 1000,
-                                    easing: 'easeOutBounce'
-                                }
-                            }
-                        });
-                    @endif
-
-                    // 2) Pekerjaan Chart
-                    @if ($jobStats->isNotEmpty())
-                        new Chart(document.getElementById('pekerjaanChart'), {
-                            type: 'doughnut',
-                            data: {
-                                labels: @json($jobStats->pluck('pekerjaan')),
-                                datasets: [{
-                                    data: @json($jobStats->pluck('count')),
-                                    backgroundColor: @json(array_slice($colors, 0, $jobStats->count())),
-                                    borderColor: '#fff',
-                                    borderWidth: 2,
-                                    hoverOffset: 10
-                                }]
-                            },
-                            options: {
-                                cutout: '60%',
-                                responsive: true,
-                                plugins: {
-                                    datalabels: {
-                                        formatter: (v, ctx) => ((v / ctx.chart.data.datasets[0].data.reduce((a,
-                                            b) => a + b, 0)) * 100).toFixed(1) + '%',
-                                        color: '#fff',
-                                        font: {
-                                            weight: '600',
-                                            size: 12
-                                        }
-                                    },
-                                    legend: {
-                                        position: 'bottom'
-                                    }
-                                },
-                                animation: {
-                                    duration: 1000,
-                                    easing: 'easeOutBounce'
-                                }
-                            }
-                        });
-                    @endif
-                });
-            </script>
-
-
-
         </div>
     </section>
+
+    <!-- Leaflet CSS (di <head> atau sebelum penggunaan map) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <!-- Leaflet JS (di bawah, sebelum </body>) -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+    @php
+        $locations = [
+            // Kantor & umum
+            ['name' => 'Kantor Desa Karangmangu', 'coords' => [-7.044712, 108.594932], 'cat' => 'office'],
+            ['name' => 'Balai Dusun Karangmangu', 'coords' => [-7.0445, 108.5955], 'cat' => 'public'],
+            // Pendidikan
+            ['name' => 'PAUD Mekar Sari', 'coords' => [-7.0449, 108.5948], 'cat' => 'edu'],
+            ['name' => 'TK Karangmangu Ceria', 'coords' => [-7.0452, 108.5953], 'cat' => 'edu'],
+            ['name' => 'SD Negeri 1 Karangmangu', 'coords' => [-7.0446, 108.595], 'cat' => 'edu'],
+            ['name' => 'SD Negeri 2 Karangmangu', 'coords' => [-7.045, 108.596], 'cat' => 'edu'],
+            ['name' => 'SMP Negeri Terdekat', 'coords' => [-7.0435, 108.5965], 'cat' => 'edu'],
+            // Ibadah
+            ['name' => 'Masjid Jami Karangmangu', 'coords' => [-7.0448, 108.595], 'cat' => 'worship'],
+            ['name' => 'Musholla Al-Hidayah', 'coords' => [-7.0451, 108.5947], 'cat' => 'worship'],
+            // Pariwisata
+            ['name' => 'Curug Putri Karangmangu', 'coords' => [-7.0425, 108.598], 'cat' => 'tourism'],
+            ['name' => 'Kolam Pemandian Alam', 'coords' => [-7.043, 108.5975], 'cat' => 'tourism'],
+            ['name' => 'Taman Desa Karangmangu', 'coords' => [-7.044, 108.5962], 'cat' => 'tourism'],
+        ];
+    @endphp
+
+    <div class="max-w-7xl mx-auto px-4 py-10 border-t border-green-200">
+        <div class="text-center mb-6">
+            <h1 class="text-4xl font-bold text-green-700">Peta Petualangan Karangmangu</h1>
+            <p class="text-gray-600 mt-2">Eksplorasi titik penting di Desa Karangmangu</p>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-6">
+            <!-- Sidebar -->
+            <aside id="sidebar" class="w-full md:w-64 bg-green-50 rounded-xl p-4 shadow border border-green-100">
+                <input id="locSearch" type="text" placeholder="Cari lokasi..."
+                    class="w-full px-3 py-2 mb-4 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400" />
+                <ul id="locList" class="space-y-2 max-h-48 overflow-y-auto text-sm pr-2">
+                    @foreach ($locations as $idx => $loc)
+                        <li>
+                            <button data-idx="{{ $idx }}"
+                                class="location-btn w-full text-left px-3 py-2 rounded-lg hover:bg-green-100 transition">{{ $loc['name'] }}</button>
+                        </li>
+                    @endforeach
+                </ul>
+                <div class="mt-6 text-xs text-gray-500">
+                    Klik titik di peta atau nama lokasi untuk navigasi.
+                </div>
+            </aside>
+
+            <!-- Map -->
+            <div class="flex-1 h-[70vh] rounded-xl overflow-hidden shadow border border-gray-200">
+                <div id="map" class="w-full h-full"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ambil data dari PHP
+            const locations = @json($locations);
+
+            // Inisialisasi peta
+            const map = L.map('map').setView(locations[0].coords, 15);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Icon berwarna per kategori (opsional)
+            const icons = {
+                office: L.icon({
+                    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-green.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41]
+                }),
+                public: L.icon({
+                    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-yellow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41]
+                }),
+                edu: L.icon({
+                    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-blue.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41]
+                }),
+                worship: L.icon({
+                    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-red.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41]
+                }),
+                tourism: L.icon({
+                    iconUrl: 'https://cdn.jsdelivr.net/gh/pointhi/leaflet-color-markers@master/img/marker-icon-violet.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41]
+                }),
+            };
+
+            // Layer per kategori untuk kontrol
+            const layers = {
+                office: L.layerGroup().addTo(map),
+                public: L.layerGroup().addTo(map),
+                edu: L.layerGroup().addTo(map),
+                worship: L.layerGroup().addTo(map),
+                tourism: L.layerGroup().addTo(map),
+            };
+
+            // Buat marker dan simpan referensi
+            const markers = locations.map((loc, i) => {
+                const m = L.marker(loc.coords, {
+                        icon: icons[loc.cat] || icons.public
+                    })
+                    .bindPopup(`<strong>${loc.name}</strong>`)
+                    .addTo(layers[loc.cat]);
+                return m;
+            });
+
+            // Kontrol layer
+            L.control.layers(null, {
+                'Kantor Desa': layers.office,
+                'Fasilitas Umum': layers.public,
+                'Pendidikan': layers.edu,
+                'Ibadah': layers.worship,
+                'Pariwisata': layers.tourism
+            }, {
+                collapsed: false,
+                position: 'topright'
+            }).addTo(map);
+
+            // Fungsi filter list sidebar
+            const searchInput = document.getElementById('locSearch');
+            searchInput.addEventListener('input', () => {
+                const q = searchInput.value.toLowerCase();
+                document.querySelectorAll('#locList li').forEach(li => {
+                    li.style.display = li.textContent.toLowerCase().includes(q) ? 'block' : 'none';
+                });
+            });
+
+            // Klik tombol navigasi
+            document.querySelectorAll('.location-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = +btn.dataset.idx;
+                    const loc = locations[idx];
+                    map.flyTo(loc.coords, 17, {
+                        duration: 0.7
+                    });
+                    markers[idx].openPopup();
+                    // highlight aktif
+                    document.querySelectorAll('.location-btn').forEach(b => b.classList.remove(
+                        'bg-green-100'));
+                    btn.classList.add('bg-green-100');
+                });
+            });
+        });
+    </script>
+
 
     <!-- Alpine.js for slider -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>

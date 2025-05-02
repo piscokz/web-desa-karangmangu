@@ -1,4 +1,4 @@
-{{-- resources/views/partials/navbar.blade.php --}}
+{{-- resources/views/partials/header.blade.php --}}
 <nav id="mainNav" class="bg-green-700 animate__animated animate__fadeInDown z-50">
     <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         {{-- Logo dan Nama Desa --}}
@@ -16,7 +16,8 @@
                     ['route' => 'profil', 'label' => 'Profil Desa'],
                     ['route' => 'news', 'label' => 'Berita'],
                     ['route' => 'galeri', 'label' => 'Galeri'],
-                    ['route' => 'pemerintahan', 'label' => 'Pemerintahan'],
+                    ['route' => 'pemerintahan', 'label' => 'Pemerintahan & Statistika'],
+                    ['route' => 'umkm', 'label' => 'UMKM'],
                     ['route' => 'wartaWargi', 'label' => 'Kontak Kami'],
                 ];
             @endphp
@@ -58,7 +59,11 @@
         <div class="flex items-center">
             <img src="{{ asset('images/Logo_Kabupaten_kuningan.png') }}" alt="Logo Kabupaten Kuningan"
                 class="w-10 h-10 object-cover rounded-full mr-3" />
+<<<<<<< HEAD
             <span class="text-white text-xl font-bold">Kelurahan Winduherang</span>
+=======
+            <span class="text-white text-xl font-bold">Kelurahan Karangmangu</span>
+>>>>>>> bcc0c3d (feat: mempercantik halaman UMKM dengan desain ala web olshop modern dan responsif)
         </div>
         <div class="hidden md:flex space-x-6">
             @foreach ($items as $item)
