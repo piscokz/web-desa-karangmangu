@@ -1,7 +1,7 @@
 {{-- resources/views/pemerintahan.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Pemerintahan Desa Winduherang')
+@section('title', 'Pemerintahan Desa Karangmangu')
 
 @section('content')
     <!-- Hero Slider -->

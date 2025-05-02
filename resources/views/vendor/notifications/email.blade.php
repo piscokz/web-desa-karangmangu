@@ -4,7 +4,7 @@
 <!-- Logo Desa -->
 <div style="text-align:center; margin-bottom:1rem;">
   <img src="{{ $message->embed(public_path('images/Logo_Kabupaten_kuningan.png')) }}"
-       alt="Logo Desa Winduherang"
+       alt="Logo Desa Karangmangu"
        width="72"
        style="display:inline-block; margin:auto;">
 </div>
@@ -16,7 +16,7 @@
 @if ($level === 'error')
 # Whoops!
 @else
-# Hello from Winduherang!
+# Hello from Karangmangu!
 @endif
 @endif
 
@@ -53,7 +53,7 @@
 {{ $salutation }}
 @else
 Regards,<br>
-Desa Winduherang
+Desa Karangmangu
 @endif
 
 {{-- Subcopy --}}

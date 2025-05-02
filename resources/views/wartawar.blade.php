@@ -1,7 +1,7 @@
 {{-- resources/views/wartawargi.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Pengaduan Masyarakat & Kontak - Kelurahan Winduherang')
+@section('title', 'Pengaduan Masyarakat & Kontak - Desa Karangmangu')
 
 @section('content')
     {{-- Hero --}}

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Desa Winduherang Admin Dashboard</title>
+    <title>Desa Karangmangu Admin Dashboard</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -51,7 +51,7 @@
         x-transition:leave-end="-translate-x-full"
         class="fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-[#14532d] to-[#22c55e] text-white z-50 transform md:hidden shadow-2xl rounded-r-xl overflow-y-auto">
         <div class="flex items-center justify-between px-6 py-4 border-b border-white/10">
-            <h1 class="text-xl font-bold">Desa Winduherang</h1>
+            <h1 class="text-xl font-bold">Desa Karangmangu</h1>
             <button @click="sidebarOpen = false" class="text-2xl hover:text-yellow-400">&times;</button>
         </div>
 
@@ -211,7 +211,7 @@
     <aside
         class="hidden md:fixed md:inset-y-0 md:w-64 md:flex md:flex-col bg-gradient-to-b from-[#14532d] to-[#22c55e] text-white shadow-2xl rounded-r-xl overflow-y-auto">
         <div class="px-6 py-6 border-b border-white/10">
-            <h1 class="text-2xl font-bold">Desa Winduherang</h1>
+            <h1 class="text-2xl font-bold">Desa Karangmangu</h1>
             <p class="text-sm text-gray-300">Admin Dashboard</p>
         </div>
 
@@ -410,7 +410,7 @@
 
         <!-- Sticky Footer -->
         <footer class="bg-white shadow p-4 text-center text-sm text-gray-500 mt-auto" data-aos="fade-up">
-            &copy; 2025 Desa Winduherang. Semua hak dilindungi.
+            &copy; 2025 Desa Karangmangu. Semua hak dilindungi.
         </footer>
     </div>
 

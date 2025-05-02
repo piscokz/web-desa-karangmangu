@@ -1,7 +1,7 @@
 {{-- resources/views/index.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Kelurahan Winduherang')
+@section('title', 'Kelurahan Karangmangu')
 
 @section('content')
     <!-- Hero Slider Section -->
@@ -27,7 +27,7 @@
         <div
             class="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center text-center text-white px-4">
             <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">
-                Wilujeng Sumping di <span class="text-green-400">Kelurahan Winduherang</span>
+                Wilujeng Sumping di <span class="text-green-400">Kelurahan Karangmangu</span>
             </h1>
             <p class="text-lg md:text-2xl mb-6 italic">Ngawilujengkeun kadatangan anjeun ka lembur nu rahayu</p>
 
@@ -58,112 +58,211 @@
         </div>
     </section>
 
+    {{-- In your layouts/app.blade.php, be sure Alpine.js is included: --}}
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    @endpush
 
-    <!-- Biografi / Sambutan Lurah -->
-    <section class="py-16 bg-green-50 relative overflow-hidden">
+    {{-- Section Visi & Misi with Modal trigger --}}
+    <section id="visi-misi" class="py-20 bg-gradient-to-br from-white to-green-50" data-aos="fade-up"
+        x-data="{ showModal: false }">
 
-        <!-- Ornamen SVG Latar -->
-        <svg class="absolute top-0 left-0 opacity-10 w-96 h-96 text-green-100 -z-10" fill="none" viewBox="0 0 500 500">
-            <path fill="currentColor"
-                d="M437.5,123.1c33.3,48.1,45.4,118.8,6.1,173.1s-130.4,87.1-210.4,79.1s-153.6-53.8-187.5-108.2S2.7,123.5,68.8,67.5S404.2,75,437.5,123.1z" />
-        </svg>
-
-        <!-- Garis-garis dekoratif -->
-        <div class="absolute top-0 left-0 w-1 h-full bg-green-100"></div>
-        <div class="absolute top-0 right-0 w-1 h-full bg-green-100"></div>
-        <div class="absolute top-10 left-10 w-24 h-1 bg-gradient-to-r from-green-600 to-green-300 rounded-full"></div>
-        <div class="absolute top-20 left-10 w-16 h-1 bg-green-600 rounded-full"></div>
-        <div class="absolute bottom-10 right-10 w-24 h-1 bg-gradient-to-l from-green-600 to-green-300 rounded-full"></div>
-        <div class="absolute bottom-20 right-10 w-16 h-1 bg-green-600 rounded-full"></div>
-
-        <div class="max-w-6xl mx-auto px-4 flex flex-col lg:flex-row items-start gap-10 relative z-10">
-
-            <!-- Foto Lurah -->
-            <div class="lg:w-1/3 w-full flex justify-center">
-                <img src="{{ asset('images/FotoLurah.jpg') }}" alt="Foto Lurah"
-                    class="rounded-xl shadow-xl object-cover w-full max-w-xs border-4 border-green-200 animate-fade-in">
+        <div class="max-w-screen-xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold text-green-800 mb-4">Visi & Misi</h2>
+                <span class="block w-20 h-1 bg-green-300 mx-auto rounded-full mb-4"></span>
+                <p class="text-gray-600 text-lg md:text-xl leading-relaxed">
+                    Menjadi desa yang <span class="font-semibold text-green-700">maju, mandiri, dan berbasis
+                        teknologi</span>,<br>
+                    dengan masyarakat yang <span class="font-semibold text-green-700">inovatif dan berdaya saing
+                        tinggi</span>,<br>
+                    demi kesejahteraan dan kualitas hidup yang lebih baik.
+                </p>
             </div>
 
-            <!-- Sambutan Teks -->
-            <div class="lg:w-2/3 w-full space-y-6 animate-fade-in">
-                <div class="flex items-center gap-2">
-                    <h2 class="text-3xl font-bold text-green-800 border-b-4 border-green-600 pb-2 inline-block relative">
-                        Sambutan Lurah Winduherang
-                        <span class="absolute -bottom-1 left-0 w-12 h-1 bg-green-300"></span>
-                    </h2>
-                    <span
-                        class="ml-2 inline-block bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full shadow-sm">#PelayananPrima</span>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                {{-- Galeri Foto --}}
+                <div class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="{{ asset('images/visimisi1.jpg') }}" alt="Kegiatan 1"
+                            class="rounded-xl shadow-lg object-cover h-40 w-full hover:scale-105 transition">
+                        <img src="{{ asset('images/visimisi2.jpg') }}" alt="Kegiatan 2"
+                            class="rounded-xl shadow-lg object-cover h-40 w-full hover:scale-105 transition">
+                    </div>
+                    <img src="{{ asset('images/visimisi3.jpg') }}" alt="Kegiatan 3"
+                        class="rounded-xl shadow-lg object-cover h-40 w-full hover:scale-105 transition">
                 </div>
 
-                <div class="space-y-4 text-gray-800 leading-relaxed">
-                    <p><strong>Assalamu’alaikum warahmatullahi wabarakatuh</strong></p>
-                    <p>Selamat Datang di “Website Kelurahan Winduherang“. Salam sejahtera bagi kita semua.</p>
-                    <p>
-                        Kepada masyarakat Kelurahan Winduherang sekalian yang saya banggakan. Pada kesempatan yang
-                        berbahagia
-                        ini, kiranya tiada kata-kata yang patut untuk kita ucapkan terlebih dahulu melainkan puji syukur
-                        yang sedalam-dalamnya, atas rahmat dan karunia Allah SWT sehingga pembuatan website Kelurahan
-                        Winduherang dapat terlaksana dengan baik.
-                    </p>
+                {{-- Daftar Singkat --}}
+                <div class="space-y-6">
+                    @foreach (['Mewujudkan tata kelola pemerintahan yang baik', 'Menjadi desa yang maju, mandiri, dan berbasis teknologi', 'Mengembangkan kegiatan keagamaan', 'Meningkatkan kualitas pendidikan dan sumber daya manusia'] as $item)
+                        <div class="flex items-start space-x-4" data-aos="fade-left"
+                            data-aos-delay="{{ $loop->index * 100 }}">
+                            <div class="bg-green-100 text-green-600 rounded-full p-2 flex-shrink-0">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L9 11.586 5.707 8.293a1
+                                     1 0 00-1.414 1.414l4 4a1 1 0 001.414
+                                     0l7-7a1 1 0 000-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <p class="text-gray-700 text-lg font-medium">{{ $item }}</p>
+                        </div>
+                    @endforeach
 
-                    <!-- Konten tersembunyi -->
-                    <div id="sambutanHidden" class="hidden space-y-4">
-                        <p>
-                            Website ini kami hadirkan secara mandiri untuk mengikuti perkembangan dunia Teknologi Informasi
-                            (IT) yang kian pesat. Lahir dari sebuah ide kreatif dan inovatif, serta merupakan sebuah
-                            terobosan atas hasil kolaborasi kami dengan Inovindo Digital Media untuk lebih mendekatkan diri
-                            kepada masyarakat luas.
-                        </p>
-                        <p>
-                            Melalui website ini kami berupaya agar informasi tentang Kelurahan Winduherang menjadi lebih
-                            terbuka dan interaktif. Profil, kegiatan dan program kelurahan serta jenis dan prosedur
-                            pelayanan dapat diakses oleh masyarakat secara langsung dan cepat.
-                        </p>
-                        <p>
-                            Sebagai Lurah Kelurahan Winduherang, kami mengajak kepada masyarakat Kelurahan Winduherang untuk
-                            ikut pula berpartisipasi menyumbangkan ide, kreasi dan informasinya agar website ini menarik
-                            minat pembaca dan menunjang kami untuk memperkenalkan potensi-potensi yang ada di Kelurahan
-                            Winduherang kepada daerah lain.
-                        </p>
-                        <p>
-                            Kami sampaikan terima kasih kepada semua pihak yang telah banyak memberikan bantuan, dukungan
-                            dan kontribusi, baik berupa tenaga, pemikiran dan dorongan semangat, hingga Website ini dapat
-                            terealisasi.
-                        </p>
-                        <p>
-                            Semoga dengan adanya Website Kelurahan Winduherang ini dapat bermanfaat dan menjadi salah satu
-                            upaya peningkatan pelayanan desa. Namun disadari bahwa upaya kami ini masih jauh dari
-                            kesempurnaan. Untuk itu kritik, saran, dan masukan yang konstruktif, kreatif dan inovatif sangat
-                            kami nantikan demi penyempurnaan website ini.
-                        </p>
-                        <p><strong>Wassalamu’alaikum warahmatullahi wabarakatuh</strong></p>
-                        <p class="font-semibold text-green-800">Lurah Kelurahan Winduherang<br>H. Ikin Sodikin, S.Sn</p>
+                    <div class="mt-8 text-center" data-aos="zoom-in" data-aos-delay="500">
+                        <button @click="showModal = true"
+                            class="bg-green-600 text-white text-lg font-semibold px-8 py-3 rounded-full shadow hover:bg-green-700 transition">
+                            Pelajari Lebih Lanjut
+                        </button>
                     </div>
-
-                    <!-- Tombol -->
-                    <button onclick="toggleSambutan()" id="toggleButton"
-                        class="text-green-700 font-semibold mt-2 inline-flex items-center hover:text-green-900 transition duration-200">
-                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                                d="M10 3a1 1 0 01.894.553l5 10a1 1 0 01-.894 1.447H5a1 1 0 01-.894-1.447l5-10A1 1 0 0110 3z" />
-                        </svg>
-                        <span>Baca Selengkapnya</span>
-                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- Script Toggle -->
-        <script>
-            function toggleSambutan() {
-                const hidden = document.getElementById("sambutanHidden");
-                const button = document.getElementById("toggleButton");
+        {{-- Modal Overlay --}}
+        <div x-show="showModal" x-transition.opacity
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            @click.self="showModal = false">
 
-                hidden.classList.toggle("hidden");
-                button.querySelector("span").innerText = hidden.classList.contains("hidden") ? "Baca Selengkapnya" : "Tutup";
-            }
-        </script>
+            {{-- Modal Content --}}
+            <div x-show="showModal" x-transition.scale.origin.center
+                class="bg-white w-11/12 max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl shadow-xl p-6 relative">
+                {{-- Close Button --}}
+                <button @click="showModal = false" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                {{-- Modal Header --}}
+                <h3 class="text-2xl font-bold text-green-800 mb-4">Visi dan Misi Desa Karangmangu</h3>
+
+                {{-- Modal Body --}}
+                <div class="space-y-4 text-gray-700 text-base leading-relaxed">
+                    <p>Demokratisasi memiliki makna bahwa penyelenggaraan pemerintahan dan pelaksanaan pembangunan di desa
+                        harus mengakomodasi aspirasi dari masyarakat melalui Badan Permusyawaratan Desa dan Lembaga
+                        Kemasyarakatan yang ada sebagai mitra Pemerintah Desa yang mampu mewujudkan peran aktif masyarakat
+                        agar masyarakat senantiasa memiliki dan turut serta bertanggung jawab terhadap perkembangan
+                        kehidupan bersama sebagai sesama warga desa sehingga diharapkan adanya peningkatan taraf hidup dan
+                        kesejahteraan masyarakat melalui penetapan kebijakan program dan kegiatan yang sesuai dengan esensi
+                        masalah dan prioritas kebutuhan masyarakat.</p>
+
+                    <p>Atas dasar pertimbangan tersebut di atas, maka untuk jangka 6 (enam) tahun ke depan diharapkan proses
+                        pembangunan di Desa, penyelenggaraan pemerintahan di desa, pemberdayaan masyarakat di desa,
+                        partisipasi masyarakat di desa, siltap kepala desa dan perangkat, operasional pemerintahan desa,
+                        tunjangan operasional BPD dan insentif RT/RW dapat benar-benar mendasarkan pada prinsip keterbukaan
+                        dan partisipasi masyarakat sehingga secara bertahap Desa Karangmangu dapat mengalami kemajuan.</p>
+
+                    <h4 class="mt-4 font-semibold text-green-700">VISI</h4>
+                    <blockquote class="pl-4 border-l-4 border-green-600 italic">
+                        “TERCIPTANYA TATA KELOLA PEMERINTAHAN DESA YANG BAIK, BERSIH DAN TRANSPARAN GUNA MEWUJUDKAN DESA
+                        KARANGMANGU YANG ADIL MAKMUR SEJAHTERA DAN BERMARTABAT”
+                    </blockquote>
+
+                    <p>Rumusan visi tersebut merupakan ungkapan niat luhur untuk memperbaiki penyelenggaraan pemerintahan
+                        dan pembangunan di Desa Karangmangu sehingga dalam 6 (enam) tahun ke depan terjadi perubahan yang
+                        lebih baik dan peningkatan kesejahteraan masyarakat, dilandasi semangat kebersamaan.</p>
+
+                    <h4 class="mt-4 font-semibold text-green-700">MISI</h4>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>Meningkatkan pelayanan prima untuk seluruh masyarakat</li>
+                        <li>Menciptakan Pemerintah Desa yang tanggap terhadap aspirasi masyarakat</li>
+                        <li>Meningkatkan sarana dan prasarana umum guna mendukung kelancaran perekonomian masyarakat</li>
+                        <li>Pemerataan pembangunan fisik dan non-fisik agar tidak terjadi kesenjangan sosial</li>
+                        <li>Koordinasi dan bekerja sama dengan semua unsur kelembagaan desa guna memberikan pelayanan
+                            terbaik</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </section>
+
+    {{-- Section Sejarah Desa Karangmangu --}}
+    <section id="sejarah" class="relative py-20 bg-white overflow-hidden" data-aos="fade-up">
+        <!-- Ornamen Latar -->
+        <svg class="absolute top-0 right-0 opacity-10 w-96 h-96 text-green-100 -z-10" fill="none" viewBox="0 0 500 500">
+            <path fill="currentColor"
+                d="M437.5,123.1c33.3,48.1,45.4,118.8,6.1,173.1s-130.4,87.1-210.4,79.1s-153.6-53.8-187.5-108.2S2.7,123.5,68.8,67.5S404.2,75,437.5,123.1z" />
+        </svg>
+
+        <div class="max-w-screen-lg mx-auto px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-green-800 inline-block border-b-4 border-green-600 pb-2">
+                    Sejarah Desa Karangmangu
+                </h2>
+                <p class="mt-4 text-gray-600">Ringkasan asal-usul dan perkembangan desa dari masa ke masa</p>
+            </div>
+
+            <!-- Narasi Sejarah (Expandable) -->
+            <div x-data="{ open: false }" class="space-y-6 text-gray-700 text-base md:text-lg leading-relaxed">
+                {{-- Always visible --}}
+                <p>Desa Karangmangu merupakan salah satu desa di wilayah Kecamatan Kramatmulya dari 14 desa yang ada. Dari
+                    jaman dahulu hingga sekarang, Desa Karangmangu terkenal dengan home industri yaitu pengrajin bata merah
+                    dan kupat/ketupat terbesar di Kabupaten Kuningan.</p>
+
+                {{-- Hidden content --}}
+                <div x-show="open" x-collapse class="space-y-4">
+                    <p>Bicara tentang asal mula Desa Karangmangu, sampai saat ini tidak ada informasi yang jelas tentang
+                        kapan dan bagaimana desa ini lahir. Para penggagas berdirinya atau orang yang dianggap tahu
+                        bagaimana Desa Karangmangu ini ada tidak ada sumber informasi yang jelas, yang ada hanya cerita
+                        orang tua “katanya-katanya” saja, penulis akan mencoba menulis ringkasan sejarah Desa Karangmangu
+                        berdasarkan sumber dari “katanya-katanya” itu.</p>
+                    <p>Desa Karangmangu asalnya adalah wilayah Desa Cikaso. Dalam sejarah singkat yang sempat penulis baca,
+                        Desa Cikaso itu bukan desa melainkan sebuah pemerintahan besar yang dipimpin oleh seorang
+                        Tumenggung/Bupati bergelar Tumenggung “ARGAWIJAYA” dengan pendampingnya Patih “NAGAREJA”. Salah satu
+                        bukti Karangmangu merupakan bagian dari Desa Cikaso adalah makam Tumenggung Argawijaya dan Patih
+                        Nagareja yang berada di Desa Karangmangu—sekarang dikeramatkan dan banyak dijiarahi orang, terutama
+                        yang berhasrat menjadi Kuwu/Kepala Desa. Bahkan untuk mengabadikan nama tokoh besar tersebut, tempat
+                        makam itu kini disebut “Blok Tumenggung” dan tercatat dalam DHKP (Daftar Himpunan Ketetapan Pajak)
+                        desa dan kabupaten.</p>
+                    <p>Pada saat Desa Karangmangu lahir mungkin karena cakupan Desa Cikaso yang luas atau sebab lain
+                        sehingga desa ini muncul—tidak penting untuk diperdebatkan. Yang jelas, katanya Karangmangu berasal
+                        dari “Karangmanggu”: di tengah desa ada sebuah pohon mangga besar, dan di sekitar pohon mangga itu
+                        terdapat sebuah halaman atau karang yang bersih, luas, rindang, dan nyaman. Karena sejuknya dan
+                        rindangnya pohon mangga tersebut, tempat itu dipakai anak-anak bermain dan para pedagang yang lewat
+                        sering numpang istirahat sambil membuka timbel/nasi bekal. Terinspirasi nama itulah “Karangmanggu”
+                        diambil—dari karang (halaman) dan manggu (mangga)—lalu disederhanakan menjadi KARANGMANGU.</p>
+                </div>
+
+                {{-- Read More Button --}}
+                <button @click="open = !open" class="text-green-700 font-semibold inline-flex items-center space-x-2">
+                    <span x-text="open ? 'Tutup Sejarah' : 'Baca Selengkapnya'"></span>
+                    <svg :class="open ? 'rotate-180' : ''" class="w-4 h-4 transform transition-transform" fill="none"
+                        stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Daftar Kuwu -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-semibold text-green-800 mb-6">Daftar Kuwu</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-lg shadow-md">
+                        <thead class="bg-green-600 text-white">
+                            <tr>
+                                <th class="px-4 py-2 text-left">Nama Kuwu</th>
+                                <th class="px-4 py-2 text-left">Periode</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            @foreach ([['Kuwu Tuba', '– 1925'], ['Kuwu Sumarja', '1925 – 1961'], ['H. Ahmad Djusa', '1961 – 1973'], ['Soekarno', '1973 – 1981'], ['E. Kusmayadi', '1981 – 1999'], ['Aksan Dana Sasmita', '1999 – 2007'], ['H. Endang Ahid', '2007 – 2013'], ['Nanda Sunanda (Plt.)', '2013 – 2014'], ['Dodo Juanda (Plt.)', '2015'], ['Mulyadi (Plt.)', '2015'], ['Supandi', '2016 – 2021'], ['H. Uja Azizi', '2021 – Sekarang']] as $row)
+                                <tr>
+                                    <td class="px-4 py-3 text-gray-800">{{ $row[0] }}</td>
+                                    <td class="px-4 py-3 text-gray-700">{{ $row[1] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    @endpush
+
 
 
     {{-- resources/views/partials/berita_section.blade.php --}}
@@ -182,7 +281,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 @foreach ($latestArticles as $idx => $article)
-                    <a href="{{ route('article.show', $article) }}" data-aos="fade-up" data-aos-delay="{{ $idx * 100 }}"
+                    <a href="{{ route('article.show', $article) }}" data-aos="fade-up"
+                        data-aos-delay="{{ $idx * 100 }}"
                         class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group block">
 
                         {{-- Thumbnail --}}
@@ -228,120 +328,250 @@
         </div>
     </section>
 
-    {{-- resources/views/partials/galeri_alam.blade.php --}}
     @php
-        use App\Models\GalleryItem;
-        $latestItems = GalleryItem::orderByDesc('date')->take(4)->get();
+        use App\Models\Resident;
+        use App\Models\FamilyCard;
+
+        $totalResidents = Resident::count();
+        $totalFamilies = FamilyCard::count();
+        $maleCount = Resident::where('jenis_kelamin', 'Laki-Laki')->count();
+        $femaleCount = Resident::where('jenis_kelamin', 'Perempuan')->count();
+        $familyPct = $totalResidents ? round(($totalFamilies / $totalResidents) * 100) : 0;
     @endphp
 
-    <section class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <h3 class="text-3xl md:text-4xl font-semibold text-center text-green-700 mb-14 tracking-tight"
-                data-aos="fade-up">
-                Galeri Kegiatan Alam Desa
-                <span class="block w-24 h-1 bg-green-300 mt-4 mx-auto rounded-full"></span>
-            </h3>
+    {{-- Section Statistik Penduduk --}}
+    <section id="statistik" class="py-20 bg-gradient-to-br from-white to-green-50 border-t border-green-200"
+        data-aos="fade-up">
+        <div class="max-w-screen-xl mx-auto px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
+                Statistik Penduduk
+            </h2>
+            <p class="text-gray-600 text-base md:text-lg mb-12">
+                Informasi lengkap karakteristik demografi penduduk—jumlah, keluarga, jenis kelamin, dan lebih.
+            </p>
 
-            {{-- 4‑column grid, always one row --}}
-            <div class="grid grid-cols-4 gap-6">
-                @foreach ($latestItems as $loopIndex => $item)
-                    <div class="group relative overflow-hidden rounded-2xl border border-green-200 bg-white shadow transition transform hover:scale-105 hover:shadow-lg hover:border-green-400 cursor-pointer"
-                        data-aos="zoom-in" data-aos-delay="{{ ($loopIndex + 1) * 100 }}"
-                        onclick="openModal('{{ $item->image_url }}', '{{ addslashes($item->title) }}', '{{ $item->date->format('d M Y') }}')">
-                        {{-- Thumbnail --}}
-                        <img src="{{ $item->image_url }}" alt="{{ $item->title }}"
-                            class="w-full h-44 object-cover transition-transform duration-300 group-hover:scale-110">
-
-                        {{-- Caption overlay --}}
-                        <div
-                            class="absolute bottom-0 w-full bg-green-50 bg-opacity-90 px-3 py-2 text-center text-green-800 text-sm font-semibold backdrop-blur-md">
-                            🌿 {{ $item->title }} — {{ $item->date->format('d M Y') }}
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-
-        {{-- Modal --}}
-        <div id="galleryModal"
-            class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center hidden z-50 px-4 py-8 overflow-y-auto">
-            <div
-                class="relative bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden animate__animated animate__zoomIn">
-                <!-- Close Button -->
-                <button onclick="closeModal()"
-                    class="absolute top-4 right-4 text-gray-400 hover:text-red-600 text-3xl leading-none font-bold focus:outline-none">
-                    &times;
-                </button>
-                <!-- Modal Image -->
-                <img id="modalImage" src="" alt="Detail"
-                    class="w-full h-[40vh] sm:h-[50vh] md:h-[60vh] object-cover bg-gray-100">
-                <!-- Caption -->
-                <div class="p-6 bg-green-50">
-                    <h3 id="modalTitle" class="text-2xl font-semibold text-green-800 text-center mb-2"></h3>
-                    <p id="modalDate" class="text-center text-gray-600"></p>
+            {{-- Cards --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                {{-- Penduduk --}}
+                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                    <div class="flex items-center justify-center mb-4 text-4xl">👥</div>
+                    @if ($totalResidents)
+                        <h3 class="text-2xl font-bold text-teal-600 mb-2">{{ number_format($totalResidents / 1000, 1) }}K
+                        </h3>
+                    @else
+                        <p class="text-red-500 font-semibold">Data belum tersedia</p>
+                    @endif
+                    <p class="text-gray-600 uppercase tracking-wide">Penduduk</p>
                 </div>
+
+                {{-- Kepala Keluarga --}}
+                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                    <div class="flex items-center justify-center mb-4 text-4xl">🏠</div>
+                    @if ($totalResidents)
+                        <h3 class="text-2xl font-bold text-teal-600 mb-2">{{ $familyPct }}%</h3>
+                    @else
+                        <p class="text-red-500 font-semibold">Data belum tersedia</p>
+                    @endif
+                    <p class="text-gray-600 uppercase tracking-wide">Kepala Keluarga</p>
+                </div>
+
+                {{-- Laki-Laki --}}
+                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                    <div class="flex items-center justify-center mb-4 text-4xl">👨</div>
+                    @if ($maleCount)
+                        <h3 class="text-2xl font-bold text-teal-600 mb-2">{{ number_format($maleCount / 1000, 1) }}K</h3>
+                    @else
+                        <p class="text-red-500 font-semibold">Data belum tersedia</p>
+                    @endif
+                    <p class="text-gray-600 uppercase tracking-wide">Laki-Laki</p>
+                </div>
+
+                {{-- Perempuan --}}
+                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                    <div class="flex items-center justify-center mb-4 text-4xl">👩</div>
+                    @if ($femaleCount)
+                        <h3 class="text-2xl font-bold text-teal-600 mb-2">
+                            {{ round(($femaleCount / ($totalResidents ?: 1)) * 100) }}%</h3>
+                    @else
+                        <p class="text-red-500 font-semibold">Data belum tersedia</p>
+                    @endif
+                    <p class="text-gray-600 uppercase tracking-wide">Perempuan</p>
+                </div>
+            </div>
+
+
+            {{-- Chart --}}
+            <div class="bg-white p-6 rounded-2xl shadow-md">
+                @if ($totalResidents)
+                    <canvas id="statChart" class="w-full h-64"></canvas>
+                @else
+                    <p class="text-center text-red-500 font-semibold">Statistik belum tersedia.</p>
+                @endif
             </div>
         </div>
     </section>
 
-    <script>
-        function openModal(src, title, date) {
-            document.getElementById('modalImage').src = src;
-            document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalDate').textContent = date;
-            document.getElementById('galleryModal').classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-        }
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                @if ($totalResidents)
+                    const ctx = document.getElementById('statChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Penduduk', 'KK', 'Laki-L', 'Perempuan'],
+                            datasets: [{
+                                data: [{{ $totalResidents }}, {{ $totalFamilies }},
+                                    {{ $maleCount }}, {{ $femaleCount }}
+                                ],
+                                backgroundColor: ['#2DD4BF', '#14B8A6', '#0D9488', '#047857'],
+                                borderRadius: 8,
+                                barThickness: 24
+                            }]
+                        },
+                        options: {
+                            indexAxis: 'y',
+                            scales: {
+                                x: {
+                                    beginAtZero: true
+                                },
+                                y: {
+                                    ticks: {
+                                        font: {
+                                            size: 14
+                                        }
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            maintainAspectRatio: false,
+                            responsive: true
+                        }
+                    });
+                @endif
+            });
+        </script>
+    @endpush
 
-        function closeModal() {
-            document.getElementById('galleryModal').classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
 
-        // click outside to close
-        document.getElementById('galleryModal').addEventListener('click', e => {
-            if (e.target.id === 'galleryModal') closeModal();
-        });
-    </script>
-
+    @push('scripts')
+        {{-- Chart.js CDN --}}
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const ctx = document.getElementById('statChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Penduduk', 'Kepala Keluarga', 'Laki-Laki', 'Perempuan'],
+                        datasets: [{
+                            label: 'Statistik',
+                            data: [
+                                {{ $totalResidents }},
+                                {{ $totalFamilies }},
+                                {{ $maleCount }},
+                                {{ $femaleCount }}
+                            ],
+                            backgroundColor: [
+                                'rgba(56, 190, 182, 0.6)',
+                                'rgba(20, 184, 166, 0.6)',
+                                'rgba(13, 148, 136, 0.6)',
+                                'rgba(4, 120, 87, 0.6)'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true
+                            },
+                            y: {
+                                ticks: {
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: ctx => ctx.parsed.x.toLocaleString()
+                                }
+                            }
+                        },
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            });
+        </script>
+    @endpush
 
 
     @php
         $locations = [
             // Kantor & umum
-            ['name' => 'Kantor Desa Winduherang', 'coords' => [-6.989075, 108.456295], 'cat' => 'office'],
-            ['name' => 'Lapangan Bola Winduherang', 'coords' => [-6.98685, 108.45789], 'cat' => 'public'],
+            ['name' => 'Kantor Desa Karangmangu', 'coords' => [-7.044712, 108.594932], 'cat' => 'office'],
+            ['name' => 'Balai Dusun Karangmangu', 'coords' => [-7.0445, 108.5955], 'cat' => 'public'],
 
             // Pendidikan
-            ['name' => 'PAUD Permata Hati', 'coords' => [-6.9898, 108.4565], 'cat' => 'edu'],
-            ['name' => 'TK Al-Ikhlas Winduherang', 'coords' => [-6.99, 108.456], 'cat' => 'edu'],
-            ['name' => 'SD Negeri Winduherang I', 'coords' => [-6.9905, 108.4572], 'cat' => 'edu'],
-            ['name' => 'SD Negeri Winduherang II', 'coords' => [-6.98922, 108.45741], 'cat' => 'edu'],
-            ['name' => 'SD Negeri Winduherang III', 'coords' => [-6.9899, 108.4576], 'cat' => 'edu'],
-            ['name' => 'SMP Negeri 1 Winduherang', 'coords' => [-6.991, 108.4575], 'cat' => 'edu'],
-            ['name' => 'SMA Negeri 1 Winduherang', 'coords' => [-6.992, 108.4578], 'cat' => 'edu'],
+            ['name' => 'PAUD Mekar Sari', 'coords' => [-7.0449, 108.5948], 'cat' => 'edu'],
+            ['name' => 'TK Karangmangu Ceria', 'coords' => [-7.0452, 108.5953], 'cat' => 'edu'],
+            ['name' => 'SD Negeri 1 Karangmangu', 'coords' => [-7.0446, 108.595], 'cat' => 'edu'],
+            ['name' => 'SD Negeri 2 Karangmangu', 'coords' => [-7.045, 108.596], 'cat' => 'edu'],
+            ['name' => 'SMP Negeri Terdekat', 'coords' => [-7.0435, 108.5965], 'cat' => 'edu'],
 
             // Ibadah
-            ['name' => 'Masjid At-Taufik (Islamic Centre)', 'coords' => [-6.988468, 108.456034], 'cat' => 'worship'],
-            ['name' => 'Mesjid Nurul Iman', 'coords' => [-6.9895, 108.4568], 'cat' => 'worship'],
-            ['name' => 'Musholla Al-Muttaqin', 'coords' => [-6.9892, 108.4565], 'cat' => 'worship'],
-            ['name' => 'Gereja Kristen Winduherang', 'coords' => [-6.9897, 108.457], 'cat' => 'worship'],
+            ['name' => 'Masjid Jami Karangmangu', 'coords' => [-7.0448, 108.595], 'cat' => 'worship'],
+            ['name' => 'Musholla Al-Hidayah', 'coords' => [-7.0451, 108.5947], 'cat' => 'worship'],
 
             // Pariwisata
-            ['name' => 'Kolam Renang Desa', 'coords' => [-6.9875, 108.458], 'cat' => 'tourism'],
-            ['name' => 'Taman Wisata Desa', 'coords' => [-6.9872, 108.4583], 'cat' => 'tourism'],
-            ['name' => 'Pusat Kuliner Tradisional', 'coords' => [-6.988, 108.4573], 'cat' => 'tourism'],
+            ['name' => 'Curug Putri Karangmangu', 'coords' => [-7.0425, 108.598], 'cat' => 'tourism'],
+            ['name' => 'Kolam Pemandian Alam', 'coords' => [-7.043, 108.5975], 'cat' => 'tourism'],
+            ['name' => 'Taman Desa Karangmangu', 'coords' => [-7.044, 108.5962], 'cat' => 'tourism'],
         ];
     @endphp
+
     <script>
+        const locations = @json($locations);
+
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('locSearch');
             const locList = document.getElementById('locList');
             const locationButtons = locList.querySelectorAll('.location-btn');
 
+            // Initialize map
+            const map = L.map('map').setView(locations[0].coords, 15);
+
+            // Add OpenStreetMap tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Store markers in an array
+            const markers = [];
+
+            locations.forEach((loc, idx) => {
+                const marker = L.marker(loc.coords)
+                    .addTo(map)
+                    .bindPopup(`<strong>${loc.name}</strong>`);
+                markers.push(marker);
+            });
+
+            // Search filter
             searchInput.addEventListener('input', function() {
                 const searchTerm = this.value.toLowerCase();
-
                 locationButtons.forEach(button => {
                     const name = button.textContent.toLowerCase();
                     if (name.includes(searchTerm)) {
@@ -351,14 +581,23 @@
                     }
                 });
             });
+
+            // Button click to zoom to marker
+            locationButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const idx = parseInt(button.getAttribute('data-idx'));
+                    const marker = markers[idx];
+                    map.setView(marker.getLatLng(), 18);
+                    marker.openPopup();
+                });
+            });
         });
     </script>
 
-
-    <div class="max-w-7xl mx-auto px-4 py-10">
+    <div class="max-w-7xl mx-auto px-4 py-10 border-t border-green-200">
         <div class="text-center mb-6">
-            <h1 class="text-4xl font-bold text-green-700">Peta Petualangan Winduherang</h1>
-            <p class="text-gray-600 mt-2">Eksplorasi titik penting di Desa Winduherang</p>
+            <h1 class="text-4xl font-bold text-green-700">Peta Petualangan Karangmangu</h1>
+            <p class="text-gray-600 mt-2">Eksplorasi titik penting di Desa Karangmangu</p>
         </div>
 
         <div class="flex flex-col md:flex-row gap-6">
@@ -476,6 +715,92 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script>
         // nothing else needed  here; Alpine init is automatic
+    </script>
+    <section class="bg-gray-100 py-12">
+        <div class="container mx-auto px-4">
+            <div class="max-w-md mx-auto space-y-4">
+
+                <!-- Judul Section -->
+                <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">💬 Informasi Kontak Desa</h2>
+
+                <!-- Komentar -->
+                <div class="bg-white rounded-xl shadow px-6 py-4">
+                    <button onclick="toggleAccordion('komentar')"
+                        class="w-full flex justify-between items-center font-semibold text-lg text-left focus:outline-none">
+                        Komentar
+                        <span id="icon-komentar">−</span>
+                    </button>
+                    <div id="content-komentar" class="mt-2 text-gray-700">
+                        Warga desa sangat ramah dan selalu menyapa dengan senyuman. Mereka juga sangat membantu jika kita
+                        membutuhkan informasi tentang sekitar desa.
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="bg-white rounded-xl shadow px-6 py-4">
+                    <button onclick="toggleAccordion('email')"
+                        class="w-full flex justify-between items-center font-semibold text-lg text-left focus:outline-none">
+                        Email
+                        <span id="icon-email">＋</span>
+                    </button>
+                    <div id="content-email" class="mt-2 text-gray-700 hidden">
+                        karangmangu2035@gmail.com
+                    </div>
+                </div>
+
+                <!-- Pesan -->
+                <div class="bg-white rounded-xl shadow px-6 py-4">
+                    <button onclick="toggleAccordion('pesan')"
+                        class="w-full flex justify-between items-center font-semibold text-lg text-left focus:outline-none">
+                        Pesan
+                        <span id="icon-pesan">＋</span>
+                    </button>
+                    <div id="content-pesan" class="mt-2 text-gray-700 hidden">
+                        Ini adalah contoh pesan dari warga yang ditujukan untuk perangkat desa.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+            function toggleAccordion(id) {
+                const content = document.getElementById('content-' + id);
+                const icon = document.getElementById('icon-' + id);
+
+                const isOpen = !content.classList.contains('hidden');
+                document.querySelectorAll('[id^="content-"]').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('[id^="icon-"]').forEach(el => el.innerText = '＋');
+
+                if (!isOpen) {
+                    content.classList.remove('hidden');
+                    icon.innerText = '−';
+                }
+            }
+
+            // Buka default pertama
+            window.onload = () => toggleAccordion('komentar');
+        </script>
+    </section>
+
+
+    <script>
+        function toggleAccordion(id) {
+            const content = document.getElementById('content-' + id);
+            const icon = document.getElementById('icon-' + id);
+
+            const isOpen = !content.classList.contains('hidden');
+            document.querySelectorAll('[id^="content-"]').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('[id^="icon-"]').forEach(el => el.innerText = '＋');
+
+            if (!isOpen) {
+                content.classList.remove('hidden');
+                icon.innerText = '−';
+            }
+        }
+
+        // Default buka komentar
+        window.onload = () => toggleAccordion('komentar');
     </script>
 
 @endsection

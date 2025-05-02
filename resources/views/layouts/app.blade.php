@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@yield('title', 'Kelurahan Winduherang')</title>
+    <title>@yield('title', 'Desa Karangmangu')</title>
     {{-- Favicon (logo kecil di tab) --}}
     <link rel="icon" href="{{ asset('images/Logo_Kabupaten_kuningan.png') }}" type="image/png">
     <!-- CDN Tailwind CSS -->
@@ -34,7 +34,9 @@
 </head>
 <body class="font-sans text-gray-700">
 
-    @include('layouts.nav')
+    @include('partials.header')
+
+    {{-- Hero Section --}}
 
     {{-- Content Section --}}
     @yield('content')

@@ -1,7 +1,7 @@
 {{-- resources/views/galeri.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Galeri Kegiatan - Kelurahan Winduherang')
+@section('title', 'Galeri Kegiatan - Desa Karangmangu')
 
 @section('content')
 @php

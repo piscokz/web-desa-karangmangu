@@ -1,7 +1,7 @@
 {{-- resources/views/admin/dashboard.blade.php --}}
 @extends('admin.layouts.app')
 
-@section('title', 'Dashboard Admin Desa Winduherang')
+@section('title', 'Dashboard Admin Desa Karangmangu')
 
 @section('content')
 @php
@@ -52,7 +52,7 @@
 
 <div class="container mx-auto py-12 px-4" data-aos="fade-up">
     <h1 class="text-4xl sm:text-5xl font-extrabold text-center text-white mb-10 bg-gradient-to-r from-purple-600 to-pink-500 p-4 rounded-2xl shadow-lg">
-        📊 Dashboard Admin Desa Winduherang
+        📊 Dashboard Admin Desa Karangmangu
     </h1>
 
     {{-- Summary Tiles --}}
