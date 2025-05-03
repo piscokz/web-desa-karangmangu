@@ -12,6 +12,7 @@ use App\Http\Controllers\{
     ResidentController,
     RtController,
     RwController,
+    VillageStallController,
 };
 
 Route::get('/', function () {
@@ -27,13 +28,13 @@ Route::get('/umkm', function () {
 })->name('umkm');
 
 Route::get('/berita', [ArticleController::class, 'frontIndex'])
-     ->name('news');
+    ->name('news');
 
 Route::get('/berita-detail/{id}', [ArticleController::class, 'showLove'])
-     ->name('article.show');
+    ->name('article.show');
 
-     Route::get('/gallery', [GalleryItemController::class, 'frontIndex'])
-     ->name('galeri');
+Route::get('/gallery', [GalleryItemController::class, 'frontIndex'])
+    ->name('galeri');
 
 Route::get('/peta-winduherang', function () {
     return view('peta');
@@ -47,7 +48,7 @@ Route::get('/pemerintahan-winduherang', function () {
     return view('pemerintahan');
 })->name('pemerintahan');
 
-Route::post('/pengaduan', [ContactController::class,'store'])->name('pengaduan.store');
+Route::post('/pengaduan', [ContactController::class, 'store'])->name('pengaduan.store');
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -63,6 +64,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('admin/content/article', ArticleController::class)->names('admin.article');
     Route::resource('admin/content/gallery', GalleryItemController::class)->names('admin.gallery');
+    Route::resource('admin/content/lapak-desa', VillageStallController::class)->names('lapak_desa');
 
     Route::resource('admin/content/penduduk', ResidentController::class)->names('penduduk');
     Route::resource('admin/content/kk', FamilyCardController::class)->names('kk');
@@ -86,10 +88,11 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('admin/pengaduan/{pengaduan}', [AdminPengaduanController::class, 'destroy'])
         ->name('admin.pengaduan.destroy');
-    
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

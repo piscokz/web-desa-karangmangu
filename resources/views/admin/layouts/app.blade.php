@@ -104,6 +104,19 @@
                 Galeri
             </a>
 
+            {{-- Lapak desa --}}
+            <a href="{{ route('lapak_desa.index') }}"
+                class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('admin.gallery.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21" />
+                </svg>
+                Lapak desa
+            </a>
+
             {{-- Pengaduan --}}
             <a href="{{ route('admin.pengaduan.index') }}"
                 class="relative flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('admin.pengaduan.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
@@ -264,6 +277,19 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21" />
                 </svg>
                 Galeri
+            </a>
+
+            {{-- Lapak desa --}}
+            <a href="{{ route('lapak_desa.index') }}"
+                class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('admin.gallery.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21" />
+                </svg>
+                Lapak desa
             </a>
 
             <!-- Pengaduan -->
