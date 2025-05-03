@@ -12,6 +12,7 @@
     <div class="p-6">
         <h1 class="text-xl font-semibold text-gray-800 mb-3">{{ $village_stall->nama_produk }}</h1>
 
+        <h2 class="text-base font-semibold text-gray-800 line-clamp-2 mb-1">Rp. {{ number_format($village_stall->harga_produk) }}.00</h2>
         <div class="text-sm text-gray-600 space-y-1 mb-4">
             <p><strong>Pemilik:</strong> {{ $village_stall->resident->nama_lengkap ?? 'Tidak diketahui' }}</p>
             <p><strong>No Telepon:</strong> {{ $village_stall->no_telepon }}</p>

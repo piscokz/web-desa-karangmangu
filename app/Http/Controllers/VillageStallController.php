@@ -30,12 +30,14 @@ class VillageStallController extends Controller
             'gambar_produk.required' => 'Gambar produk wajib diunggah.',
             'gambar_produk.image'    => 'File yang diunggah harus berupa gambar.',
             'deskripsi.required'     => 'Deskripsi produk wajib diisi.',
+            'harga_produk.required'     => 'Harga produk wajib diisi.',
         ];
 
         $data = $request->validate([
             'nama_produk'   => 'required',
             'id_penduduk'   => 'required',
             'no_telepon'    => 'required',
+            'harga_produk'    => 'required',
             'kategori'      => 'nullable',
             'gambar_produk' => 'required|image',
             'deskripsi'     => 'required',
@@ -77,6 +79,7 @@ class VillageStallController extends Controller
             'no_telepon.required'    => 'Nomor telepon wajib diisi.',
             'gambar_produk.image'    => 'File yang diunggah harus berupa gambar.',
             'deskripsi.required'     => 'Deskripsi produk wajib diisi.',
+            'harga_produk.required'     => 'Harga produk wajib diisi.',
         ];
 
         $data = $request->validate([
@@ -84,6 +87,7 @@ class VillageStallController extends Controller
             'id_penduduk'   => 'required',
             'no_telepon'    => 'required',
             'kategori'      => 'nullable',
+            'harga_produk'      => 'required',
             'gambar_produk' => 'nullable|image',
             'deskripsi'     => 'required',
         ], $messages);

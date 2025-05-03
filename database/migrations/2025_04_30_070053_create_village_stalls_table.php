@@ -16,6 +16,7 @@ return new class extends Migration
         $table->string('nama_produk');
         $table->unsignedBigInteger('id_penduduk'); // foreign key ke Resident
         $table->string('no_telepon');
+        $table->string('harga_produk');
         $table->string('kategori')->nullable();
         $table->string('gambar_produk');
         $table->text('deskripsi');

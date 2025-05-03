@@ -36,6 +36,13 @@
              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400" />
     </div>
 
+    {{-- Harga Produk --}}
+    <div>
+        <label class="block text-gray-700 font-medium mb-1">Harga Produk</label>
+        <input type="number" name="harga_produk" value="{{ old('harga_produk', $village_stall->harga_produk) }}"
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400" />
+      </div>
+
     {{-- Pemilik --}}
     <div>
       <label class="block text-gray-700 font-medium mb-1">Pemilik (Penduduk)</label>

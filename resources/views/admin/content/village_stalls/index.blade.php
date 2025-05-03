@@ -45,6 +45,7 @@
         <div class="p-4 flex-1 flex flex-col">
           <h2 class="text-base font-semibold text-gray-800 line-clamp-2 mb-1">{{ $item->nama_produk }}</h2>
           <p class="text-sm text-gray-600 line-clamp-3 flex-1">{!! Str::limit(strip_tags($item->deskripsi), 100) !!}</p>
+          <h2 class="text-base font-semibold text-gray-800 line-clamp-2 mb-1">Rp. {{ number_format($item->harga_produk) }}.00</h2>
 
           {{-- Aksi --}}
           <div class="mt-4 flex items-center justify-between">

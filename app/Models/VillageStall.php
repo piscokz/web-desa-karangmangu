@@ -16,6 +16,7 @@ class VillageStall extends Model
         'id_penduduk',
         'no_telepon',
         'kategori',
+        'harga_produk',
         'gambar_produk',
         'deskripsi',
     ];
