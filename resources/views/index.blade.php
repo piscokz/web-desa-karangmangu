@@ -517,6 +517,60 @@
             });
         </script>
     @endpush
+    <section class="bg-gray-50 border-t border-green-200 py-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <h3 class="text-4xl font-bold text-center text-green-800 mb-16 relative inline-block">
+                Berita Desa
+                <span class="block w-20 h-1 bg-green-300 mt-2 mx-auto rounded-full"></span>
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                @foreach ($latestArticles as $idx => $article)
+                    <a href="{{ route('article.show', $article) }}" data-aos="fade-up" data-aos-delay="{{ $idx * 100 }}"
+                        class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group block">
+
+                        {{-- Thumbnail --}}
+                        <div class="relative">
+                            <img src="{{ $article->image ? asset('storage/' . $article->image) : 'https://via.placeholder.com/600x400' }}"
+                                alt="{{ $article->title }}"
+                                class="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105">
+                            <div
+                                class="absolute bottom-2 left-2 bg-green-700 text-white text-xs px-3 py-1 rounded-full shadow">
+                                {{ \Carbon\Carbon::parse($article->date)->format('d M Y') }}
+                            </div>
+                        </div>
+
+                        {{-- Content --}}
+                        <div class="p-6 space-y-3">
+                            <span
+                                class="inline-block text-xs font-medium uppercase tracking-wide text-green-700 bg-green-100 px-2 py-1 rounded-full">
+                                {{ $article->category }}
+                            </span>
+                            <h4 class="text-lg font-semibold text-gray-800 group-hover:text-green-700 transition-colors">
+                                {{ \Illuminate\Support\Str::limit($article->title, 50) }}
+                            </h4>
+
+                            <div class="text-gray-600 text-sm leading-relaxed prose max-w-none">
+                                {!! \Illuminate\Support\Str::limit($article->content, 200) !!}
+                            </div>
+
+                            <div class="mt-4">
+                                <span
+                                    class="text-green-700 font-medium inline-flex items-center hover:underline transition">
+                                    Baca Selengkapnya
+                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </section>
 
 
     <!-- Leaflet CSS (di <head> atau sebelum penggunaan map) -->

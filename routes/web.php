@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     RtController,
     RwController,
     VillageStallController,
+    UmkmController,
 };
 
 Route::get('/', function () {
@@ -23,9 +24,7 @@ Route::get('/profil', function () {
     return view('profil');
 })->name('profil');
 
-Route::get('/umkm', function () {
-    return view('umkm');
-})->name('umkm');
+Route::get('/umkm', [VillageStallController::class, 'FrontIndex'])->name('umkm');
 
 Route::get('/berita', [ArticleController::class, 'frontIndex'])
     ->name('news');
