@@ -22,6 +22,11 @@ class Resident extends Model
         'id_kk',
         'no_telp',
         'alamat',
+        'nama_ayah',
+        'nama_ibu',
+        'disabilitas',
+        'organisasi',
+        'foto',
         // 'nik_ayah', 'nik_ibu'
     ];
 

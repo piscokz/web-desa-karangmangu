@@ -22,13 +22,18 @@ return new class extends Migration
             $table->string('status_perkawinan');
             $table->string('pekerjaan');
             $table->string('pendidikan');
-            $table->string('gol_darah')->nullable();
             $table->string('shdk');
+            $table->string('gol_darah')->nullable();
+            $table->string('nama_ayah')->nullable();
+            $table->string('nama_ibu')->nullable();
+            $table->string('no_telp')->nullable();
             $table->unsignedBigInteger('id_kk');
+            $table->foreign('id_kk')->references('id')->on('family_cards')->onDelete('cascade');
+            $table->string('disabilitas');
+            $table->string('organisasi')->nullable(); // Pemerintah desa, Bpd, Lpm, Pkk, Mui, Linmas, Bumdes, Karang Taruna, Kepala Dusun, Ketua Rt/rw, Lainnya
+            $table->string('foto')->nullable();
             // $table->string('nik_ayah')->nullable();
             // $table->string('nik_ibu')->nullable();
-            $table->string('no_telp')->nullable();
-            $table->foreign('id_kk')->references('id')->on('family_cards')->onDelete('cascade');
             $table->timestamps();
         });
     }

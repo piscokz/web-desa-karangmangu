@@ -182,13 +182,45 @@
                  placeholder="Masukkan No Telepon"
                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
         </div>
+
+        {{-- Nama Ayah --}}
+        <div>
+          <label for="nama_ayah" class="block text-gray-700 font-medium mb-1">Nama Ayah</label>
+          <input type="text" name="nama_ayah" id="nama_ayah"
+                 value="{{ old('nama_ayah') }}"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-200" />
+        </div>
+
+        {{-- Nama Ibu --}}
+        <div>
+          <label for="nama_ibu" class="block text-gray-700 font-medium mb-1">Nama Ibu</label>
+          <input type="text" name="nama_ibu" id="nama_ibu"
+                 value="{{ old('nama_ibu') }}"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-200" />
+        </div>
+
+        {{-- Disabilitas --}}
+        <div>
+          <label for="disabilitas" class="block text-gray-700 font-medium mb-1">Disabilitas</label>
+          <input type="text" name="disabilitas" id="disabilitas"
+                 value="{{ old('disabilitas') }}"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-200" />
+        </div>
+
+        {{-- Organisasi --}}
+        <div>
+          <label for="organisasi" class="block text-gray-700 font-medium mb-1">Organisasi</label>
+          <input type="text" name="organisasi" id="organisasi"
+                 value="{{ old('organisasi') }}"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-200" />
+        </div>
       </div>
 
       <div class="pt-4 border-t border-gray-200 text-right">
         <a href="{{ route('penduduk.index') }}" class="mr-4 text-gray-600 hover:underline">Batal</a>
         <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-xl hover:bg-green-500 transition">Simpan</button>
       </div>
-    </form>
+    </form> 
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreign('id_rt')->references('id')->on('rts')->onDelete('cascade');
             $table->foreign('id_rw')->references('id')->on('rws')->onDelete('cascade');
             $table->foreign('id_dusun')->references('id')->on('hamlets')->onDelete('cascade');
+            $table->string('alamat')->nullable();
             $table->timestamps();
         });
     }

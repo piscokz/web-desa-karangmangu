@@ -193,6 +193,38 @@ x-data="{
                  value="{{ old('no_telp', $penduduk->no_telp) }}"
                  class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-200" />
         </div>
+
+        {{-- Nama Ayah --}}
+        <div>
+          <label for="nama_ayah" class="block text-gray-700 font-medium mb-1">Nama Ayah</label>
+          <input type="text" name="nama_ayah" id="nama_ayah"
+                 value="{{ old('nama_ayah', $penduduk->nama_ayah) }}"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-200" />
+        </div>
+
+        {{-- Nama Ibu --}}
+        <div>
+          <label for="nama_ibu" class="block text-gray-700 font-medium mb-1">Nama Ibu</label>
+          <input type="text" name="nama_ibu" id="nama_ibu"
+                 value="{{ old('nama_ibu', $penduduk->nama_ibu) }}"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-200" />
+        </div>
+
+        {{-- Disabilitas --}}
+        <div>
+          <label for="disabilitas" class="block text-gray-700 font-medium mb-1">Disabilitas</label>
+          <input type="text" name="disabilitas" id="disabilitas"
+                 value="{{ old('disabilitas', $penduduk->disabilitas) }}"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-200" />
+        </div>
+
+        {{-- Organisasi --}}
+        <div>
+          <label for="organisasi" class="block text-gray-700 font-medium mb-1">Organisasi</label>
+          <input type="text" name="organisasi" id="organisasi"
+                 value="{{ old('organisasi', $penduduk->organisasi) }}"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-200" />
+        </div>
       </div>
 
       <div class="pt-4 border-t border-gray-200 text-right">

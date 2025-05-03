@@ -26,6 +26,10 @@
             <p><span class="font-semibold">Tempat, Tanggal Lahir:</span> {{ $penduduk->tempat_lahir }}, {{ $penduduk->tanggal_lahir }}</p>
             <p><span class="font-semibold">Jenis Kelamin:</span> {{ $penduduk->jenis_kelamin }}</p>
             <p><span class="font-semibold">Agama:</span> {{ $penduduk->agama }}</p>
+            <p><span class="font-semibold">Nama Ayah:</span> {{ $penduduk->nama_ayah }}</p>
+            <p><span class="font-semibold">Nama Ibu:</span> {{ $penduduk->nama_ibu }}</p>
+            <p><span class="font-semibold">Disabilitas:</span> {{ $penduduk->disabilitas }}</p>
+            <p><span class="font-semibold">Organisasi:</span> {{ $penduduk->organisasi }}</p>
           </div>
           <div>
             <p><span class="font-semibold">Status Perkawinan:</span> {{ $penduduk->status_perkawinan }}</p>

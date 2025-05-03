@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FamilyCard extends Model
 {
     protected $table = 'family_cards';
-    protected $fillable = ['no_kk', 'alamat', 'id_rt', 'id_rw', 'id_dusun'];
+    protected $fillable = ['no_kk', 'alamat', 'id_rt', 'id_rw', 'id_dusun', 'alamat'];
 
     public function rt()
     {
