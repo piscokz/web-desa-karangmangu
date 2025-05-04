@@ -105,17 +105,15 @@
                 Galeri
             </a>
 
-            {{-- Lapak desa --}}
+            {{-- Lapak Desa --}}
             <a href="{{ route('lapak_desa.index') }}"
-                class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('admin.gallery.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
+                class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('lapak_desa.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                    <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M16 11V7.5A1.5 1.5 0 0014.5 6h-5A1.5 1.5 0 008 7.5V11M3 11h18l-1 10a1 1 0 01-1 1H5a1 1 0 01-1-1L3 11z" />
                 </svg>
-                Lapak desa
+                Lapak Desa
             </a>
 
             {{-- Pengaduan --}}
@@ -280,18 +278,17 @@
                 Galeri
             </a>
 
-            {{-- Lapak desa --}}
+            {{-- Lapak Desa --}}
             <a href="{{ route('lapak_desa.index') }}"
-                class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('admin.gallery.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
+                class="flex items-center py-2 px-4 rounded transition-all duration-200 {{ request()->routeIs('lapak_desa.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                    <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21" />
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M16 11V7.5A1.5 1.5 0 0014.5 6h-5A1.5 1.5 0 008 7.5V11M3 11h18l-1 10a1 1 0 01-1 1H5a1 1 0 01-1-1L3 11z" />
                 </svg>
-                Lapak desa
+                Lapak Desa
             </a>
+
 
             <!-- Pengaduan -->
             <a href="{{ route('admin.pengaduan.index') }}"
@@ -372,8 +369,9 @@
                 class="flex items-center py-2 px-4 rounded transition-all duration-200 {{ request()->routeIs('home') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round" />
                     <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 17.93V16m0-8v-1.07M4.93 4.93l.78.78M17.29 17.29l.78.78M2 12h1.07M20.93 12H19.86M4.93 19.07l.78-.78M17.29 6.71l.78-.78" />
+                        d="M2 12h20M12 2v20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14" />
                 </svg>
                 Guest Page
             </a>

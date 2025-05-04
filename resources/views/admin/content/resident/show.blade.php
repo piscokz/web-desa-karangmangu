@@ -1,3 +1,4 @@
+{{-- resources/views/admin/content/penduduk/show.blade.php --}}
 @extends('admin.layouts.app')
 
 @section('title', 'Detail Penduduk')
@@ -13,9 +14,13 @@
       <div class="flex flex-col md:flex-row gap-6">
         <!-- Foto Profil -->
         <div class="flex-shrink-0 mx-auto md:mx-0">
-          <img src="{{ $penduduk->foto ? asset('storage/' . $penduduk->foto) : asset('images/default-user.png') }}" 
-               alt="Foto Penduduk" 
-               class="w-40 h-40 object-cover rounded-lg border shadow">
+          <img 
+            src="{{ $penduduk->foto 
+                      ? asset('storage/' . $penduduk->foto) 
+                      : asset('images/image.png') }}" 
+            alt="Foto Penduduk" 
+            class="w-40 h-40 object-cover rounded-lg border shadow"
+          >
         </div>
 
         <!-- Data Penduduk -->
@@ -23,7 +28,14 @@
           <div>
             <p><span class="font-semibold">NIK:</span> {{ $penduduk->nik }}</p>
             <p><span class="font-semibold">Nama Lengkap:</span> {{ $penduduk->nama_lengkap }}</p>
-            <p><span class="font-semibold">Tempat, Tanggal Lahir:</span> {{ $penduduk->tempat_lahir }}, {{ $penduduk->tanggal_lahir }}</p>
+            <p>
+              <span class="font-semibold">Tempat, Tanggal Lahir:</span>
+              {{ $penduduk->tempat_lahir }}, 
+              {{ \Carbon\Carbon::parse($penduduk->tanggal_lahir)
+                    ->locale('id')
+                    ->translatedFormat('d F Y') 
+              }}
+            </p>
             <p><span class="font-semibold">Jenis Kelamin:</span> {{ $penduduk->jenis_kelamin }}</p>
             <p><span class="font-semibold">Agama:</span> {{ $penduduk->agama }}</p>
             <p><span class="font-semibold">Nama Ayah:</span> {{ $penduduk->nama_ayah }}</p>
@@ -44,7 +56,10 @@
       </div>
 
       <div class="mt-6 text-right">
-        <a href="{{ route('penduduk.index') }}" class="inline-block bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition">Kembali</a>
+        <a href="{{ route('penduduk.index') }}"
+           class="inline-block bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition">
+          Kembali
+        </a>
       </div>
     </div>
   @else
@@ -54,7 +69,10 @@
     </div>
 
     <div class="mt-4">
-      <a href="{{ route('penduduk.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">Kembali</a>
+      <a href="{{ route('penduduk.index') }}"
+         class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+        Kembali
+      </a>
     </div>
   @endif
 </div>

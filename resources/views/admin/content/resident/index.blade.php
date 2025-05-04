@@ -1,3 +1,4 @@
+{{-- resources/views/admin/content/penduduk/index.blade.php --}}
 @extends('admin.layouts.app')
 
 @section('title', 'Daftar Penduduk')
@@ -16,16 +17,6 @@
   @if(session('success'))
     <div class="mb-6 p-4 bg-green-100 border-l-4 border-green-500 text-green-800 rounded-lg">
       {{ session('success') }}
-    </div>
-  @endif
-
-  @if($errors->any())
-    <div class="mb-6 p-4 bg-red-100 border-l-4 border-red-500 text-red-800 rounded-lg">
-      <ul class="list-disc list-inside">
-        @foreach($errors->all() as $error)
-          <li>{{ $error }}</li>
-        @endforeach
-      </ul>
     </div>
   @endif
 
@@ -58,7 +49,12 @@
           <td class="px-6 py-4 text-sm text-gray-800">{{ $penduduk->firstItem() + $i }}</td>
           <td class="px-6 py-4 text-sm text-gray-800">{{ $res->nik }}</td>
           <td class="px-6 py-4 text-sm text-gray-800">{{ $res->nama_lengkap }}</td>
-          <td class="px-6 py-4 text-sm text-gray-800">{{ $res->tempat_lahir }}, {{ $res->tanggal_lahir }}</td>
+          <td class="px-6 py-4 text-sm text-gray-800">
+            {{ $res->tempat_lahir }}, 
+            {{ \Carbon\Carbon::parse($res->tanggal_lahir)
+                 ->locale('id')
+                 ->translatedFormat('d F Y') }}
+          </td>
           <td class="px-6 py-4 text-sm text-gray-800">{{ $res->jenis_kelamin }}</td>
           <td class="px-6 py-4 text-sm text-gray-800">{{ $res->familyCard->no_kk ?? '-' }}</td>
           <td class="px-6 py-4 text-sm text-center space-x-2">
