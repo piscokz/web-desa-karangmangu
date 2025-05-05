@@ -154,6 +154,7 @@ class ResidentController extends Controller
     {
         $rules = [
             'nik'                      => 'required|digits:16|unique:residents,nik,' . $id,
+            'nik.unique'               => 'NIK sudah terdaftar.',
             'nama_lengkap'             => 'required|string|max:255',
             'tempat_lahir'             => 'required|string|max:255',
             'tanggal_lahir'            => 'required|date',
@@ -170,8 +171,8 @@ class ResidentController extends Controller
             'disabilitas'              => 'nullable|string|max:100',
             'organisasi'               => 'nullable|string|max:100',
             'foto'                     => 'nullable|image|max:2048',
-            // 'gol_darah'                => 'nullable|string|max:5',
-            // 'gol_darah_other'          => 'required_if:gol_darah,Lainnya|string|max:5',
+            'gol_darah'                => 'nullable|string|max:5',
+            'gol_darah_other'          => 'required_if:gol_darah,Lainnya|string|max:5',
             'shdk'                     => 'required|string|max:50',
             'shdk_other'               => 'required_if:shdk,Lainnya|string|max:50',
             'id_kk'                    => 'required|exists:family_cards,id',
@@ -179,9 +180,42 @@ class ResidentController extends Controller
         ];
 
         // reuse same pesan validasi
-        $messages = (new \ReflectionClass($this))->getMethod('store')
-            ->getClosure($this)
-            ->call($this, $request)['messages'] ?? [];
+        $messages = $messages = [
+            'nik.required'                     => 'NIK wajib diisi.',
+            'nik.unique'                       => 'NIK sudah terdaftar.',
+            'nik.digits'                       => 'NIK harus terdiri dari 16 digit.',
+            'nama_lengkap.required'            => 'Nama lengkap wajib diisi.',
+            'nama_lengkap.max'                 => 'Nama lengkap maksimal 255 karakter.',
+            'tempat_lahir.required'            => 'Tempat lahir wajib diisi.',
+            'tempat_lahir.max'                 => 'Tempat lahir maksimal 255 karakter.',
+            'tanggal_lahir.required'           => 'Tanggal lahir wajib diisi.',
+            'tanggal_lahir.date'               => 'Tanggal lahir tidak valid.',
+            'jenis_kelamin.required'           => 'Jenis kelamin wajib dipilih.',
+            'jenis_kelamin.max'                => 'Jenis kelamin maksimal 50 karakter.',
+            'jenis_kelamin_other.required_if'  => 'Mohon isi jenis kelamin jika memilih "Lainnya".',
+            'agama.required'                   => 'Agama wajib dipilih.',
+            'agama.max'                        => 'Agama maksimal 50 karakter.',
+            'agama_other.required_if'          => 'Mohon isi agama jika memilih "Lainnya".',
+            'status_perkawinan.required'       => 'Status perkawinan wajib dipilih.',
+            'status_perkawinan.max'            => 'Status perkawinan maksimal 50 karakter.',
+            'status_perkawinan_other.required_if' => 'Mohon isi status perkawinan jika memilih "Lainnya".',
+            'pekerjaan.max'                    => 'Pekerjaan maksimal 100 karakter.',
+            'pendidikan.max'                   => 'Pendidikan maksimal 100 karakter.',
+            'nama_ayah.max'                    => 'Nama ayah maksimal 100 karakter.',
+            'nama_ibu.max'                     => 'Nama ibu maksimal 100 karakter.',
+            'disabilitas.max'                  => 'Disabilitas maksimal 100 karakter.',
+            'organisasi.max'                   => 'Organisasi maksimal 100 karakter.',
+            'foto.image'                       => 'Foto harus berupa gambar.',
+            'foto.max'                         => 'Foto maksimal 2 MB.',
+            'gol_darah.max'                    => 'Golongan darah maksimal 5 karakter.',
+            'gol_darah_other.required_if'      => 'Mohon isi golongan darah jika memilih "Lainnya".',
+            'shdk.required'                    => 'SHDK wajib dipilih.',
+            'shdk.max'                         => 'SHDK maksimal 50 karakter.',
+            'shdk_other.required_if'           => 'Mohon isi SHDK jika memilih "Lainnya".',
+            'id_kk.required'                   => 'Kartu Keluarga wajib dipilih.',
+            'id_kk.exists'                     => 'Kartu Keluarga tidak ditemukan.',
+            'no_telp.max'                      => 'No. telepon maksimal 20 karakter.',
+        ];
 
         $data = $request->validate($rules, $messages);
 

@@ -1,3 +1,4 @@
+{{-- resources/views/admin/content/lapak_desa/create.blade.php --}}
 @extends('admin.layouts.app')
 
 @section('content')
@@ -23,7 +24,7 @@
     </div>
   @endif
 
-  <form action="{{ route('lapak_desa.store') }}" method="POST" enctype="multipart/form-data"
+  <form id="createForm" action="{{ route('lapak_desa.store') }}" method="POST" enctype="multipart/form-data"
         class="space-y-6" onsubmit="stripPhoneMask()">
     @csrf
 
@@ -31,21 +32,23 @@
     <div>
       <label class="block text-gray-700 font-medium mb-1">Nama Produk</label>
       <input type="text" name="nama_produk" value="{{ old('nama_produk') }}"
-             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400" />
+             class="form-input" />
     </div>
 
     {{-- Harga Produk --}}
     <div>
-        <label class="block text-gray-700 font-medium mb-1">Harga Produk</label>
-        <input type="number" name="harga_produk" value="{{ old('harga_produk') }}"
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400" />
-      </div>
+      <label class="block text-gray-700 font-medium mb-1">Harga Produk</label>
+      <input type="text" name="harga_produk" id="hargaInput"
+             value="{{ old('harga_produk') }}"
+             placeholder="0"
+             class="form-input"
+             oninput="formatPrice(this)" />
+    </div>
 
     {{-- Pemilik --}}
     <div>
       <label class="block text-gray-700 font-medium mb-1">Pemilik (Penduduk)</label>
-      <select name="id_penduduk"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400">
+      <select name="id_penduduk" class="form-input">
         <option value="">-- Pilih Penduduk --</option>
         @foreach($penduduks as $p)
           <option value="{{ $p->id }}" {{ old('id_penduduk')==$p->id?'selected':'' }}>
@@ -60,15 +63,13 @@
       <label class="block text-gray-700 font-medium mb-1">No Telepon</label>
       <input type="text" id="phoneInput" name="no_telepon" value="{{ old('no_telepon') }}"
              maxlength="14" placeholder="08**-****-****"
-             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400"
-             oninput="formatPhone(this)" />
+             class="form-input" oninput="formatPhone(this)" />
     </div>
 
     {{-- Kategori --}}
     <div>
       <label class="block text-gray-700 font-medium mb-1">Kategori</label>
-      <select name="kategori"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400">
+      <select name="kategori" class="form-input">
         <option value="">-- Pilih Kategori --</option>
         @foreach($kategoriOptions as $cat)
           <option value="{{ $cat }}" {{ old('kategori')==$cat?'selected':'' }}>
@@ -82,8 +83,7 @@
     <div>
       <label class="block text-gray-700 font-medium mb-1">Deskripsi</label>
       <textarea name="deskripsi" id="deskripsi-create"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400"
-      >{{ old('deskripsi') }}</textarea>
+                class="form-input">{{ old('deskripsi') }}</textarea>
     </div>
 
     {{-- Gambar Produk --}}
@@ -107,15 +107,63 @@
 <script>
   CKEDITOR.replace('deskripsi-create',{height:200});
 
+  // format nomor telepon dengan dash
   function formatPhone(input) {
     let digits = input.value.replace(/\D/g,'').slice(0,12);
     let parts = [];
-    for(let i=0;i<digits.length;i+=4) parts.push(digits.substr(i,4));
+    for(let i=0; i<digits.length; i+=4) parts.push(digits.substr(i,4));
     input.value = parts.join('-');
   }
   function stripPhoneMask() {
     let i = document.getElementById('phoneInput');
     i.value = i.value.replace(/\D/g,'');
   }
+
+  // format harga dengan titik ribuan
+  function formatPrice(input) {
+    // simpan posisi kursor
+    const start = input.selectionStart;
+    const end = input.selectionEnd;
+
+    // hapus semua non-digit
+    let val = input.value.replace(/\D/g,'');
+    // tambahkan titik per 3 digit dari kanan
+    val = val.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    input.value = val;
+
+    // restore posisi kursor
+    const newPos = start + (input.value.length - val.length);
+    input.setSelectionRange(newPos, newPos);
+  }
+
+  // pindah focus on Enter
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('createForm');
+    const fields = Array.from(form.querySelectorAll('input, select, textarea'))
+      .filter(el=>!['submit','file'].includes(el.type));
+    fields.forEach((el, idx) => {
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const next = fields[idx+1];
+          if (next) next.focus();
+          else form.submit();
+        }
+      });
+    });
+  });
 </script>
+
+<style>
+  .form-input {
+    width: 100%;
+    padding: .5rem 1rem;
+    border: 1px solid #D1D5DB;
+    border-radius: .5rem;
+    outline: none;
+  }
+  .form-input:focus {
+    box-shadow: 0 0 0 2px rgba(34,197,94,.5);
+  }
+</style>
 @endsection
