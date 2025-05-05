@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('disabilitas');
             $table->string('organisasi')->nullable(); // Pemerintah desa, Bpd, Lpm, Pkk, Mui, Linmas, Bumdes, Karang Taruna, Kepala Dusun, Ketua Rt/rw, Lainnya
             $table->string('foto')->nullable();
+            $table->boolean('kematian')->default(false);
             // $table->string('nik_ayah')->nullable();
             // $table->string('nik_ibu')->nullable();
             $table->timestamps();
