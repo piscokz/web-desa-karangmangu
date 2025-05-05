@@ -6,6 +6,7 @@ use App\Models\Resident;
 use App\Models\VillageStall;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;          // ← import Str facade
 
 class VillageStallController extends Controller
 {
@@ -30,14 +31,14 @@ class VillageStallController extends Controller
             'gambar_produk.required' => 'Gambar produk wajib diunggah.',
             'gambar_produk.image'    => 'File yang diunggah harus berupa gambar.',
             'deskripsi.required'     => 'Deskripsi produk wajib diisi.',
-            'harga_produk.required'     => 'Harga produk wajib diisi.',
+            'harga_produk.required'  => 'Harga produk wajib diisi.',
         ];
 
         $data = $request->validate([
             'nama_produk'   => 'required',
             'id_penduduk'   => 'required',
             'no_telepon'    => 'required',
-            'harga_produk'    => 'required',
+            'harga_produk'  => 'required',
             'kategori'      => 'nullable',
             'gambar_produk' => 'required|image',
             'deskripsi'     => 'required',
@@ -56,7 +57,6 @@ class VillageStallController extends Controller
 
     public function show(VillageStall $lapak_desa)
     {
-        // $lapak_desa is the bound model
         return view('admin.content.village_stalls.show', [
             'village_stall' => $lapak_desa->load('resident'),
         ]);
@@ -79,7 +79,7 @@ class VillageStallController extends Controller
             'no_telepon.required'    => 'Nomor telepon wajib diisi.',
             'gambar_produk.image'    => 'File yang diunggah harus berupa gambar.',
             'deskripsi.required'     => 'Deskripsi produk wajib diisi.',
-            'harga_produk.required'     => 'Harga produk wajib diisi.',
+            'harga_produk.required'  => 'Harga produk wajib diisi.',
         ];
 
         $data = $request->validate([
@@ -87,13 +87,12 @@ class VillageStallController extends Controller
             'id_penduduk'   => 'required',
             'no_telepon'    => 'required',
             'kategori'      => 'nullable',
-            'harga_produk'      => 'required',
+            'harga_produk'  => 'required',
             'gambar_produk' => 'nullable|image',
             'deskripsi'     => 'required',
         ], $messages);
 
         if ($request->hasFile('gambar_produk')) {
-            // optionally delete old
             Storage::disk('public')->delete($lapak_desa->gambar_produk);
             $data['gambar_produk'] = $request
                 ->file('gambar_produk')
@@ -109,7 +108,6 @@ class VillageStallController extends Controller
 
     public function destroy(VillageStall $lapak_desa)
     {
-        // optionally delete image
         Storage::disk('public')->delete($lapak_desa->gambar_produk);
         $lapak_desa->delete();
 
@@ -118,17 +116,34 @@ class VillageStallController extends Controller
             ->with('success', 'Produk berhasil dihapus!');
     }
 
+    public function bySeller($id_penduduk)
+    {
+        $resident = Resident::findOrFail($id_penduduk);
+        $stalls   = VillageStall::where('id_penduduk', $id_penduduk)
+                    ->latest()
+                    ->get();
+    
+        // kategori unik
+        $categories = $stalls
+            ->pluck('kategori')
+            ->filter()
+            ->unique()
+            ->values();
+    
+        return view('admin.content.village_stalls.bySeller', compact(
+            'resident', 'stalls', 'categories'
+        ));
+    }
+    
+
     public function FrontIndex(Request $request)
     {
-        // Ambil 12 per halaman
-        $stalls = VillageStall::with('resident')
-                              ->paginate(12);
-
-        // Unique categories untuk filter
-        $categories = $stalls->pluck('kategori')
-                             ->filter()
-                             ->unique()
-                             ->values();
+        $stalls     = VillageStall::with('resident')->paginate(12);
+        $categories = $stalls
+            ->pluck('kategori')
+            ->filter()
+            ->unique()
+            ->values();
 
         return view('umkm', compact('stalls', 'categories'));
     }

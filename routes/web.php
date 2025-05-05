@@ -64,6 +64,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('admin/content/article', ArticleController::class)->names('admin.article');
     Route::resource('admin/content/gallery', GalleryItemController::class)->names('admin.gallery');
     Route::resource('admin/content/lapak-desa', VillageStallController::class)->names('lapak_desa');
+    Route::get('admin/content/lapak-desa/seller/{id}', 
+    [VillageStallController::class, 'bySeller'])
+    ->name('lapak_desa.bySeller');
 
     Route::resource('admin/content/penduduk', ResidentController::class)->names('penduduk');
     Route::resource('admin/content/kk', FamilyCardController::class)->names('kk');
