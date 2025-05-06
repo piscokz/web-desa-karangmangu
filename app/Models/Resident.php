@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Resident extends Model
 {
@@ -48,5 +49,11 @@ class Resident extends Model
     public function stalls()
     {
         return $this->hasMany(VillageStall::class, 'id_penduduk', 'id');
+    }
+
+    // Scope untuk filter organisasi
+    public function scopeFilterByOrganisasi(Builder $query, $organisasi)
+    {
+        return $query->where('organisasi', 'like', '%' . $organisasi . '%');
     }
 }

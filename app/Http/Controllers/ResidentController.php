@@ -12,21 +12,26 @@ class ResidentController extends Controller
      * Display a listing of the resource with search and pagination.
      */
     public function index(Request $request)
-    {
-        $search = $request->input('search');
+{
+    $search = $request->input('search');
+    $organisasi = $request->input('organisasi');
 
-        $penduduk = Resident::with('familyCard')
-            ->when($search, function ($query, $search) {
-                $query->where('nik', 'like', "%{$search}%")
-                    ->orWhere('nama_lengkap', 'like', "%{$search}%")
-                    ->orWhereHas('familyCard', fn($q) => $q->where('no_kk', 'like', "%{$search}%"));
-            })
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
+    $penduduk = Resident::with('familyCard')
+        ->when($search, function ($query, $search) {
+            $query->where('nik', 'like', "%{$search}%")
+                ->orWhere('nama_lengkap', 'like', "%{$search}%")
+                ->orWhereHas('familyCard', fn($q) => $q->where('no_kk', 'like', "%{$search}%"));
+        })
+        ->when($organisasi, function ($query, $organisasi) {
+            $query->where('organisasi', $organisasi);
+        })
+        ->latest()
+        ->paginate(10)
+        ->withQueryString();
 
-        return view('admin.content.resident.index', compact('penduduk', 'search'));
-    }
+    return view('admin.content.resident.index', compact('penduduk', 'search', 'organisasi'));
+}
+
 
     /**
      * Show the form for creating a new resource.
