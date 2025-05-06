@@ -27,6 +27,7 @@ class Resident extends Model
         'disabilitas',
         'organisasi',
         'foto',
+        'kematian',
         // 'nik_ayah', 'nik_ibu'
     ];
 

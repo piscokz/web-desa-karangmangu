@@ -212,7 +212,7 @@
           <select name="organisasi" id="organisasi"
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200">
             <option value="">-- Pilih Organisasi --</option>
-            @foreach (['Karang Taruna','PKK','Posyandu','Linmas','BPD','LPM','RT','RW'] as $o)
+            @foreach ([ '-', 'Pemerintah desa', 'Karang Taruna','PKK','Posyandu','Linmas','BPD','LPM','RT','RW'] as $o)
               <option value="{{ $o }}" {{ old('organisasi')==$o?'selected':'' }}>{{ $o }}</option>
             @endforeach
           </select>
