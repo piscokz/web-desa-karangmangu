@@ -4,13 +4,19 @@
 @section('title', 'Tambah Penduduk')
 
 @section('content')
-<div class="container mx-auto px-4 py-8" x-data="{
-    jenis: '{{ old('jenis_kelamin') }}',
-    agama: '{{ old('agama') }}',
-    status: '{{ old('status_perkawinan') }}',
-    gol: '{{ old('gol_darah') }}',
-    shdk: '{{ old('shdk') }}'
-}">
+<div class="container mx-auto px-4 py-8"
+     x-data="{
+       jenis: '{{ old('jenis_kelamin') }}',
+       agama: '{{ old('agama') }}',
+       status: '{{ old('status_perkawinan') }}',
+       gol: '{{ old('gol_darah') }}',
+       shdk: '{{ old('shdk') }}',
+       disabilitas: '{{ old('disabilitas') }}',
+       disabilitasOther: '{{ old('disabilitas_other') }}',
+       organisasi: '{{ old('organisasi') }}',
+       organisasiOther: '{{ old('organisasi_other') }}'
+     }"
+>
   <h1 class="text-2xl font-bold text-green-800 mb-6">Tambah Penduduk</h1>
 
   {{-- notifikasi sukses / error --}}
@@ -77,7 +83,7 @@
             <option value="" disabled>Pilih Jenis Kelamin</option>
             <option value="Laki-laki">Laki-laki</option>
             <option value="Perempuan">Perempuan</option>
-            <option value="Lainnya">Lainnya</option>
+            {{-- <option value="Lainnya">Lainnya</option> --}}
           </select>
           <template x-if="jenis === 'Lainnya'">
             <input type="text" name="jenis_kelamin_other" placeholder="Masukkan manual..."
@@ -92,7 +98,7 @@
           <select name="agama" id="agama" x-model="agama" required
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200">
             <option value="" disabled>Pilih Agama</option>
-            @foreach (['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'] as $a)
+            @foreach (['Islam','Kristen','Katolik','Hindu','Buddha','Konghucu'] as $a)
               <option value="{{ $a }}">{{ $a }}</option>
             @endforeach
             <option value="Lainnya">Lainnya</option>
@@ -110,12 +116,12 @@
           <select name="status_perkawinan" id="status_perkawinan" x-model="status" required
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200">
             <option value="" disabled>Pilih Status</option>
-            @foreach (['Belum Kawin', 'Kawin', 'Cerai Hidup', 'Cerai Mati'] as $s)
+            @foreach (['Belum Kawin','Kawin','Cerai Hidup','Cerai Mati'] as $s)
               <option value="{{ $s }}">{{ $s }}</option>
             @endforeach
             <option value="Lainnya">Lainnya</option>
           </select>
-          <template x-if="status==='Lainnya'">
+          <template x-if="status === 'Lainnya'">
             <input type="text" name="status_perkawinan_other" placeholder="Masukkan manual..."
                    value="{{ old('status_perkawinan_other') }}"
                    class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
@@ -126,7 +132,8 @@
         <div>
           <label for="pekerjaan" class="block text-gray-700 font-medium mb-1">Pekerjaan</label>
           <input type="text" name="pekerjaan" id="pekerjaan"
-                 value="{{ old('pekerjaan') }}" placeholder="Masukkan Pekerjaan"
+                 value="{{ old('pekerjaan') }}"
+                 placeholder="Masukkan Pekerjaan"
                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
         </div>
 
@@ -134,22 +141,23 @@
         <div>
           <label for="pendidikan" class="block text-gray-700 font-medium mb-1">Pendidikan</label>
           <input type="text" name="pendidikan" id="pendidikan"
-                 value="{{ old('pendidikan') }}" placeholder="Masukkan Pendidikan"
+                 value="{{ old('pendidikan') }}"
+                 placeholder="Masukkan Pendidikan"
                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
         </div>
 
         {{-- Golongan Darah --}}
         <div>
           <label for="gol_darah" class="block text-gray-700 font-medium mb-1">Golongan Darah</label>
-          <select name="gol_darah" id="gol_darah" x-model="gol"
+          <select name="gol_darah" id="gol_darah" x-model="gol" required
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200">
-            <option value="" disabled>Pilih Golongan Darah</option>
+            <option value="" disabled>Pilih Golongan</option>
             @foreach (['A','B','AB','O'] as $g)
               <option value="{{ $g }}">{{ $g }}</option>
             @endforeach
             <option value="Lainnya">Lainnya</option>
           </select>
-          <template x-if="gol==='Lainnya'">
+          <template x-if="gol === 'Lainnya'">
             <input type="text" name="gol_darah_other" placeholder="Masukkan manual..."
                    value="{{ old('gol_darah_other') }}"
                    class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
@@ -159,7 +167,7 @@
         {{-- SHDK --}}
         <div>
           <label for="shdk" class="block text-gray-700 font-medium mb-1">SHDK</label>
-          <select name="shdk" id="shdk" x-model="shdk"
+          <select name="shdk" id="shdk" x-model="shdk" required
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200">
             <option value="" disabled>Pilih SHDK</option>
             @foreach (['Kepala Keluarga','Istri','Anak','Orang Tua'] as $sh)
@@ -167,20 +175,20 @@
             @endforeach
             <option value="Lainnya">Lainnya</option>
           </select>
-          <template x-if="shdk==='Lainnya'">
+          <template x-if="shdk === 'Lainnya'">
             <input type="text" name="shdk_other" placeholder="Masukkan manual..."
                    value="{{ old('shdk_other') }}"
                    class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
           </template>
         </div>
 
-        {{-- Kartu Keluarga --}}
+        {{-- No KK --}}
         <div>
-          <label for="id_kk" class="block text-gray-700 font-medium mb-1">No Kartu Keluarga</label>
+          <label for="id_kk" class="block text-gray-700 font-medium mb-1">No. Kartu Keluarga</label>
           <select name="id_kk" id="id_kk" required
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200">
             <option value="" disabled>Pilih Kartu Keluarga</option>
-            @foreach ($kks as $kk)
+            @foreach($kks as $kk)
               <option value="{{ $kk->id }}" {{ old('id_kk')==$kk->id?'selected':'' }}>
                 {{ $kk->no_kk }}
               </option>
@@ -191,32 +199,48 @@
         {{-- Disabilitas --}}
         <div>
           <label for="disabilitas" class="block text-gray-700 font-medium mb-1">Disabilitas</label>
-          <select name="disabilitas" id="disabilitas"
+          <select name="disabilitas" id="disabilitas" x-model="disabilitas"
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200">
-            <option value="">-- Pilih Disabilitas --</option>
-            @foreach ([
-              'Tidak Cacat','Tuna Daksa/Cacat Tubuh','Tuna Netra/Buta','Tuna Rungu',
-              'Tuna Wicara','Tuna Rungu & Wicara','Tuna Netra & Cacat Tubuh',
-              'Tuna Netra, Rungu & Wicara','Tuna Rungu, Wicara & Cacat Tubuh',
-              'Tuna Rungu, Wicara, Netra & Cacat Tubuh','Cacat Mental/Retardasi',
+            <option value="">Tidak Cacat</option>
+            @foreach([
+              'Tuna Daksa/Cacat Tubuh','Tuna Netra/Buta','Tuna Rungu','Tuna Wicara',
+              'Tuna Rungu & Wicara','Tuna Netra & Cacat Tubuh','Tuna Netra, Rungu & Wicara',
+              'Tuna Rungu, Wicara & Cacat Tubuh','Cacat Mental/Retardasi',
               'Mantan Penderita Gangguan Jiwa','Cacat Fisik & Mental','Tuna Grahita'
             ] as $d)
-              <option value="{{ $d }}" {{ old('disabilitas')==$d?'selected':'' }}>{{ $d }}</option>
+              <option value="{{ $d }}">{{ $d }}</option>
             @endforeach
+            <option value="Lainnya">Lainnya</option>
           </select>
+          <template x-if="disabilitas === 'Lainnya'">
+            <input type="text" name="disabilitas_other" placeholder="Masukkan manual..."
+                   x-model="disabilitasOther"
+                   class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
+          </template>
         </div>
 
         {{-- Organisasi --}}
-        <div>
+        {{-- <div>
           <label for="organisasi" class="block text-gray-700 font-medium mb-1">Organisasi</label>
-          <select name="organisasi" id="organisasi"
+          <select name="organisasi" id="organisasi" x-model="organisasi"
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200">
-            <option value="">-- Pilih Organisasi --</option>
-            @foreach ([ '-', 'Pemerintah desa', 'Karang Taruna','PKK','Posyandu','Linmas','BPD','LPM','RT','RW'] as $o)
-              <option value="{{ $o }}" {{ old('organisasi')==$o?'selected':'' }}>{{ $o }}</option>
-            @endforeach
+            <option value="">—</option>
+            <option value="Karang Taruna">Karang Taruna</option>
+            <option value="PKK">PKK</option>
+            <option value="Posyandu">Posyandu</option>
+            <option value="Linmas">Linmas</option>
+            <option value="BPD">BPD</option>
+            <option value="LPM">LPM</option>
+            <option value="RT">RT</option>
+            <option value="RW">RW</option>
+            <option value="Lainnya">Lainnya</option>
           </select>
-        </div>
+          <template x-if="organisasi === 'Lainnya'">
+            <input type="text" name="organisasi_other" placeholder="Masukkan manual..."
+                   x-model="organisasiOther"
+                   class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
+          </template>
+        </div> --}}
       </div>
 
       <div class="pt-4 border-t border-gray-200 text-right">

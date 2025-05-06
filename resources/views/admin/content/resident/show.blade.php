@@ -14,11 +14,14 @@
                 <div class="flex flex-col md:flex-row gap-6">
                     @if ($penduduk->organisasi != '-')
                         <!-- Foto Profil -->
-                        <div class="flex-shrink-0 mx-auto md:mx-0">
+                        <div class="flex-shrink-0 mx-auto md:mx-0 text-center">
                             <img src="{{ $penduduk->foto ? asset('storage/' . $penduduk->foto) : asset('images/image.png') }}"
                                 alt="Foto Penduduk" class="w-40 h-40 object-cover rounded-lg border shadow">
+                                <div class="mt-3">
+                                    {{-- <span class="font-semibold">Jabatan:</span> {{ $penduduk->jabatan }} --}}
+                                    <span class="font-semibold">Organisasi:</span> {{ $penduduk->organisasi }}
+                                </div>
                         </div>
-                        <span class="font-semibold">Organisasi:</span> {{ $penduduk->organisasi }}
                     @endif
 
                     <!-- Data Penduduk -->

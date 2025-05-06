@@ -30,7 +30,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_kk');
             $table->foreign('id_kk')->references('id')->on('family_cards')->onDelete('cascade');
             $table->string('disabilitas');
-            $table->string('organisasi')->nullable(); // Pemerintah desa, Bpd, Lpm, Pkk, Mui, Linmas, Bumdes, Karang Taruna, Kepala Dusun, Ketua Rt/rw, Lainnya
+            $table->string('organisasi')->default('-');// Pemerintah desa, Bpd, Lpm, Pkk, Mui, Linmas, Bumdes, Karang Taruna, Kepala Dusun, Ketua Rt/rw, Lainnya
             $table->string('foto')->nullable();
             $table->boolean('kematian')->default(false);
             // $table->string('nik_ayah')->nullable();

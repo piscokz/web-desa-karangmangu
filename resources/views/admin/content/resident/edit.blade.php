@@ -259,7 +259,7 @@
         </div>
 
         {{-- Organisasi --}}
-        <div>
+        {{-- <div>
           <label for="organisasi" class="block text-gray-700 font-medium mb-1">Organisasi</label>
           <select name="organisasi"
                   class="w-full px-4 py-2	border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200">
@@ -271,7 +271,7 @@
               </option>
             @endforeach
           </select>
-        </div>
+        </div> --}}
       </div>
 
       <div class="pt-4 border-t border-gray-200 text-right">
