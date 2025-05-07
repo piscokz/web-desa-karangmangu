@@ -116,6 +116,25 @@ class VillageStallController extends Controller
             ->with('success', 'Produk berhasil dihapus!');
     }
 
+    public function bySellery($id_penduduk)
+    {
+        $resident = Resident::findOrFail($id_penduduk);
+        $stalls   = VillageStall::where('id_penduduk', $id_penduduk)
+                    ->latest()
+                    ->get();
+    
+        // kategori unik
+        $categories = $stalls
+            ->pluck('kategori')
+            ->filter()
+            ->unique()
+            ->values();
+    
+        return view('admin.content.village_stalls.bySellery', compact(
+            'resident', 'stalls', 'categories'
+        ));
+    }
+
     public function bySeller($id_penduduk)
     {
         $resident = Resident::findOrFail($id_penduduk);
@@ -134,7 +153,6 @@ class VillageStallController extends Controller
             'resident', 'stalls', 'categories'
         ));
     }
-    
 
     public function FrontIndex(Request $request)
     {
