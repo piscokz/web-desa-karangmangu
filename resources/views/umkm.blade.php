@@ -112,7 +112,6 @@
                                     Detail
                                 </a>
                             </div>
-
                         </div>
                     </div>
 
