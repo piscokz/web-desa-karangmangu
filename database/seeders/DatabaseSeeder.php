@@ -60,5 +60,14 @@ class DatabaseSeeder extends Seeder
             ['nama_lengkap' => 'Satoshi Nakamoto', 'id_kk' => 1, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'nik' => '1234567890123456', 'tempat_lahir' => 'Bitcoin', 'tanggal_lahir' => '1990-01-01', 'jenis_kelamin' => 'Laki-laki', 'agama' => 'Islam', 'status_perkawinan' => 'Belum Menikah', 'pekerjaan' => 'Coin Creator', 'pendidikan' => 'S3', 'gol_darah' => 'O', 'shdk' => 'Kepala Keluarga', 'no_telp' => '2573253', 'disabilitas' => 'Tidak Ada', 'organisasi' => 'Karang Taruna', 'nama_ayah' => 'Ayah 1', 'nama_ibu' => 'Ibu 1'],
             ['nama_lengkap' => 'Mutiara Permata', 'id_kk' => 1, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'nik' => '2345678901234567', 'tempat_lahir' => 'City B', 'tanggal_lahir' => '1992-02-02', 'jenis_kelamin' => 'Perempuan', 'agama' => 'Kristen', 'status_perkawinan' => 'Menikah', 'pekerjaan' => 'Ibu Rumah Tangga', 'pendidikan' => 'S1', 'gol_darah' => 'A', 'shdk' => 'Istri', 'no_telp' => '1234567890', 'disabilitas' => 'Tidak Ada', 'organisasi' => 'Bumdes', 'nama_ayah' => 'Ayah 2', 'nama_ibu' => 'Ibu 2'],
         ]);
+
+        DB::table('village_contacts')->insert([
+            'no_telepon' => '',
+            'email' => '',
+            'instagram' => '',
+            'youtube' => '',
+            'facebook' => '',
+            'created_at' => Carbon::now(),
+        ]);
     }
 }

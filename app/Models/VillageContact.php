@@ -9,11 +9,11 @@ class VillageContact extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_contact'; // karena kamu pakai id custom
     protected $fillable = [
         'no_telepon',
         'email',
         'instagram',
         'youtube',
+        'facebook',
     ];
 }

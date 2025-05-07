@@ -184,7 +184,7 @@
                     </div>
                 </div>
             </div>
->>>>>>> bcc0c3d (feat: mempercantik halaman UMKM dengan desain ala web olshop modern dan responsif)
+>>>>>>> bcc0c3d (feat: mempercantik halaman Lapak Desa dengan desain ala web olshop modern dan responsif)
 
 
             <!-- Struktur Organisasi -->

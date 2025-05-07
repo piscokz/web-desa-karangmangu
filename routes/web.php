@@ -14,6 +14,7 @@ use App\Http\Controllers\{
     RwController,
     VillageStallController,
     UmkmController,
+    VillageContactController,
 };
 
 Route::get('/', function () {
@@ -24,7 +25,7 @@ Route::get('/profil', function () {
     return view('profil');
 })->name('profil');
 
-Route::get('/umkm', [VillageStallController::class, 'FrontIndex'])->name('umkm');
+Route::get('/lapak-desa', [VillageStallController::class, 'FrontIndex'])->name('umkm');
 
 Route::get('/berita', [ArticleController::class, 'frontIndex'])
     ->name('news');
@@ -64,9 +65,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('admin/content/article', ArticleController::class)->names('admin.article');
     Route::resource('admin/content/gallery', GalleryItemController::class)->names('admin.gallery');
     Route::resource('admin/content/lapak-desa', VillageStallController::class)->names('lapak_desa');
-    Route::get('admin/content/lapak-desa/seller/{id}', 
-    [VillageStallController::class, 'bySeller'])
-    ->name('lapak_desa.bySeller');
+    Route::get('admin/content/lapak-desa/seller/{id}', [VillageStallController::class, 'bySeller'])->name('lapak_desa.bySeller');
+
+    Route::get('admin/content/kontak-desa', [VillageContactController::class, 'edit'])->name('kontak.edit');
+    Route::put('admin/content/kontak-desa', [VillageContactController::class, 'update'])->name('kontak.update');
 
     Route::resource('admin/content/penduduk', ResidentController::class)->names('penduduk');
     Route::resource('admin/content/kk', FamilyCardController::class)->names('kk');

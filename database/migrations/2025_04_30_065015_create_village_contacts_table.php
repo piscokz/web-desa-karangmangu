@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
 {
     Schema::create('village_contacts', function (Blueprint $table) {
-        $table->id('id_contact'); // primary key custom
-        $table->string('no_telepon');
-        $table->string('email');
-        $table->string('instagram');
-        $table->string('youtube');
+        $table->id(); // primary key custom
+        $table->string('no_telepon')->nullable();
+        $table->string('email')->nullable();
+        $table->string('instagram')->nullable();
+        $table->string('youtube')->nullable();
+        $table->string('facebook')->nullable();
         $table->timestamps();
     });
 }

@@ -17,7 +17,7 @@
                     ['route' => 'news', 'label' => 'Berita'],
                     ['route' => 'galeri', 'label' => 'Galeri'],
                     ['route' => 'pemerintahan', 'label' => 'Pemerintahan & Statistika'],
-                    ['route' => 'umkm', 'label' => 'UMKM'],
+                    ['route' => 'umkm', 'label' => 'Lapak Desa'],
                     ['route' => 'wartaWargi', 'label' => 'Kontak Kami'],
                 ];
             @endphp

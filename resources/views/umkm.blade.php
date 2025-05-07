@@ -1,13 +1,13 @@
 {{-- resources/views/umkm.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'UMKM Desa – Desa Karangmangu')
+@section('title', 'Lapak Desa – Desa Karangmangu')
 
 @section('content')
 <section class="bg-green-50 py-16">
   <div class="max-w-6xl mx-auto px-4">
     <h1 class="text-5xl font-extrabold text-center text-green-800 mb-12">
-      UMKM Desa Karangmangu
+      Lapak Desa Desa Karangmangu
     </h1>
 
     {{-- Search & Filter --}}
