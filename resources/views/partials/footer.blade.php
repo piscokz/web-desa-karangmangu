@@ -45,20 +45,20 @@
                 </a>
 
                 <!-- Instagram -->
-                <a href="https://www.instagram.com/pps_winduherang?igsh=MTV0Yjd4dDdzN2libg==" class="hover:text-green-400" aria-label="Instagram">
+                <a href="" class="hover:text-green-400" aria-label="Instagram">
                     <svg class="w-6 h-6 fill-current text-white transition-colors duration-300" viewBox="0 0 24 24">
                         <path
                             d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.5.6.2 1 .5 1.5 1s.8.9 1 1.5c.2.4.4 1 .5 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.5 2.2-.2.6-.5 1-.9 1.5s-.9.8-1.5 1c-.4.2-1 .4-2.2.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.5-.6-.2-1-.5-1.5-1s-.8-.9-1-1.5c-.2-.4-.4-1-.5-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.5-2.2.2-.6.5-1 .9-1.5s.9-.8 1.5-1c.4-.2 1-.4 2.2-.5C8.4 2.2 8.8 2.2 12 2.2zm0 4.4a5.4 5.4 0 100 10.8 5.4 5.4 0 000-10.8zm0 9a3.6 3.6 0 110-7.2 3.6 3.6 0 010 7.2zm5.6-9.5a1.3 1.3 0 100 2.6 1.3 1.3 0 000-2.6z" />
                     </svg>
                 </a>
 
-                <!-- Twitter -->
+                {{-- <!-- Twitter -->
                 <a href="#" class="hover:text-green-400" aria-label="X">
                     <svg class="w-6 h-6 fill-current text-white transition-colors duration-300" viewBox="0 0 24 24">
                         <path
                             d="M22.5 3.1h-2.1L13.5 10l8.4 10.9h-6.6L9.6 13.2 3 21h2.1L10.5 14 2.1 3.1H9l6 7.9 7.5-7.9z" />
                     </svg>
-                </a>
+                </a> --}}
 
                 <!-- Facebook -->
                 <a href="#" class="hover:text-green-400" aria-label="Facebook">

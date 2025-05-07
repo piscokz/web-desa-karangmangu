@@ -62,10 +62,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('village_contacts')->insert([
-            'no_telepon' => '',
+            'no_telepon' => '8123456789',
             'email' => '',
-            'instagram' => '',
-            'youtube' => '',
+            'instagram' => 'https://www.instagram.com/pps_winduherang',
+            'youtube' => 'waduh',
             'facebook' => '',
             'created_at' => Carbon::now(),
         ]);

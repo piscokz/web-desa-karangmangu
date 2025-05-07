@@ -51,7 +51,6 @@
                 type="text"
                 value="{{ old('instagram', $kontak->instagram) }}"
                 placeholder="https://instagram.com/username"
-                required
                 class="flex-1 px-3 py-2 outline-none text-gray-800"
               />
             </div>
@@ -75,7 +74,6 @@
                 type="email"
                 value="{{ old('email', $kontak->email) }}"
                 placeholder="email@domain.com"
-                required
                 class="flex-1 px-3 py-2 outline-none text-gray-800"
               />
             </div>
@@ -99,7 +97,6 @@
                 type="text"
                 value="{{ old('no_telepon', $kontak->no_telepon) }}"
                 placeholder="08xx-xxxx-xxxx"
-                required
                 class="flex-1 px-3 py-2 outline-none text-gray-800"
               />
             </div>
@@ -122,7 +119,6 @@
                 type="text"
                 value="{{ old('facebook', $kontak->facebook) }}"
                 placeholder="https://facebook.com/username"
-                required
                 class="flex-1 px-3 py-2 outline-none text-gray-800"
               />
             </div>

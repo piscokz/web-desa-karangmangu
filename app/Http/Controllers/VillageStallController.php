@@ -61,6 +61,12 @@ class VillageStallController extends Controller
             'village_stall' => $lapak_desa->load('resident'),
         ]);
     }
+    public function showed(VillageStall $lapak_desa)
+    {
+        return view('admin.content.village_stalls.showed', [
+            'village_stall' => $lapak_desa->load('resident'),
+        ]);
+    }
 
     public function edit(VillageStall $lapak_desa)
     {

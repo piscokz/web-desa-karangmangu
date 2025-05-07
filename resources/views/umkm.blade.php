@@ -101,17 +101,18 @@
                                 </div>
 
                             </div>
-
-                            <div class="mt-4 flex justify-between items-center">
+                            <div
+                                class="mt-4 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-x-2">
                                 <a href="{{ $waLink }}" target="_blank"
-                                    class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-full text-sm font-semibold hover:bg-green-700 transition">
-                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                        <path
-                                            d="M20.52 3.48A11.84 11.84 0 0012 0C5.37 0 0 5.37 0 12c0 2.12.56 4.17 1.63 5.99L0 24l6.3-1.65a12.02 12.02 0 005.7 1.46h.01C18.63 24 24 18.63 24 12c0-3.17-1.23-6.15-3.48-8.52zM12 22a9.93 9.93 0 01-5.1-1.39l-.37-.22-3.73.98.99-3.63-.24-.38A9.93 9.93 0 012 12C2 6.48 6.48 2 12 2s10 4.48 10 10-4.48 10-10 10zm5.06-7.75c-.27-.14-1.61-.79-1.86-.88-.25-.09-.44-.14-.63.14-.19.28-.72.88-.89 1.06-.17.19-.33.21-.61.07-.27-.14-1.13-.42-2.15-1.33-.79-.7-1.32-1.57-1.47-1.83-.15-.27-.02-.41.11-.55.11-.11.25-.28.37-.42.12-.14.16-.24.25-.4.08-.17.04-.31-.02-.45-.07-.14-.63-1.51-.87-2.06-.23-.55-.46-.47-.63-.48h-.54c-.18 0-.47.07-.71.33s-.93.91-.93 2.21.95 2.57 1.09 2.75c.14.18 1.87 2.85 4.55 4 .64.28 1.14.45 1.53.57.64.2 1.22.17 1.68.1.51-.08 1.61-.66 1.84-1.29.23-.63.23-1.18.16-1.29-.07-.11-.25-.18-.52-.32z" />
-                                    </svg>
+                                    class="flex-1 text-center bg-green-600 text-white py-2 rounded-full text-sm font-semibold hover:bg-green-700 transition">
                                     WhatsApp
                                 </a>
+                                <a href="{{ route('lapak_desa.showed', $stall->id_produk) }}"
+                                    class="flex-1 text-center bg-white border border-green-600 text-green-600 py-2 rounded-full text-sm font-semibold hover:bg-green-600 hover:text-white transition">
+                                    Detail
+                                </a>
                             </div>
+
                         </div>
                     </div>
 

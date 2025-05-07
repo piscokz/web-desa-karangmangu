@@ -21,6 +21,8 @@ Route::get('/', function () {
     return view('index');
 })->name('home');
 
+Route::get('lapak-desa/{lapak_desa}', [VillageStallController::class, 'showed'])->name('lapak_desa.showed');
+
 Route::get('/lapak_desa/penjual/{resident}', [VillageStallController::class, 'bySellery'])
      ->name('lapak_desa.bySellery');
 

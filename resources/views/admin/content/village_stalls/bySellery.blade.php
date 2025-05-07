@@ -66,16 +66,7 @@
           <td class="px-4 py-3 whitespace-nowrap text-center space-x-2">
             <a href="{{ route('lapak_desa.show', $item->id_produk) }}"
                class="text-sm text-blue-600 hover:underline">Detail</a>
-            <a href="{{ route('lapak_desa.edit', $item->id_produk) }}"
-               class="text-sm text-yellow-600 hover:underline">Edit</a>
-            <form action="{{ route('lapak_desa.destroy', $item->id_produk) }}"
-                  method="POST" class="inline">
-              @csrf @method('DELETE')
-              <button type="submit"
-                      onclick="return confirm('Hapus produk ini?')"
-                      class="text-sm text-red-600 hover:underline">Hapus</button>
-            </form>
-          </td>
+            </td>
         </tr>
         @empty
         <tr>
