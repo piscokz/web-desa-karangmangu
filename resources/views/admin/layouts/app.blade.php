@@ -190,18 +190,17 @@
                 RT
             </a>
 
-            {{-- Kontak Desa Page --}}
+            <!-- Kontak Desa Page -->
             <a href="{{ route('kontak.edit') }}"
-                class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('home') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
+                class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('kontak.edit') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round" />
                     <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M2 12h20M12 2v20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14" />
+                        d="M21 10c0 7-9 11-9 11S3 17 3 10a9 9 0 1118 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 14a4 4 0 100-8 4 4 0 000 8z" />
                 </svg>
                 Kontak Desa
             </a>
-
             {{-- Guest Page --}}
             <a href="{{ route('home') }}"
                 class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('home') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
@@ -376,17 +375,18 @@
                 RT
             </a>
 
-            {{-- Kontak Desa Page --}}
-            <a href="{{ route('kontak.edit') }}"
-                class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('home') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round" />
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M2 12h20M12 2v20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14" />
-                </svg>
-                Kontak Desa
-            </a>
+        <!-- Kontak Desa Page -->
+        <a href="{{ route('kontak.edit') }}"
+            class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('kontak.edit') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M21 10c0 7-9 11-9 11S3 17 3 10a9 9 0 1118 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 14a4 4 0 100-8 4 4 0 000 8z" />
+            </svg>
+            Kontak Desa
+        </a>
 
             <!-- Guest Page -->
             <a href="{{ route('home') }}"
