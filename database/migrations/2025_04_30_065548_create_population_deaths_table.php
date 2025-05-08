@@ -12,13 +12,12 @@ return new class extends Migration
     public function up(): void
 {
     Schema::create('population_deaths', function (Blueprint $table) {
-        $table->id('id_kematian'); // primary key
-        $table->unsignedBigInteger('id_penduduk')->unique(); // foreign key + one-to-one
-        $table->date('tanggal_kematian');
+        $table->id();
+        $table->foreignId('penduduk_id')->constrained('residents')->onDelete('cascade');
+        $table->date('tanggal_meninggal');
+        $table->string('penyebab')->nullable();
+        $table->text('keterangan')->nullable();
         $table->timestamps();
-
-        // foreign key constraint ke residents.id_penduduk
-        $table->foreign('id_penduduk')->references('id')->on('residents')->onDelete('cascade');
     });
 }
 

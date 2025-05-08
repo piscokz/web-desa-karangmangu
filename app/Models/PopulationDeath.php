@@ -9,15 +9,11 @@ class PopulationDeath extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_kematian';
 
-    protected $fillable = [
-        'nik',
-        'tanggal_kematian',
-    ];
+    protected $fillable = ['penduduk_id', 'tanggal_meninggal', 'penyebab', 'keterangan'];
 
     public function resident()
     {
-        return $this->belongsTo(Resident::class, 'nik', 'nik');
+        return $this->belongsTo(Resident::class, 'penduduk_id');
     }
 }

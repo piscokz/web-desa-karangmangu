@@ -142,6 +142,17 @@
                 Penduduk
             </a>
 
+            {{-- kematian --}}
+            <a href="{{ route('kematian.index') }}"
+                class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('kematian.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M17 20h5V4H2v16h5m10 0v-4a3 3 0 00-6 0v4m6 0H11" />
+                </svg>
+                Kematian Penduduk
+            </a>
+
             {{-- Kartu Keluarga --}}
             <a href="{{ route('kk.index') }}"
                 class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('kk.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
@@ -325,6 +336,17 @@
                         d="M17 20h5V4H2v16h5m10 0v-4a3 3 0 00-6 0v4m6 0H11" />
                 </svg>
                 Penduduk
+            </a>
+
+            {{-- kematian --}}
+            <a href="{{ route('kematian.index') }}"
+                class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('kematian.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M17 20h5V4H2v16h5m10 0v-4a3 3 0 00-6 0v4m6 0H11" />
+                </svg>
+                Kematian
             </a>
 
             <!-- Kartu Keluarga -->

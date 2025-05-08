@@ -1,3 +1,11 @@
+@php
+            $kontak = \App\Models\VillageContact::first();
+            $youtube = $kontak->youtube ?? '#';
+            $instagram = $kontak->instagram ?? '#';
+            $facebook = $kontak->facebook ?? '#';
+            $whatsapp = $kontak->no_telepon ? 'https://wa.me/' . preg_replace('/\D/', '', $kontak->no_telepon) : '#';
+            $emailLink = $kontak->email ? 'mailto:' . $kontak->email : '#';
+        @endphp
 <!-- Footer Section -->
 <footer id="footer" class="bg-black text-white py-10 mt-8 opacity-0 transition-opacity duration-1000">
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
@@ -12,9 +20,9 @@
         <!-- Kolom 2: Kontak -->
         <div>
             <h4 class="font-semibold mb-3 text-white">Hubungi Kami</h4>
-            <p class="text-gray-300 mb-1">088347520749</p>
-            <a href="mailto:kelurahanwinduherang66@gmail.com" class="text-gray-300 hover:underline block">
-                kelurahanwinduherang66@gmail.com
+            <p class="text-gray-300 mb-1">{{ $kontak->no_telepon }}</p>
+            <a href="mailto:{{ $kontak->email }}" class="text-gray-300 hover:underline block">
+                {{ $kontak->email }}
             </a>
         </div>
 
@@ -29,15 +37,6 @@
                 <a href="{{ route('admin.dashboard') }}" class="text-gray-300 hover:underline block mt-2">Admin Page</a>
             @endauth
         </div>
-
-        @php
-            $kontak = \App\Models\VillageContact::first();
-            $youtube = $kontak->youtube ?? '#';
-            $instagram = $kontak->instagram ?? '#';
-            $facebook = $kontak->facebook ?? '#';
-            $whatsapp = $kontak->no_telepon ? 'https://wa.me/' . preg_replace('/\D/', '', $kontak->no_telepon) : '#';
-            $emailLink = $kontak->email ? 'mailto:' . $kontak->email : '#';
-        @endphp
 
         <!-- Kolom 4: Sosial Media -->
         <div>

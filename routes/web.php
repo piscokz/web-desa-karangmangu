@@ -9,6 +9,7 @@ use App\Http\Controllers\{
     AdminPengaduanController,
     FamilyCardController,
     HamletController,
+    PopulationDeathController,
     ResidentController,
     RtController,
     RwController,
@@ -70,6 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('admin/content/article', ArticleController::class)->names('admin.article');
     Route::resource('admin/content/gallery', GalleryItemController::class)->names('admin.gallery');
     Route::resource('admin/content/lapak-desa', VillageStallController::class)->names('lapak_desa');
+    Route::resource('admin/content/kematian-penduduk', PopulationDeathController::class)->names('kematian');
     Route::get('admin/content/lapak-desa/seller/{id}', [VillageStallController::class, 'bySeller'])->name('lapak_desa.bySeller');
 
     Route::get('admin/content/kontak-desa', [VillageContactController::class, 'edit'])->name('kontak.edit');

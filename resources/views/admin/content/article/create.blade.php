@@ -42,8 +42,8 @@
                     <select name="category" id="category" @change="other = $event.target.value === 'Lainnya'" required
                         class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-600 transition">
                         <option value="">-- Pilih Kategori --</option>
-                        <option value="Berita" {{ old('category') == 'Berita' ? 'selected' : '' }}>Berita
-                        </option>
+                        <option value="profil desa" {{ old('category') == 'profil desa' ? 'selected' : '' }}>Profil Desa</option>
+                        <option value="Berita" {{ old('category') == 'Berita' ? 'selected' : '' }}>Berita</option>
                         <option value="Pengumuman" {{ old('category') == 'Pengumuman' ? 'selected' : '' }}>Pengumuman
                         </option>
                         <option value="Agenda" {{ old('category') == 'Agenda' ? 'selected' : '' }}>Agenda
