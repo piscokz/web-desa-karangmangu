@@ -142,13 +142,14 @@
                 Penduduk
             </a>
 
-            {{-- kematian --}}
+            <!-- Kematian Penduduk -->
             <a href="{{ route('kematian.index') }}"
                 class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('kematian.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
+                    <!-- Ikon user-minus -->
                     <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M17 20h5V4H2v16h5m10 0v-4a3 3 0 00-6 0v4m6 0H11" />
+                        d="M15 12h.008M9 12h.008M12 16h.008M12 8h.008M12 12h.008M19.5 19.5l-15-15" />
                 </svg>
                 Kematian Penduduk
             </a>
@@ -338,15 +339,16 @@
                 Penduduk
             </a>
 
-            {{-- kematian --}}
+            <!-- Kematian Penduduk -->
             <a href="{{ route('kematian.index') }}"
                 class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('kematian.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
+                    <!-- Ikon user-minus -->
                     <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M17 20h5V4H2v16h5m10 0v-4a3 3 0 00-6 0v4m6 0H11" />
+                        d="M15 12h.008M9 12h.008M12 16h.008M12 8h.008M12 12h.008M19.5 19.5l-15-15" />
                 </svg>
-                Kematian
+                Kematian Penduduk
             </a>
 
             <!-- Kartu Keluarga -->
@@ -397,18 +399,17 @@
                 RT
             </a>
 
-        <!-- Kontak Desa Page -->
-        <a href="{{ route('kontak.edit') }}"
-            class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('kontak.edit') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M21 10c0 7-9 11-9 11S3 17 3 10a9 9 0 1118 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M12 14a4 4 0 100-8 4 4 0 000 8z" />
-            </svg>
-            Kontak Desa
-        </a>
+            <!-- Kontak Desa Page -->
+            <a href="{{ route('kontak.edit') }}"
+                class="flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('kontak.edit') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 10c0 7-9 11-9 11S3 17 3 10a9 9 0 1118 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 14a4 4 0 100-8 4 4 0 000 8z" />
+                </svg>
+                Kontak Desa
+            </a>
 
             <!-- Guest Page -->
             <a href="{{ route('home') }}"
@@ -437,7 +438,6 @@
             </form>
         </nav>
     </aside>
-
 
     <script>
         function confirmLogout(e) {
