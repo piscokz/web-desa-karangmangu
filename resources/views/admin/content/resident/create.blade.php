@@ -224,7 +224,8 @@
           <label for="organisasi" class="block text-gray-700 font-medium mb-1">Organisasi</label>
           <select name="organisasi" id="organisasi" x-model="organisasi"
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200">
-            <option value="">-</option>
+            <option value="penduduk">-</option>
+            <option value="Pemerintah Desa">Pemerintah Desa</option>
             <option value="Karang Taruna">Karang Taruna</option>
             <option value="PKK">PKK</option>
             <option value="Posyandu">Posyandu</option>

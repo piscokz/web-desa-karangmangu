@@ -15,7 +15,7 @@
 
                 <select name="organisasi" class="px-3 py-2 border rounded-md">
                     <option value="">Semua</option>
-                    <option value="-" {{ request('organisasi') == '-' ? 'selected' : '' }}>
+                    <option value="penduduk" {{ request('organisasi') == 'penduduk'  ? 'selected' : '' }}>
                       Penduduk</option>
                     @foreach (['Pemerintah desa', 'Bpd', 'Lpm', 'Pkk', 'Mui', 'Linmas', 'Bumdes', 'Karang Taruna', 'Kepala Dusun', 'Ketua Rt/rw', 'Lainnya'] as $item)
                         <option value="{{ $item }}" {{ request('organisasi') == $item ? 'selected' : '' }}>

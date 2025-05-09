@@ -12,7 +12,7 @@
         @if ($penduduk)
             <div class="bg-white shadow-lg rounded-xl p-6 md:p-8">
                 <div class="flex flex-col md:flex-row gap-6">
-                    @if ($penduduk->organisasi != '-')
+                    @if ($penduduk->organisasi != 'penduduk')
                         <!-- Foto Profil -->
                         <div class="flex-shrink-0 mx-auto md:mx-0 text-center">
                             <img src="{{ $penduduk->foto ? asset('storage/' . $penduduk->foto) : asset('images/image.png') }}"
@@ -48,6 +48,7 @@
                             <p><span class="font-semibold">SHDK:</span> {{ $penduduk->shdk }}</p>
                             <p><span class="font-semibold">No. KK:</span> {{ $penduduk->familyCard->no_kk ?? '-' }}</p>
                             <p><span class="font-semibold">No. Telepon:</span> {{ $penduduk->no_telp }}</p>
+                            <p><span class="font-semibold" style="color:red;">Riwayat Kematian:</span> {{ $penduduk->death->tanggal_meninggal ?? 'tidak ada' }}</p>
                         </div>
                     </div>
                 </div>

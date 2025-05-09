@@ -138,7 +138,9 @@ class ResidentController extends Controller
      */
     public function show(string $id)
     {
-        $penduduk = Resident::with('familyCard')->findOrFail($id);
+        // Tampilkan data penduduk berdasarkan ID
+        $penduduk = Resident::with(['familyCard', 'death'])->findOrFail($id);
+        // Tampilkan data kematian penduduk
         return view('admin.content.resident.show', compact('penduduk'));
     }
 

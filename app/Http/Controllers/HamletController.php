@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Hamlet;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isNull;
+
 class HamletController extends Controller
 {
     /**

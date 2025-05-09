@@ -43,7 +43,7 @@ class Resident extends Model
 
     public function death()
     {
-        return $this->hasOne(PopulationDeath::class, 'id_penduduk', 'id');
+        return $this->hasOne(PopulationDeath::class, 'penduduk_id');
     }
 
     public function stalls()
