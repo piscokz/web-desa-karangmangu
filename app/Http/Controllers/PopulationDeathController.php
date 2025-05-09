@@ -8,82 +8,79 @@ use Illuminate\Http\Request;
 
 class PopulationDeathController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $deaths = PopulationDeath::with('resident')->latest()->get();
+        $deaths = PopulationDeath::with('resident')
+                    ->latest('tanggal_meninggal')
+                    ->get();
+
         return view('admin.content.populationDeath.index', compact('deaths'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $residents = Resident::latest()->get();
+        // ambil hanya penduduk yang belum memiliki record kematian
+        $residents = Resident::doesntHave('death')
+                        ->orderBy('nama_lengkap')
+                        ->get();
+
         return view('admin.content.populationDeath.create', compact('residents'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $request->validate([
-            'penduduk_id' => 'required|exists:residents,id',
+        $data = $request->validate([
+            'penduduk_id'       => 'required|exists:residents,id',
             'tanggal_meninggal' => 'required|date',
-            'penyebab' => 'nullable|string|max:255',
-            'keterangan' => 'nullable|string',
+            'penyebab'          => 'nullable|string|max:255',
+            'keterangan'        => 'nullable|string',
         ]);
 
-        PopulationDeath::create($request->all());
-        return redirect()->route('kematian.store')->with('success', 'Data kematian penduduk berhasil ditambahkan!');
+        PopulationDeath::create($data);
+
+        return redirect()
+            ->route('kematian.index')
+            ->with('success', 'Data kematian penduduk berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(string $id)
     {
-        $death = PopulationDeath::with('resident')->findOrFail($id);
-        return view('admin.content.populationDeath.show', compact('death'));
+        // definisikan ulang agar blade menerima variabel yang jelas
+        $death     = PopulationDeath::findOrFail($id);
+        // penduduk yang belum mati, plus penduduk saat ini (supaya tetap muncul di select)
+        $residents = Resident::where(function($q) use ($death) {
+                            $q->doesntHave('death')
+                              ->orWhere('id', $death->penduduk_id);
+                        })
+                        ->orderBy('nama_lengkap')
+                        ->get();
+
+        return view('admin.content.populationDeath.edit', compact('death', 'residents'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PopulationDeath $populationDeath, $penduduk_id)
+    public function update(Request $request, string $id)
     {
-        $populationDeath = PopulationDeath::with('resident')->findOrFail($penduduk_id);
-        $residents = Resident::latest()->get();
-        return view('admin.content.populationDeath.edit', compact('populationDeath', 'residents'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, PopulationDeath $populationDeath)
-    {
-        $request->validate([
-            'penduduk_id' => 'required|exists:residents,id',
+        $populationDeath = PopulationDeath::findOrFail($id);
+        $data = $request->validate([
+            'penduduk_id'       => 'required|exists:residents,id',
             'tanggal_meninggal' => 'required|date',
-            'penyebab' => 'nullable|string|max:255',
-            'keterangan' => 'nullable|string',
+            'penyebab'          => 'nullable|string|max:255',
+            'keterangan'        => 'nullable|string',
         ]);
 
-        $populationDeath->update($request->all());
-        return redirect()->route('kematian.index')->with('success', 'Data kematian penduduk berhasil diperbarui!');
+        $populationDeath->update($data);
+
+        return redirect()
+            ->route('kematian.index')
+            ->with('success', 'Data kematian penduduk berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(PopulationDeath $populationDeath, $penduduk_id)
+    public function destroy(string $id)
     {
-        $populationDeath = PopulationDeath::findOrFail($penduduk_id);
+        $populationDeath = PopulationDeath::findOrFail($id);
         $populationDeath->delete();
-        return redirect()->route('kematian.index')->with('success', 'Data kematian penduduk berhasil dihapus!');
+        return redirect()
+            ->route('kematian.index')
+            ->with('success', 'Data kematian penduduk berhasil dihapus!');
     }
 }
