@@ -111,10 +111,42 @@
         use App\Models\FamilyCard;
         use Illuminate\Support\Facades\DB;
         use Illuminate\Support\Str;
+        use App\Models\PopulationDeath;
+        // use App\Models\Resident;
+        use Carbon\Carbon;
+        // 1) Tahun sekarang
+        $year = Carbon::now()->year;
 
-        //
-        // 1) Data Demografi
-        //
+        // 2) Ambil semua record kematian tahun ini, plus relasi resident
+        $deaths = PopulationDeath::with('resident')->whereYear('tanggal_meninggal', $year)->get();
+
+        // 3) Total kematian, laki-laki & perempuan
+        $totalDeaths = $deaths->count();
+        $maleDeaths = $deaths->filter(fn($d) => $d->resident && $d->resident->jenis_kelamin === 'Laki-laki')->count();
+        $femaleDeaths = $deaths->filter(fn($d) => $d->resident && $d->resident->jenis_kelamin === 'Perempuan')->count();
+
+        // 4) Rata-rata umur (dalam tahun, 1 desimal)
+        $ages = $deaths
+            ->filter(fn($d) => $d->resident && $d->resident->tanggal_lahir)
+            ->map(fn($d) => $d->tanggal_meninggal->diffInYears($d->resident->tanggal_lahir))
+            ->toArray();
+
+        $avgAge = count($ages) ? round(array_sum($ages) / count($ages), 1) : 0;
+        $eduStats = Resident::select(
+            'pendidikan',
+            DB::raw("SUM(CASE WHEN jenis_kelamin = 'Laki-laki' THEN 1 ELSE 0 END) as male"),
+            DB::raw("SUM(CASE WHEN jenis_kelamin = 'Perempuan' THEN 1 ELSE 0 END) as female"),
+        )
+            ->whereNotNull('pendidikan')
+            ->groupBy('pendidikan')
+            ->orderByRaw(
+                "FIELD(pendidikan, 'TK/PAUD','SD','SMP','SMA','DIPLOMA','SARJANA (S1)','MAJISTER (S2)','DOKTOR (S3)')",
+            )
+            ->get();
+
+        $eduLabels = $eduStats->pluck('pendidikan');
+        $eduMaleData = $eduStats->pluck('male');
+        $eduFemaleData = $eduStats->pluck('female');
         $total = Resident::count();
         $male = Resident::where('jenis_kelamin', 'Laki-laki')->count();
         $female = Resident::where('jenis_kelamin', 'Perempuan')->count();
@@ -141,40 +173,63 @@
             return match (Str::lower($r)) {
                 'islam' => '🕌',
                 'kristen', 'katolik' => '⛪',
-                'hindu' => '🕉',
-                'buddha' => '☸',
-                'konghucu' => '☯',
+                'hindu' => '🕉️',
+                'buddha' => '☸️',
+                'konghucu' => '☯️',
                 default => '❓',
             };
         }
         function getJobEmoji($j)
         {
             $j = Str::lower($j);
+
             return match (true) {
+                // Pertanian & Alam
                 Str::contains($j, ['tani', 'kebun']) => '🌱',
                 Str::contains($j, ['ternak']) => '🐄',
                 Str::contains($j, ['ikan', 'laut', 'perikanan']) => '🐟',
-                Str::contains($j, ['hutan']) => '🌳',
-                Str::contains($j, ['industri']) => '🏭',
-                Str::contains($j, ['konstruksi', 'bangunan']) => '👷‍♂',
-                Str::contains($j, ['teknisi', 'teknik']) => '🛠',
-                Str::contains($j, ['sopir', 'supir']) => '🚗',
-                Str::contains($j, ['dagang', 'jualan']) => '🛒',
-                Str::contains($j, ['jasa']) => '💼',
-                Str::contains($j, ['wisata']) => '🏨',
-                Str::contains($j, ['dokter']) => '👨‍⚕',
-                Str::contains($j, ['perawat']) => '👩‍⚕',
+                Str::contains($j, ['hutan', 'perkebunan']) => '🌳',
+                // Industri & Konstruksi
+                Str::contains($j, ['industri', 'pabrik']) => '🏭',
+                Str::contains($j, ['konstruksi', 'bangunan', 'engineer']) => '👷‍♂️',
+                Str::contains($j, ['teknisi', 'teknik']) => '🛠️',
+                // Transportasi & Logistik
+                Str::contains($j, ['sopir', 'supir', 'driver']) => '🚗',
+                Str::contains($j, ['pilot']) => '✈️',
+                Str::contains($j, ['kurir', 'logistik']) => '📦',
+                // Perdagangan & Jasa
+                Str::contains($j, ['dagang', 'jualan', 'retail']) => '🛒',
+                Str::contains($j, ['jasa', 'service']) => '💼',
+                Str::contains($j, ['wisata', 'hotel', 'tour']) => '🏨',
+                // Kesehatan
+                Str::contains($j, ['dokter']) => '👨‍⚕️',
+                Str::contains($j, ['perawat']) => '👩‍⚕️',
                 Str::contains($j, ['apoteker']) => '💊',
-                Str::contains($j, ['guru']) => '🎓',
-                Str::contains($j, ['dosen']) => '👩‍🎓',
+                Str::contains($j, ['psikolog', 'psikiater']) => '🧠',
+                // Pendidikan & Riset
+                Str::contains($j, ['guru', 'pengajar']) => '🎓',
+                Str::contains($j, ['dosen', 'lecturer']) => '👩‍🎓',
                 Str::contains($j, ['peneliti', 'riset']) => '🔬',
-                Str::contains($j, ['pns', 'pegawai negeri']) => '🏛',
-                Str::contains($j, ['tni', 'polri']) => '👮‍♂',
-                Str::contains($j, ['buruh']) => '🔨',
-                Str::contains($j, ['karyawan', 'pegawai', 'pt']) => '🏢',
-                Str::contains($j, ['wirausaha', 'wiraswasta']) => '🚀',
-                Str::contains($j, ['pelajar', 'mahasiswa', 'sekolah']) => '🧑‍🎓',
+                Str::contains($j, ['pelajar', 'mahasiswa']) => '🧑‍🎓',
+                // Pemerintahan & Keamanan
+                Str::contains($j, ['pns', 'pegawai negeri']) => '🏛️',
+                Str::contains($j, ['tni', 'polri', 'tentara']) => '👮‍♂️',
+                Str::contains($j, ['satpam', 'security']) => '🛡️',
+                // Korporasi & Kantor
+                Str::contains($j, ['karyawan', 'pegawai', 'staff', 'office']) => '🏢',
+                Str::contains($j, ['manajer', 'manager', 'supervisor']) => '📋',
+                Str::contains($j, ['admin', 'administrasi']) => '🗄️',
+                // Kreatif & Media
+                Str::contains($j, ['programmer', 'developer', 'it', 'software']) => '💻',
+                Str::contains($j, ['designer', 'ui/ux', 'grafis']) => '🎨',
+                Str::contains($j, ['jurnalis', 'wartawan', 'penulis']) => '🗞️',
+                Str::contains($j, ['fotografer', 'fotografi']) => '📷',
+                Str::contains($j, ['musisi', 'musik', 'penyanyi']) => '🎵',
+                // Wirausaha
+                Str::contains($j, ['wirausaha', 'wiraswasta', 'entrepreneur']) => '🚀',
+                // Rumah tangga & Lainnya
                 Str::contains($j, ['ibu rumah tangga']) => '🏠',
+                // Default
                 default => '❓',
             };
         }
@@ -184,7 +239,7 @@
     @endphp
 
     {{-- =======================
-Section: Total Penduduk
+     Section: Total Penduduk
 ======================= --}}
     <section id="total-penduduk" class="py-12 px-4 bg-gray-50">
         <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6">
@@ -227,7 +282,7 @@ Section: Total Penduduk
     </section>
 
     {{-- =======================
-Section: Agama
+     Section: Agama
 ======================= --}}
     <section id="agama" class="py-12 px-4 bg-gray-100">
         <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6">
@@ -255,7 +310,7 @@ Section: Agama
     </section>
 
     {{-- =======================
-Section: Pekerjaan
+     Section: Pekerjaan
 ======================= --}}
     <section id="pekerjaan" class="py-12 px-4 bg-gray-50">
         <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6">
@@ -290,7 +345,7 @@ Section: Pekerjaan
     </section>
 
     {{-- =======================
-Scripts: Chart.js + DataLabels
+     Scripts: Chart.js + DataLabels
 ======================= --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
@@ -379,10 +434,275 @@ Scripts: Chart.js + DataLabels
             @endif
         });
     </script>
-    </div>
-    @include('sections.age-range')
-    @include('sections.category_age-range')
-    @include('sections.married-status')
 
+    </div>
+    </section>
+
+    {{-- Chart Pendidikan --}}
+    <section id="pendidikan" class="py-12 px-4 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-green-800 mb-6 text-center">Pendidikan & Gender</h2>
+            <canvas id="pendidikanChart"></canvas>
+        </div>
+    </section>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Chart.register(ChartDataLabels);
+
+            @if ($eduStats->isNotEmpty())
+                // Tambahkan emoji khusus untuk setiap jenjang pendidikan
+                const eduEmojis = {
+                    'Tidak/Belum Sekolah': '🚫',
+                    'SD': '🏫',
+                    'SMP': '🎒',
+                    'SMA/SMK': '🎓',
+                    'Diploma': '🎖️',
+                    'Sarjana': '🎓',
+                    'Magister': '🎓',
+                    'Doktor': '👨‍🔬'
+                };
+
+                // Ganti setiap label dengan label + emoji
+                const labelsWithEmoji = @json($eduLabels).map(label =>
+                    `${eduEmojis[label] || ''} ${label}`);
+
+                new Chart(document.getElementById('pendidikanChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: labelsWithEmoji,
+                        datasets: [{
+                                label: '👦 Laki-laki',
+                                data: @json($eduMaleData),
+                                backgroundColor: '#3B82F6',
+                                borderRadius: 6,
+                                stack: 'gen'
+                            },
+                            {
+                                label: '👧 Perempuan',
+                                data: @json($eduFemaleData),
+                                backgroundColor: '#EC4899',
+                                borderRadius: 6,
+                                stack: 'gen'
+                            }
+                        ]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        plugins: {
+                            datalabels: {
+                                anchor: 'end',
+                                align: 'end',
+                                formatter: v => {
+                                    // Variasi emoji per digit
+                                    const emojis = ['🎓', '📚', '🧮', '🔢'];
+                                    const emoji = emojis[v.toString().length % emojis.length];
+                                    return `${emoji} ${v.toLocaleString('id')}`;
+                                },
+                                font: {
+                                    weight: '600',
+                                    size: 12
+                                }
+                            },
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    usePointStyle: true,
+                                    pointStyle: 'circle',
+                                    padding: 16,
+                                    generateLabels: chart => {
+                                        // Tambahkan flare emoji ke legend
+                                        return Chart.defaults.plugins.legend.labels.generateLabels(
+                                            chart).map(item => {
+                                            item.text =
+                                                `${item.text} ${item.text.includes('👦') ? '🧑‍🎓' : '👩‍🎓'}`;
+                                            return item;
+                                        });
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    title: ctx => {
+                                        // Tampilkan emoji jenjang di tooltip title
+                                        const rawLabel = @json($eduLabels)[ctx[0].dataIndex];
+                                        return `${eduEmojis[rawLabel] || ''} ${rawLabel}`;
+                                    },
+                                    label: ctx => {
+                                        const val = ctx.parsed.x;
+                                        const genderEmoji = ctx.dataset.label.includes('Laki') ? '👦' :
+                                            '👧';
+                                        return `${genderEmoji} ${ctx.dataset.label.split(' ')[1]}: ${val.toLocaleString('id')} jiwa`;
+                                    }
+                                },
+                                backgroundColor: 'rgba(0,0,0,0.7)',
+                                titleFont: {
+                                    size: 14,
+                                    weight: '700'
+                                },
+                                bodyFont: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                stacked: true,
+                                title: {
+                                    display: true,
+                                    text: 'Jumlah Penduduk 🧮',
+                                    font: {
+                                        size: 14,
+                                        weight: '600'
+                                    }
+                                },
+                                ticks: {
+                                    callback: v => `🔢 ${v.toLocaleString('id')}`
+                                }
+                            },
+                            y: {
+                                stacked: true,
+                                title: {
+                                    display: true,
+                                    text: 'Pendidikan 📚',
+                                    font: {
+                                        size: 14,
+                                        weight: '600'
+                                    }
+                                },
+                                ticks: {
+                                    font: {
+                                        size: 13
+                                    }
+                                }
+                            }
+                        },
+                        animation: {
+                            duration: 1000,
+                            easing: 'easeOutBounce'
+                        }
+                    }
+                });
+            @endif
+
+        });
+    </script>
+
+    <div id="deathApp" class="max-w-4xl mx-auto px-4 py-8">
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h2 class="text-xl sm:text-2xl font-bold mb-6 text-gray-800 text-center">
+                Distribusi Kematian Tahun {{ $year }}
+            </h2>
+
+            <!-- Chart -->
+            <div class="flex justify-center mb-6">
+                <div class="w-[260px] sm:w-[300px]">
+                    <canvas id="deathPieChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Statistik -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center text-gray-700">
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-sm text-gray-500">Total Kematian</p>
+                    <p class="text-xl font-semibold">{{ number_format($totalDeaths, 0, ',', '.') }}</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-sm text-gray-500">Laki-laki</p>
+                    <p class="text-xl font-semibold">{{ number_format($maleDeaths, 0, ',', '.') }}</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-sm text-gray-500">Perempuan</p>
+                    <p class="text-xl font-semibold">{{ number_format($femaleDeaths, 0, ',', '.') }}</p>
+                </div>
+            </div>
+
+            <!-- Rata-rata umur -->
+            <p class="mt-6 text-center text-gray-600 text-sm">
+                Rata-rata umur saat meninggal:
+                <span class="font-semibold">{{ number_format($avgAge, 1) }} tahun</span>
+            </p>
+        </div>
+    </div>
+
+    {{-- @push('scripts') --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Chart.register(ChartDataLabels);
+
+            const total = @json($totalDeaths);
+            const male = @json($maleDeaths);
+            const female = @json($femaleDeaths);
+            const avgAge = @json($avgAge);
+
+            const ctx = document.getElementById('deathPieChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['👦 Laki-laki', '👧 Perempuan'],
+                    datasets: [{
+                        data: [male, female],
+                        backgroundColor: ['#3B82F6', '#EC4899'],
+                        borderColor: '#fff',
+                        borderWidth: 2,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    cutout: '65%',
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                font: {
+                                    size: 13
+                                }
+                            }
+                        },
+                        datalabels: {
+                            color: '#fff',
+                            formatter: v => {
+                                const pct = (v / total * 100).toFixed(0);
+                                return `${pct}%\n(${v})`;
+                            },
+                            font: {
+                                weight: '600',
+                                size: 12
+                            },
+                            anchor: 'center',
+                            align: 'center'
+                        },
+                        beforeDraw: chart => {
+                            const {
+                                width,
+                                height,
+                                ctx
+                            } = chart;
+                            ctx.save();
+                            ctx.font = '600 14px sans-serif';
+                            ctx.fillStyle = '#333';
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            ctx.fillText('Avg Umur', width / 2, height / 2 - 10);
+                            ctx.font = '700 16px sans-serif';
+                            ctx.fillText(`${avgAge} th`, width / 2, height / 2 + 14);
+                            ctx.restore();
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    {{-- @endpush --}}
+    
+
+    <!-- Alpine.js for slider -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    
 @endsection
