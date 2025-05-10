@@ -209,7 +209,7 @@
                         <label for="disabilitas" class="block text-gray-700 font-medium mb-1">Disabilitas</label>
                         <select name="disabilitas" id="disabilitas" x-model="disabilitas"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200">
-                            <option value="">Tidak Cacat</option>
+                            <option value="Tidak Cacat">Tidak Cacat</option>
                             @foreach (['Tuna Daksa/Cacat Tubuh', 'Tuna Netra/Buta', 'Tuna Rungu', 'Tuna Wicara', 'Tuna Rungu & Wicara', 'Tuna Netra & Cacat Tubuh', 'Tuna Netra, Rungu & Wicara', 'Tuna Rungu, Wicara & Cacat Tubuh', 'Cacat Mental/Retardasi', 'Mantan Penderita Gangguan Jiwa', 'Cacat Fisik & Mental', 'Tuna Grahita'] as $d)
                                 <option value="{{ $d }}">{{ $d }}</option>
                             @endforeach

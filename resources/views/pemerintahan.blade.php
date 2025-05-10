@@ -112,26 +112,84 @@
         use Illuminate\Support\Facades\DB;
         use Illuminate\Support\Str;
         use App\Models\PopulationDeath;
+        use Illuminate\Http\Request;
         // use App\Models\Resident;
         use Carbon\Carbon;
         // 1) Tahun sekarang
-        $year = Carbon::now()->year;
 
-        // 2) Ambil semua record kematian tahun ini, plus relasi resident
-        $deaths = PopulationDeath::with('resident')->whereYear('tanggal_meninggal', $year)->get();
+        $bloodStats = Resident::select('gol_darah as type', DB::raw('count(*) as count'))->groupBy('gol_darah')->get();
+        $total = Resident::count();
+        // Total kematian
+        $totalDeaths = PopulationDeath::count();
 
-        // 3) Total kematian, laki-laki & perempuan
-        $totalDeaths = $deaths->count();
-        $maleDeaths = $deaths->filter(fn($d) => $d->resident && $d->resident->jenis_kelamin === 'Laki-laki')->count();
-        $femaleDeaths = $deaths->filter(fn($d) => $d->resident && $d->resident->jenis_kelamin === 'Perempuan')->count();
+        // Kematian berdasarkan jenis kelamin
+        $maleDeaths = PopulationDeath::whereHas('resident', function ($q) {
+            $q->where('jenis_kelamin', 'Laki-laki');
+        })->count();
+        $femaleDeaths = PopulationDeath::whereHas('resident', function ($q) {
+            $q->where('jenis_kelamin', 'Perempuan');
+        })->count();
 
-        // 4) Rata-rata umur (dalam tahun, 1 desimal)
-        $ages = $deaths
-            ->filter(fn($d) => $d->resident && $d->resident->tanggal_lahir)
-            ->map(fn($d) => $d->tanggal_meninggal->diffInYears($d->resident->tanggal_lahir))
-            ->toArray();
+        // Persentase
+        $percentMale = $totalDeaths > 0 ? round((100 * $maleDeaths) / $totalDeaths, 1) : 0;
+        $percentFemale = $totalDeaths > 0 ? round((100 * $femaleDeaths) / $totalDeaths, 1) : 0;
+        // Hitung umur saat meninggal dan grup ke kategori lebih detail
+        $ageData = PopulationDeath::with('resident')
+            ->get()
+            ->map(function ($death) {
+                $dob = $death->resident->tanggal_lahir;
+                $dod = $death->tanggal_meninggal;
+                $ageYears =
+                    $dob && $dod
+                        ? $dob->diffInDays($dod) / 365.25 // usia dalam tahun (desimal)
+                        : null;
 
-        $avgAge = count($ages) ? round(array_sum($ages) / count($ages), 1) : 0;
+                if ($ageYears === null) {
+                    $cat = 'Tidak diketahui';
+                } elseif ($ageYears < 28 / 365.25) {
+                    $cat = 'Neonatal (0–28 hari)';
+                } elseif ($ageYears < 1) {
+                    $cat = 'Bayi (29 hari–<1 thn)';
+                } elseif ($ageYears < 13) {
+                    $cat = 'Anak-anak (1–12 thn)';
+                } elseif ($ageYears < 18) {
+                    $cat = 'Remaja (13–17 thn)';
+                } elseif ($ageYears < 36) {
+                    $cat = 'Dewasa Muda (18–35 thn)';
+                } elseif ($ageYears < 60) {
+                    $cat = 'Dewasa (36–59 thn)';
+                } elseif ($ageYears < 75) {
+                    $cat = 'Lansia (60–74 thn)';
+                } else {
+                    $cat = 'Tua (≥75 thn)';
+                }
+
+                return $cat;
+            })
+            ->countBy();
+
+        // Pastikan urutan label konsisten
+        $ageLabels = [
+            'Neonatal (0–28 hari)',
+            'Bayi (29 hari–<1 thn)',
+            'Anak-anak (1–12 thn)',
+            'Remaja (13–17 thn)',
+            'Dewasa Muda (18–35 thn)',
+            'Dewasa (36–59 thn)',
+            'Lansia (60–74 thn)',
+            'Tua (≥75 thn)',
+            'Tidak diketahui',
+        ];
+
+        // Ambil nilai sesuai urutan label
+        $ageCounts = array_map(function ($label) use ($ageData) {
+            return $ageData->get($label, 0);
+        }, $ageLabels);
+
+        // Siapkan labels & data untuk chart umur
+        $ageLabels = $ageData->keys()->toArray();
+        $ageCounts = $ageData->values()->toArray();
+
         $eduStats = Resident::select(
             'pendidikan',
             DB::raw("SUM(CASE WHEN jenis_kelamin = 'Laki-laki' THEN 1 ELSE 0 END) as male"),
@@ -590,119 +648,557 @@
         });
     </script>
 
-    <div id="deathApp" class="max-w-4xl mx-auto px-4 py-8">
-        <div class="bg-white rounded-2xl shadow-lg p-6">
-            <h2 class="text-xl sm:text-2xl font-bold mb-6 text-gray-800 text-center">
-                Distribusi Kematian Tahun {{ $year }}
-            </h2>
 
-            <!-- Chart -->
-            <div class="flex justify-center mb-6">
-                <div class="w-[260px] sm:w-[300px]">
-                    <canvas id="deathPieChart"></canvas>
-                </div>
-            </div>
 
-            <!-- Statistik -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center text-gray-700">
-                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-                    <p class="text-sm text-gray-500">Total Kematian</p>
-                    <p class="text-xl font-semibold">{{ number_format($totalDeaths, 0, ',', '.') }}</p>
-                </div>
-                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-                    <p class="text-sm text-gray-500">Laki-laki</p>
-                    <p class="text-xl font-semibold">{{ number_format($maleDeaths, 0, ',', '.') }}</p>
-                </div>
-                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-                    <p class="text-sm text-gray-500">Perempuan</p>
-                    <p class="text-xl font-semibold">{{ number_format($femaleDeaths, 0, ',', '.') }}</p>
-                </div>
-            </div>
+    <!-- Alpine.js for slider -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
-            <!-- Rata-rata umur -->
-            <p class="mt-6 text-center text-gray-600 text-sm">
-                Rata-rata umur saat meninggal:
-                <span class="font-semibold">{{ number_format($avgAge, 1) }} tahun</span>
-            </p>
-        </div>
-    </div>
-
-    {{-- @push('scripts') --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             Chart.register(ChartDataLabels);
 
-            const total = @json($totalDeaths);
-            const male = @json($maleDeaths);
-            const female = @json($femaleDeaths);
-            const avgAge = @json($avgAge);
+            @if ($total > 0)
+                new Chart(document.getElementById('bloodTypeChart'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: @json($bloodStats->pluck('type')), // ['A','B','AB','O', ...]
+                        datasets: [{
+                            data: @json($bloodStats->pluck('count')), // [jumlah A, jumlah B, ...]
+                            backgroundColor: @json(array_slice($colors, 0, $bloodStats->count())),
+                            borderColor: '#fff',
+                            borderWidth: 2,
+                            hoverOffset: 10
+                        }]
+                    },
+                    options: {
+                        cutout: '60%',
+                        responsive: true,
+                        plugins: {
+                            datalabels: {
+                                formatter: (v, ctx) => ((v / ctx.chart.data.datasets[0].data.reduce((a,
+                                    b) => a + b, 0)) * 100).toFixed(1) + '%',
+                                color: '#fff',
+                                font: {
+                                    weight: '600',
+                                    size: 12
+                                }
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        },
+                        animation: {
+                            duration: 1000,
+                            easing: 'easeOutBounce'
+                        }
+                    }
+                });
+            @endif
+        });
+    </script>
 
-            const ctx = document.getElementById('deathPieChart').getContext('2d');
+    {{-- =======================
+ Section: Golongan Darah Penduduk
+======================= --}}
+    <section id="blood-types" class="py-12 px-4 bg-gray-50">
+        <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6">
+            <h2 class="text-3xl font-bold text-green-800 text-center">Distribusi Golongan Darah</h2>
+
+            @if ($total > 0)
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                    {{-- Chart --}}
+                    <div class="w-full max-w-sm mx-auto">
+                        <canvas id="bloodTypeChart"></canvas>
+                    </div>
+
+                    {{-- Kartu ringkasan --}}
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 flex-1">
+                        @foreach ($bloodStats as $stat)
+                            <div class="p-4 bg-white rounded-lg text-center shadow-sm border">
+                                <p class="text-gray-700 font-medium">Total Golongan {{ $stat->type }}</p>
+                                <p class="text-xl font-bold text-green-700">
+                                    {{ number_format($stat->count, 0, ',', '.') }}
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @else
+                <p class="text-center text-gray-500">Belum ada data golongan darah penduduk.</p>
+            @endif
+        </div>
+    </section>
+    <section id="death-stats" class="py-12 px-4 bg-gray-50">
+        <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6">
+            <h2 class="text-3xl font-bold text-red-800 text-center">Statistik Kematian Penduduk</h2>
+
+            @if ($totalDeaths > 0)
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                    {{-- Chart Persentase Gender --}}
+                    <div class="w-full max-w-sm mx-auto">
+                        <canvas id="deathGenderChart"></canvas>
+                    </div>
+
+                    {{-- Ringkasan --}}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
+                        <div class="p-4 bg-red-50 rounded-lg text-center">
+                            <p class="text-gray-700 font-medium">Total Kematian</p>
+                            <p class="text-red-700 text-2xl font-bold">{{ number_format($totalDeaths, 0, ',', '.') }}</p>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-lg text-center">
+                            <p class="text-gray-700 font-medium">Laki-laki</p>
+                            <p class="text-blue-700 text-2xl font-bold">{{ number_format($maleDeaths, 0, ',', '.') }}</p>
+                            <p class="text-sm text-gray-600">{{ $percentMale }}%</p>
+                        </div>
+                        <div class="p-4 bg-pink-50 rounded-lg text-center">
+                            <p class="text-gray-700 font-medium">Perempuan</p>
+                            <p class="text-pink-700 text-2xl font-bold">{{ number_format($femaleDeaths, 0, ',', '.') }}
+                            </p>
+                            <p class="text-sm text-gray-600">{{ $percentFemale }}%</p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Chart Distribusi Umur --}}
+                <div class="mt-12">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Distribusi Umur Saat Meninggal</h3>
+                    <div class="w-full max-w-lg mx-auto">
+                        <canvas id="deathAgeChart"></canvas>
+                    </div>
+                </div>
+            @else
+                <p class="text-center text-gray-500">Belum ada data kematian yang tercatat.</p>
+            @endif
+        </div>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Chart.register(ChartDataLabels);
+
+            @if ($totalDeaths > 0)
+                // 1) Doughnut Chart: Persentase Gender
+                new Chart(document.getElementById('deathGenderChart'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Laki-laki', 'Perempuan'],
+                        datasets: [{
+                            data: [{{ $maleDeaths }}, {{ $femaleDeaths }}],
+                            backgroundColor: @json(['#3B82F6', '#EC4899']),
+                            borderColor: '#fff',
+                            borderWidth: 2,
+                            hoverOffset: 6
+                        }]
+                    },
+                    options: {
+                        cutout: '70%',
+                        responsive: true,
+                        plugins: {
+                            datalabels: {
+                                formatter: (v, ctx) => v + '%',
+                                color: '#fff',
+                                font: {
+                                    weight: '600',
+                                    size: 12
+                                }
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+
+                // 2) Bar Chart: Distribusi Umur Saat Meninggal
+                new Chart(document.getElementById('deathAgeChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: @json($ageLabels),
+                        datasets: [{
+                            label: 'Jumlah Meninggal',
+                            data: @json($ageCounts),
+                            backgroundColor: 'rgba(239, 68, 68, 0.6)',
+                            borderColor: 'rgba(239, 68, 68, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y', // opsional: bar horizontal
+                        responsive: true,
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            datalabels: {
+                                anchor: 'end',
+                                align: 'right',
+                                formatter: v => v
+                            }
+                        }
+                    }
+                });
+            @endif
+        });
+    </script>
+
+
+    {{-- resources/views/dashboard/age-range.blade.php --}}
+    <section id="age-range-chart" class="py-12 px-4 bg-gray-50">
+        <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Distribusi Usia Penduduk</h2>
+
+            @php
+                //   use App\Models\Resident;
+
+                // Definisikan rentang umur
+                $ageRanges = [
+                    'Anak (0–17)' => [0, 17],
+                    'Dewasa (18–55)' => [18, 55],
+                    'Lansia (56+)' => [56, 200],
+                ];
+
+                $labels = array_keys($ageRanges);
+                $maleCounts = [];
+                $femaleCounts = [];
+
+                foreach ($ageRanges as $range) {
+                    [$min, $max] = $range;
+
+                    // Hitung jumlah laki-laki
+                    $maleCounts[] = Resident::where('jenis_kelamin', 'L')
+                        ->whereRaw('TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) BETWEEN ? AND ?', [$min, $max])
+                        ->count();
+
+                    // Hitung jumlah perempuan
+                    $femaleCounts[] = Resident::where('jenis_kelamin', 'P')
+                        ->whereRaw('TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) BETWEEN ? AND ?', [$min, $max])
+                        ->count();
+                }
+            @endphp
+
+            <canvas id="ageRangeChart"></canvas>
+        </div>
+    </section>
+
+    {{-- @push('scripts') --}}
+    {{-- Pastikan layout utama memanggil @stack('scripts') sebelum closing </body> --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('ageRangeChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @json($labels),
+                    datasets: [{
+                            label: 'Laki-laki',
+                            data: @json($maleCounts),
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Perempuan',
+                            data: @json($femaleCounts),
+                            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Jumlah Penduduk'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Rentang Usia'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'top',
+                            formatter: v => v,
+                            font: {
+                                weight: '600',
+                                size: 12
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutBounce'
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        });
+    </script>
+    {{-- @endpush --}}
+    {{-- resources/views/dashboard/age-category.blade.php --}}
+    @php
+        use Illuminate\Support\Facades\Cache;
+
+        // 1) Definisikan rentang umur (tahun)
+        $ageCategories = [
+            'Balita & Batita (0–5)' => [0, 5],
+            'Anak-Anak (6–12)' => [6, 12],
+            'Remaja (13–18)' => [13, 18],
+            'Dewasa (19–59)' => [19, 59],
+            'Lansia (60+)' => [60, 200],
+        ];
+
+        // 2) Hitung jumlah & persentase
+        $counts = [];
+        foreach ($ageCategories as $label => [$min, $max]) {
+            $counts[$label] = Resident::whereRaw('TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) BETWEEN ? AND ?', [
+                $min,
+                $max,
+            ])->count();
+        }
+        $total = array_sum($counts);
+        $percentages = [];
+        foreach ($counts as $label => $c) {
+            $percentages[$label] = $total > 0 ? round(($c / $total) * 100, 1) : 0;
+        }
+
+        // Warnai chart dengan warna cerah
+        $colors = ['#4CAF50', '#2196F3', '#FF9800', '#9C27B0', '#F44336'];
+    @endphp
+    <section id="age-category" class="py-12 px-4 bg-gray-50">
+        <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-gray-800 text-center mb-8">Kategori Umur</h2>
+
+            <div class="flex flex-col lg:flex-row items-start gap-8">
+                {{-- Doughnut Chart --}}
+                <div class="w-full lg:w-1/3">
+                    <canvas id="ageCategoryChart"></canvas>
+
+                    {{-- Total & daftar ringkasan --}}
+                    <div class="mt-6 text-gray-700">
+                        <p class="font-medium mb-2">Total Data: {{ number_format($total) }} Jiwa</p>
+                        @foreach ($counts as $label => $c)
+                            <p class="text-sm">
+                                {{ $label }}: {{ number_format($c) }} Jiwa ({{ $percentages[$label] }}%)
+                            </p>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Kartu per kategori dengan emoji --}}
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
+                    @foreach ($ageCategories as $label => $_)
+                        @php
+                            // Tentukan emoji per kategori
+                            $emojiMap = [
+                                'Balita & Batita (0–5)' => '👶',
+                                'Anak-Anak (6–12)' => '🧒',
+                                'Remaja (13–18)' => '🧑‍🎓',
+                                'Dewasa (19–59)' => '🧑‍💼',
+                                'Lansia (60+)' => '👵',
+                            ];
+                            $emoji = $emojiMap[$label] ?? '❓';
+                            // Ambil kata pertama sebagai judul ringkas
+                            $title = explode(' ', $label)[0];
+                        @endphp
+
+                        <div class="bg-gray-50 rounded-lg p-6 flex flex-col items-center">
+                            <div class="text-5xl mb-2">{{ $emoji }}</div>
+                            <h3 class="font-semibold text-gray-800 text-center">{{ $title }}</h3>
+                            <p class="text-xl text-green-600 font-bold">{{ $percentages[$label] }}%</p>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- @push('scripts') --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('ageCategoryChart').getContext('2d');
+            const labels = @json(array_keys($ageCategories));
+            const data = @json(array_values($percentages));
+            const colors = @json($colors);
+
             new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['👦 Laki-laki', '👧 Perempuan'],
+                    labels,
                     datasets: [{
-                        data: [male, female],
-                        backgroundColor: ['#3B82F6', '#EC4899'],
+                        data,
+                        backgroundColor: colors,
                         borderColor: '#fff',
                         borderWidth: 2,
                         hoverOffset: 8
                     }]
                 },
                 options: {
-                    cutout: '65%',
+                    cutout: '60%',
                     responsive: true,
                     plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                usePointStyle: true,
-                                pointStyle: 'circle',
-                                font: {
-                                    size: 13
-                                }
-                            }
-                        },
                         datalabels: {
+                            formatter: v => v + '%',
                             color: '#fff',
-                            formatter: v => {
-                                const pct = (v / total * 100).toFixed(0);
-                                return `${pct}%\n(${v})`;
-                            },
                             font: {
                                 weight: '600',
                                 size: 12
-                            },
-                            anchor: 'center',
-                            align: 'center'
+                            }
                         },
-                        beforeDraw: chart => {
-                            const {
-                                width,
-                                height,
-                                ctx
-                            } = chart;
-                            ctx.save();
-                            ctx.font = '600 14px sans-serif';
-                            ctx.fillStyle = '#333';
-                            ctx.textAlign = 'center';
-                            ctx.textBaseline = 'middle';
-                            ctx.fillText('Avg Umur', width / 2, height / 2 - 10);
-                            ctx.font = '700 16px sans-serif';
-                            ctx.fillText(`${avgAge} th`, width / 2, height / 2 + 14);
-                            ctx.restore();
+                        legend: {
+                            position: 'bottom'
                         }
+                    },
+                    animation: {
+                        duration: 800,
+                        easing: 'easeOutBounce'
                     }
-                }
+                },
+                plugins: [ChartDataLabels]
             });
         });
     </script>
     {{-- @endpush --}}
-    
+    {{-- resources/views/dashboard/marital-status.blade.php --}}
+    @php
+        //   use App\Models\Resident;
 
-    <!-- Alpine.js for slider -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+        // 1) Definisikan kategori status perkawinan
+        $statusCategories = [
+            'Belum Kawin' => 'Belum Kawin',
+            'Kawin' => 'Kawin',
+            'Cerai Mati' => 'Cerai Mati',
+            'Cerai Hidup' => 'Cerai Hidup',
+        ];
 
-    
+        // 2) Hitung jumlah & persentase tiap kategori
+        $counts = [];
+        foreach ($statusCategories as $key => $label) {
+            $counts[$label] = Resident::where('status_perkawinan', $label)->count();
+        }
+        $total = array_sum($counts);
+
+        $percentages = [];
+        foreach ($counts as $label => $c) {
+            $percentages[$label] = $total > 0 ? round(($c / $total) * 100) : 0;
+        }
+
+        // 3) Warna chart
+        $colors = ['#4CAF50', '#2196F3', '#FF9800', '#F44336'];
+    @endphp
+
+    <section id="marital-status" class="py-12 px-4 bg-gray-50">
+        <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-3xl font-bold text-gray-800 text-center mb-8">Perkawinan</h2>
+
+            <div class="flex flex-col lg:flex-row items-start gap-8">
+                {{-- Doughnut Chart + Ringkasan --}}
+                <div class="w-full lg:w-1/3">
+                    <canvas id="maritalChart"></canvas>
+
+                    <div class="mt-6 text-gray-700">
+                        <p class="font-medium mb-2">Total Data: {{ number_format($total) }} Jiwa</p>
+                        @foreach ($counts as $label => $c)
+                            <p class="text-sm">
+                                {{ $label }}: {{ number_format($c) }} Jiwa ({{ $percentages[$label] }}%)
+                            </p>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Kartu per kategori dengan emoji --}}
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
+                    @php
+                        $emojiMap = [
+                            'Belum Kawin' => '💌',
+                            'Kawin' => '💑',
+                            'Cerai Mati' => '⚰️',
+                            'Cerai Hidup' => '💔',
+                        ];
+                    @endphp
+
+                    @foreach ($statusCategories as $label)
+                        <div class="bg-gray-50 rounded-lg p-6 flex flex-col items-center">
+                            <div class="text-5xl mb-2">{{ $emojiMap[$label] }}</div>
+                            <h3 class="font-semibold text-gray-800 text-center">{{ $label }}</h3>
+                            <p class="text-xl text-green-600 font-bold">{{ $percentages[$label] }}%</p>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- @push('scripts') --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('maritalChart').getContext('2d');
+            const labels = @json(array_keys($statusCategories));
+            const data = @json(array_values($percentages));
+            const bgColors = @json($colors);
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels,
+                    datasets: [{
+                        data,
+                        backgroundColor: bgColors,
+                        borderColor: '#fff',
+                        borderWidth: 2,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    cutout: '60%',
+                    responsive: true,
+                    plugins: {
+                        datalabels: {
+                            formatter: v => v + '%',
+                            color: '#fff',
+                            font: {
+                                weight: '600',
+                                size: 12
+                            }
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    animation: {
+                        duration: 800,
+                        easing: 'easeOutBounce'
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        });
+    </script>
+    {{-- @endpush --}}
+
 @endsection
