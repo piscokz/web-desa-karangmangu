@@ -101,8 +101,8 @@
                             <div class="bg-green-100 text-green-600 rounded-full p-2 flex-shrink-0">
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L9 11.586 5.707 8.293a1
-                                         1 0 00-1.414 1.414l4 4a1 1 0 001.414
-                                         0l7-7a1 1 0 000-1.414z" clip-rule="evenodd" />
+                                                 1 0 00-1.414 1.414l4 4a1 1 0 001.414
+                                                 0l7-7a1 1 0 000-1.414z" clip-rule="evenodd" />
                                 </svg>
                             </div>
                             <p class="text-gray-700 text-lg font-medium">{{ $item }}</p>
@@ -350,52 +350,61 @@
                 Informasi lengkap karakteristik demografi penduduk—jumlah, keluarga, jenis kelamin, dan lebih.
             </p>
 
-            {{-- Cards --}}
+            {{-- Cards Statistik Desa --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-12">
                 {{-- Penduduk --}}
-                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                    <div class="flex items-center justify-center mb-4 text-4xl">👥</div>
+                <div
+                    class="bg-gradient-to-br from-teal-100 to-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1">
+                    <div class="flex items-center justify-center mb-4 text-5xl">👥</div>
                     @if ($totalResidents)
-                        <h3 class="text-2xl font-bold text-teal-600 mb-2">{{ number_format($totalResidents / 1000, 1) }}K
+                        <h3 class="text-3xl font-extrabold text-teal-700 mb-2">
+                            {{ $totalResidents }} Jiwa <br> Terdata</h3>
+                    @else
+                        <p class="text-red-500 font-semibold">Data belum tersedia</p>
+                    @endif
+                    <p class="text-gray-600 uppercase tracking-wider">Penduduk</p>
+                </div>
+
+                {{-- Kepala Keluarga --}}
+                <div
+                    class="bg-gradient-to-br from-teal-100 to-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1">
+                    <div class="flex items-center justify-center mb-4 text-5xl">🏠</div>
+                    @if ($totalFamilies && $totalResidents)
+                        <h3 class="text-3xl font-extrabold text-teal-700 mb-2">
+                            {{ round(($totalFamilies / ($totalResidents ?: 1)) * 100) }}%
                         </h3>
                     @else
                         <p class="text-red-500 font-semibold">Data belum tersedia</p>
                     @endif
-                    <p class="text-gray-600 uppercase tracking-wide">Penduduk</p>
-                </div>
-
-                {{-- Kepala Keluarga --}}
-                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                    <div class="flex items-center justify-center mb-4 text-4xl">🏠</div>
-                    @if ($totalResidents)
-                        <h3 class="text-2xl font-bold text-teal-600 mb-2">{{ $familyPct }}%</h3>
-                    @else
-                        <p class="text-red-500 font-semibold">Data belum tersedia</p>
-                    @endif
-                    <p class="text-gray-600 uppercase tracking-wide">Kepala Keluarga</p>
+                    <p class="text-gray-600 uppercase tracking-wider">Kepala Keluarga</p>
                 </div>
 
                 {{-- Laki-Laki --}}
-                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                    <div class="flex items-center justify-center mb-4 text-4xl">👨</div>
-                    @if ($maleCount)
-                        <h3 class="text-2xl font-bold text-teal-600 mb-2">{{ number_format($maleCount / 1000, 1) }}K</h3>
+                <div
+                    class="bg-gradient-to-br from-blue-100 to-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1">
+                    <div class="flex items-center justify-center mb-4 text-5xl text-blue-600">👨</div>
+                    @if ($maleCount && $totalResidents)
+                        <h3 class="text-3xl font-extrabold text-blue-700 mb-2">
+                            {{ round(($maleCount / ($totalResidents ?: 1)) * 100) }}%
+                        </h3>
                     @else
                         <p class="text-red-500 font-semibold">Data belum tersedia</p>
                     @endif
-                    <p class="text-gray-600 uppercase tracking-wide">Laki-Laki</p>
+                    <p class="text-gray-600 uppercase tracking-wider">Laki-Laki</p>
                 </div>
 
                 {{-- Perempuan --}}
-                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                    <div class="flex items-center justify-center mb-4 text-4xl">👩</div>
-                    @if ($femaleCount)
-                        <h3 class="text-2xl font-bold text-teal-600 mb-2">
-                            {{ round(($femaleCount / ($totalResidents ?: 1)) * 100) }}%</h3>
+                <div
+                    class="bg-gradient-to-br from-pink-100 to-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1">
+                    <div class="flex items-center justify-center mb-4 text-5xl text-pink-600">👩</div>
+                    @if ($femaleCount && $totalResidents)
+                        <h3 class="text-3xl font-extrabold text-pink-700 mb-2">
+                            {{ round(($femaleCount / ($totalResidents ?: 1)) * 100) }}%
+                        </h3>
                     @else
                         <p class="text-red-500 font-semibold">Data belum tersedia</p>
                     @endif
-                    <p class="text-gray-600 uppercase tracking-wide">Perempuan</p>
+                    <p class="text-gray-600 uppercase tracking-wider">Perempuan</p>
                 </div>
             </div>
 
@@ -411,79 +420,23 @@
         </div>
     </section>
 
-    @push('scripts')
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                @if ($totalResidents)
-                    const ctx = document.getElementById('statChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Penduduk', 'KK', 'Laki-L', 'Perempuan'],
-                            datasets: [{
-                                data: [{{ $totalResidents }}, {{ $totalFamilies }},
-                                    {{ $maleCount }}, {{ $femaleCount }}
-                                ],
-                                backgroundColor: ['#2DD4BF', '#14B8A6', '#0D9488', '#047857'],
-                                borderRadius: 8,
-                                barThickness: 24
-                            }]
-                        },
-                        options: {
-                            indexAxis: 'y',
-                            scales: {
-                                x: {
-                                    beginAtZero: true
-                                },
-                                y: {
-                                    ticks: {
-                                        font: {
-                                            size: 14
-                                        }
-                                    }
-                                }
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false
-                                }
-                            },
-                            maintainAspectRatio: false,
-                            responsive: true
-                        }
-                    });
-                @endif
-            });
-        </script>
-    @endpush
-
-
-    @push('scripts')
-        {{-- Chart.js CDN --}}
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
+    {{-- @push('scripts') --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            @if ($totalResidents)
                 const ctx = document.getElementById('statChart').getContext('2d');
                 new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ['Penduduk', 'Kepala Keluarga', 'Laki-Laki', 'Perempuan'],
+                        labels: ['Penduduk', 'KK', 'Laki-L', 'Perempuan'],
                         datasets: [{
-                            label: 'Statistik',
-                            data: [
-                                {{ $totalResidents }},
-                                {{ $totalFamilies }},
-                                {{ $maleCount }},
-                                {{ $femaleCount }}
+                            data: [{{ $totalResidents }}, {{ $totalFamilies }},
+                                {{ $maleCount }}, {{ $femaleCount }}
                             ],
-                            backgroundColor: [
-                                'rgba(56, 190, 182, 0.6)',
-                                'rgba(20, 184, 166, 0.6)',
-                                'rgba(13, 148, 136, 0.6)',
-                                'rgba(4, 120, 87, 0.6)'
-                            ],
-                            borderWidth: 0
+                            backgroundColor: ['#2DD4BF', '#14B8A6', '#0D9488', '#047857'],
+                            borderRadius: 8,
+                            barThickness: 24
                         }]
                     },
                     options: {
@@ -503,20 +456,149 @@
                         plugins: {
                             legend: {
                                 display: false
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: ctx => ctx.parsed.x.toLocaleString()
-                                }
                             }
                         },
-                        responsive: true,
-                        maintainAspectRatio: false
+                        maintainAspectRatio: false,
+                        responsive: true
                     }
                 });
+            @endif
+        });
+    </script>
+    {{-- @endpush --}}
+
+
+    {{-- @push('scripts') --}}
+    {{-- Chart.js CDN --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Sertakan plugin DataLabels di <head> atau sebelum script Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+    <canvas id="statChart" style="height: 300px;"></canvas>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('statChart').getContext('2d');
+
+            // Buat gradien untuk tiap bar
+            const createGradient = (ctx, colorStart, colorEnd) => {
+                const grad = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
+                grad.addColorStop(0, colorStart);
+                grad.addColorStop(1, colorEnd);
+                return grad;
+            };
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Penduduk', 'Kepala Keluarga', 'Laki-Laki', 'Perempuan'],
+                    datasets: [{
+                        label: 'Jumlah',
+                        data: [
+                            {{ $totalResidents }},
+                            {{ $totalFamilies }},
+                            {{ $maleCount }},
+                            {{ $femaleCount }}
+                        ],
+                        backgroundColor: [
+                            createGradient(ctx, 'rgba(56,190,182,0.8)', 'rgba(56,190,182,0.4)'),
+                            createGradient(ctx, 'rgba(20,184,166,0.8)', 'rgba(20,184,166,0.4)'),
+                            createGradient(ctx, 'rgba(13,148,136,0.8)', 'rgba(13,148,136,0.4)'),
+                            createGradient(ctx, 'rgba(4,120,87,0.8)', 'rgba(4,120,87,0.4)')
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    animation: {
+                        duration: 800,
+                        easing: 'easeOutQuad'
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Statistik Penduduk Desa Karangmangu',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 20
+                            }
+                        },
+                        subtitle: {
+                            display: true,
+                            text: `Data per ${new Date().toLocaleDateString('id-ID', {
+            day: 'numeric', month: 'long', year: 'numeric'
+          })}`,
+                            font: {
+                                size: 12,
+                                style: 'italic'
+                            },
+                            padding: {
+                                bottom: 10
+                            }
+                        },
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => ctx.parsed.x.toLocaleString('id-ID')
+                            }
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'right',
+                            formatter: value => value.toLocaleString('id-ID'),
+                            font: {
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Jumlah (orang)',
+                                font: {
+                                    size: 14
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0,0,0,0.1)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Kategori',
+                                font: {
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                font: {
+                                    size: 14
+                                }
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                },
+                plugins: [ChartDataLabels]
             });
-        </script>
-    @endpush
+        });
+    </script>
+
+    {{-- @endpush --}}
     <section class="bg-gray-50 border-t border-green-200 py-20">
         <div class="max-w-7xl mx-auto px-4">
             <h3 class="text-4xl font-bold text-center text-green-800 mb-16 relative inline-block">
@@ -526,7 +608,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 @foreach ($latestArticles as $idx => $article)
-                    <a href="{{ route('article.show', $article) }}" data-aos="fade-up" data-aos-delay="{{ $idx * 100 }}"
+                    <a href="{{ route('article.show', $article) }}" data-aos="fade-up"
+                        data-aos-delay="{{ $idx * 100 }}"
                         class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group block">
 
                         {{-- Thumbnail --}}
@@ -738,84 +821,73 @@
                 <!-- Judul Section -->
                 <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">💬 Informasi Kontak Desa</h2>
 
-                <!-- Komentar -->
-                <div class="bg-white rounded-xl shadow px-6 py-4">
-                    <button onclick="toggleAccordion('komentar')"
-                        class="w-full flex justify-between items-center font-semibold text-lg text-left focus:outline-none">
-                        Komentar
-                        <span id="icon-komentar">−</span>
-                    </button>
-                    <div id="content-komentar" class="mt-2 text-gray-700">
-                        Warga desa sangat ramah dan selalu menyapa dengan senyuman. Mereka juga sangat membantu jika kita
-                        membutuhkan informasi tentang sekitar desa.
+                <!-- Accordion Item Template -->
+                <template id="accordion-item">
+                    <div class="bg-white rounded-xl shadow">
+                        <button
+                            class="w-full flex justify-between items-center font-semibold text-lg text-left px-6 py-4 focus:outline-none"
+                            onclick="toggleAccordion(this)">
+                            <span class="accordion-title"></span>
+                            <span class="accordion-icon">＋</span>
+                        </button>
+                        <div
+                            class="accordion-content px-6 overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                            <p class="py-4 text-gray-700"></p>
+                        </div>
                     </div>
-                </div>
+                </template>
 
-                <!-- Email -->
-                <div class="bg-white rounded-xl shadow px-6 py-4">
-                    <button onclick="toggleAccordion('email')"
-                        class="w-full flex justify-between items-center font-semibold text-lg text-left focus:outline-none">
-                        Email
-                        <span id="icon-email">＋</span>
-                    </button>
-                    <div id="content-email" class="mt-2 text-gray-700 hidden">
-                        karangmangu2035@gmail.com
-                    </div>
-                </div>
+                <!-- Data Items -->
+                <script>
+                    const items = [{
+                            title: 'Komentar',
+                            text: 'Warga desa sangat ramah dan selalu menyapa dengan senyuman. Mereka juga sangat membantu jika kita membutuhkan informasi tentang sekitar desa.'
+                        },
+                        {
+                            title: 'Email',
+                            text: 'karangmangu2035@gmail.com'
+                        },
+                        {
+                            title: 'Pesan',
+                            text: 'Ini adalah contoh pesan dari warga yang ditujukan untuk perangkat desa.'
+                        }
+                    ];
 
-                <!-- Pesan -->
-                <div class="bg-white rounded-xl shadow px-6 py-4">
-                    <button onclick="toggleAccordion('pesan')"
-                        class="w-full flex justify-between items-center font-semibold text-lg text-left focus:outline-none">
-                        Pesan
-                        <span id="icon-pesan">＋</span>
-                    </button>
-                    <div id="content-pesan" class="mt-2 text-gray-700 hidden">
-                        Ini adalah contoh pesan dari warga yang ditujukan untuk perangkat desa.
-                    </div>
-                </div>
+                    window.addEventListener('DOMContentLoaded', () => {
+                        const container = document.querySelector('.max-w-md');
+                        const tpl = document.getElementById('accordion-item');
 
-            </div>
-        </div>
+                        items.forEach((item, idx) => {
+                            const clone = tpl.content.cloneNode(true);
+                            clone.querySelector('.accordion-title').innerText = item.title;
+                            clone.querySelector('p').innerText = item.text;
+                            if (idx === 0) {
+                                // Buka default pertama
+                                setTimeout(() => openAccordion(clone.querySelector('button')), 0);
+                            }
+                            container.appendChild(clone);
+                        });
+                    });
 
-        <script>
-            function toggleAccordion(id) {
-                const content = document.getElementById('content-' + id);
-                const icon = document.getElementById('icon-' + id);
+                    function toggleAccordion(button) {
+                        const content = button.nextElementSibling;
+                        const icon = button.querySelector('.accordion-icon');
 
-                const isOpen = !content.classList.contains('hidden');
-                document.querySelectorAll('[id^="content-"]').forEach(el => el.classList.add('hidden'));
-                document.querySelectorAll('[id^="icon-"]').forEach(el => el.innerText = '＋');
+                        const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+                        // Tutup semua
+                        document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = '0px');
+                        document.querySelectorAll('.accordion-icon').forEach(i => i.textContent = '＋');
 
-                if (!isOpen) {
-                    content.classList.remove('hidden');
-                    icon.innerText = '−';
-                }
-            }
+                        if (!isOpen) {
+                            content.style.maxHeight = content.scrollHeight + 'px';
+                            icon.textContent = '−';
+                        }
+                    }
 
-            // Buka default pertama
-            window.onload = () => toggleAccordion('komentar');
-        </script>
+                    function openAccordion(button) {
+                        button.click();
+                    }
+                </script>
     </section>
-
-
-    <script>
-        function toggleAccordion(id) {
-            const content = document.getElementById('content-' + id);
-            const icon = document.getElementById('icon-' + id);
-
-            const isOpen = !content.classList.contains('hidden');
-            document.querySelectorAll('[id^="content-"]').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('[id^="icon-"]').forEach(el => el.innerText = '＋');
-
-            if (!isOpen) {
-                content.classList.remove('hidden');
-                icon.innerText = '−';
-            }
-        }
-
-        // Default buka komentar
-        window.onload = () => toggleAccordion('komentar');
-    </script>
 
 @endsection
