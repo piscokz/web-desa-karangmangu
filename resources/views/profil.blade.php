@@ -49,36 +49,201 @@
 
     <section class="bg-green-50 py-16 space-y-16">
         <div class="max-w-4xl mx-auto px-4 space-y-16">
+            <!-- Profil Desa -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Profil Desa Karangmangu</h2>
+                <div class="text-gray-700 leading-relaxed text-justify space-y-6">
+                    <p>
+                        Desa Karangmangu adalah salah satu desa di Kecamatan Kramatmulya, Kabupaten Kuningan, dengan luas
+                        wilayah 223,165 Ha.
+                        Kantor Desa terletak di Dusun Manis RT 007 RW 003. Desa terdiri dari 4 Dusun, 8 RW, dan 20 RT.
+                    </p>
+                    <p>
+                        Jumlah penduduk total mencapai 4.636 jiwa, terdiri dari 2.226 laki-laki dan 2.140 perempuan,
+                        dengan 1.318 Kepala Keluarga. Dari jumlah KK tersebut, 383 KK (30 %) tergolong keluarga miskin
+                        (Gakin).
+                    </p>
+                    <p>
+                        Berdasarkan topografi dan kontur tanah, Desa Karangmangu secara umum berupa area sawah dan daratan
+                        pada ketinggian 500–550 m dpl, dengan suhu rata-rata 29 °C–35 °C. Jarak ke ibu kota kecamatan 2 km
+                        (10 menit)
+                        dan ke ibu kota kabupaten 6 km (30 menit).
+                    </p>
+
+                    <div class="overflow-x-auto">
+                        <table class="table-auto w-full border-collapse border border-gray-300">
+                            <thead class="bg-green-50">
+                                <tr>
+                                    <th class="px-4 py-2 border">Keterangan</th>
+                                    <th class="px-4 py-2 border text-right">Jumlah</th>
+                                    <th class="px-4 py-2 border">Satuan</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700">
+                                <!-- Luas Wilayah -->
+                                <tr class="bg-gray-100">
+                                    <td class="px-4 py-2 border font-semibold">Luas Wilayah Desa Karangmangu</td>
+                                    <td class="px-4 py-2 border text-right">223,165</td>
+                                    <td class="px-4 py-2 border">Ha</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border">a. Tanah Sawah</td>
+                                    <td class="px-4 py-2 border text-right">65,844</td>
+                                    <td class="px-4 py-2 border">Ha</td>
+                                </tr>
+                                <tr class="bg-gray-100">
+                                    <td class="px-4 py-2 border">b. Pemukiman</td>
+                                    <td class="px-4 py-2 border text-right">36,4</td>
+                                    <td class="px-4 py-2 border">Ha</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border">c. Perkantoran/Fasilitas Umum</td>
+                                    <td class="px-4 py-2 border text-right">2,48</td>
+                                    <td class="px-4 py-2 border">Ha</td>
+                                </tr>
+                                <tr class="bg-gray-100">
+                                    <td class="px-4 py-2 border">d. Lainnya</td>
+                                    <td class="px-4 py-2 border text-right">–</td>
+                                    <td class="px-4 py-2 border">Ha</td>
+                                </tr>
+
+                                <!-- Spacer row -->
+                                <tr>
+                                    <td colspan="3" class="py-2"></td>
+                                </tr>
+
+                                <!-- Penduduk -->
+                                <tr class="bg-gray-100">
+                                    <td class="px-4 py-2 border font-semibold">Penduduk</td>
+                                    <td class="px-4 py-2 border text-right">4.636</td>
+                                    <td class="px-4 py-2 border">Jiwa</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border">a. Laki-laki</td>
+                                    <td class="px-4 py-2 border text-right">2.226</td>
+                                    <td class="px-4 py-2 border">Jiwa</td>
+                                </tr>
+                                <tr class="bg-gray-100">
+                                    <td class="px-4 py-2 border">b. Perempuan</td>
+                                    <td class="px-4 py-2 border text-right">2.140</td>
+                                    <td class="px-4 py-2 border">Jiwa</td>
+                                </tr>
+
+                                <!-- Kepala Keluarga -->
+                                <tr>
+                                    <td class="px-4 py-2 border font-semibold">Kepala Keluarga</td>
+                                    <td class="px-4 py-2 border text-right">1.318</td>
+                                    <td class="px-4 py-2 border">KK</td>
+                                </tr>
+
+                                <!-- Spacer row -->
+                                <tr>
+                                    <td colspan="3" class="py-2"></td>
+                                </tr>
+
+                                <!-- Sarana Pendidikan -->
+                                <tr class="bg-gray-100">
+                                    <td class="px-4 py-2 border font-semibold">Sarana Pendidikan</td>
+                                    <td colspan="2" class="px-4 py-2 border">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border">a. Kelompok PAUD</td>
+                                    <td class="px-4 py-2 border text-right">3</td>
+                                    <td class="px-4 py-2 border">Kelompok</td>
+                                </tr>
+                                <tr class="bg-gray-100">
+                                    <td class="px-4 py-2 border">b. TPA</td>
+                                    <td class="px-4 py-2 border text-right">4</td>
+                                    <td class="px-4 py-2 border">Kelompok</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border">c. SD</td>
+                                    <td class="px-4 py-2 border text-right">3</td>
+                                    <td class="px-4 py-2 border">Buah</td>
+                                </tr>
+                                <tr class="bg-gray-100">
+                                    <td class="px-4 py-2 border">d. Madrasah Diniyah</td>
+                                    <td class="px-4 py-2 border text-right">4</td>
+                                    <td class="px-4 py-2 border">Buah</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border">e. Pondok Pesantren</td>
+                                    <td class="px-4 py-2 border text-right">4</td>
+                                    <td class="px-4 py-2 border">Buah</td>
+                                </tr>
+
+                                <!-- Spacer row -->
+                                <tr>
+                                    <td colspan="3" class="py-2"></td>
+                                </tr>
+
+                                <!-- Sarana Kesehatan Masyarakat -->
+                                <tr class="bg-gray-100">
+                                    <td class="px-4 py-2 border font-semibold">Sarana Kesehatan Masyarakat</td>
+                                    <td colspan="2" class="px-4 py-2 border">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border">a. Jamban Keluarga</td>
+                                    <td class="px-4 py-2 border text-right">1.218</td>
+                                    <td class="px-4 py-2 border">KK</td>
+                                </tr>
+                                <tr class="bg-gray-100">
+                                    <td class="px-4 py-2 border">b. KK Mempunyai Jamban</td>
+                                    <td class="px-4 py-2 border text-right">1.218</td>
+                                    <td class="px-4 py-2 border">KK</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 border">c. KK Tidak Mempunyai Jamban</td>
+                                    <td class="px-4 py-2 border text-right">10</td>
+                                    <td class="px-4 py-2 border">KK</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
 
             <!-- Sejarah -->
             <div class="bg-white rounded-lg shadow-lg p-8">
                 <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Sejarah Desa Karangmangu</h2>
                 <div class="text-gray-700 leading-relaxed text-justify space-y-4">
-                    <p>
-                        Desa Karangmangu merupakan salah satu desa di wilayah Kecamatan Kramatmulya dari 14 desa yang ada.
-                        Sejak zaman dahulu hingga sekarang, Desa Karangmangu terkenal dengan industri rumahannya, yaitu
-                        pengrajin bata merah dan produksi kupat/ketupat terbesar di Kabupaten Kuningan.
-                    </p>
-                    <p>
-                        Bicara tentang asal mula Desa Karangmangu, hingga saat ini belum ada catatan resmi kapan dan
-                        bagaimana desa ini lahir. Cerita yang beredar hanya “katanya-katanya” dari para sesepuh. Berikut
-                        ringkasan sejarah berdasarkan sumber lisan tersebut.
-                    </p>
-                    <p>
-                        Dahulu Karangmangu merupakan bagian dari wilayah Desa Cikaso, sebuah pemerintahan besar yang
-                        dipimpin oleh Tumenggung Argawijaya dengan patih Nagareja. Salah satu bukti adalah keberadaan makam
-                        kedua tokoh tersebut yang kini dikeramatkan di Desa Karangmangu, tepatnya di area yang kini disebut
-                        “Blok Tumenggung”.
-                    </p>
-                    <p>
-                        Nama “Karangmangu” konon berasal dari gabungan kata “karang” (halaman luas yang bersih dan rindang)
-                        dan “manggu” (bahasa Sunda untuk pohon mangga). Di tengah-tengah desa terdapat pohon mangga besar
-                        tempat anak-anak bermain dan para pedagang beristirahat. Dari situ lahirlah nama “Karangmanggu”,
-                        yang kemudian disederhanakan menjadi Karangmangu.
-                    </p>
-                    <p>
-                        Desa Karangmangu dipimpin oleh seorang kuwu. Berikut periode kepemimpinan yang dapat dihimpun:
-                    </p>
+                    <p>Desa Karangmangu merupakan salah satu desa diwilayah Kecamatan Kramatmulya
+dari 14 desa yang ada. Dari jaman dahulu hingga sekarang, Desa Karangmangu terkenal
+dengan home indurstrinya yaitu pengrajin bata merah dan kupat/ketupat terbesar
+dikabupaten Kuningan. Bicara tentang asal mula Desa Karangmangu, sampai saat ini tidak
+ada informasi yang jelas tentang kapan dan bagaimana desa ini lahir. Para penggagas
+berdirinya atau orang yang dianggap tahu bagaimana Desa Karangmangu ini ada tidak
+sumber informasi yang jelas, yang ada hanya cerita orang tua ”katanya-katanya” saja, penulis
+akan mencoba menulis Ringkasan sejarah Desa Karangmangu yang berdasarakan sumber
+dari “katan-katanya” itu.</p>
+<p>Desa Karangmangu asalnya adalah wilayah desa Cikaso, dalam sejarah singkat yang
+sempat penulis baca Desa Cikaso itu asalnya bukan desa melainkan sebuah pemerintahan
+besar yang dipimpin oleh seorang tumenggung/bupati yang bergelar Tumenggung
+“ARGAWIJAYA” dengan pendampingnya patih “NAGAREJA”. Salah satu bukti Karangmangu
+merupakan bagian dari Desa Cikaso yaitu kedua tokoh besar itu yakni Tumenggung
+ARGAWIJAYA dan Patih NAGAREJA makam/kuburannya berada di Desa Karangmangu
+yang sekarang dikeramatkan dan banyak dijiarahi orang terutama orang yang berhasrat ingin
+menjadi Kuwu/Kepala Desa. Bahkan untuk mengabadikan nama tokoh besar tersebut tempat
+dimana makam itu berada kini diabadikan dengan dengan istilah BLOK TUMENGGUNG,
+tempat itu tercatat pada catatan DHKP (Daftar Himpunan Ketetapan Pajak) desa dan
+kabupaten.</p>
+<p>Pada saat desa karangmangu lahir mungkin karena cakupan desa Cikaso yang luas
+atau mungkin ada sebab lain sehingga Desa Karangmangu ini lahir tidak penting untuk
+diperdebatklan, yang jelas katanya Karangmangu berasal dari Karangmanggu, konon katanya
+ditengah-tengah desa ada sebuah pohon manggu yang besar dan di disekitar pohon manggu
+tersebut ada sebuah halaman atau karang yang bersih, luas, rindang dan nyaman. karena
+rasa sejuk dan rindangnya pohon manggu terebut tempat ini dipakai sarana tempat bermain
+anak-anak bahkan juga tak jarang para pedagang yang kebetulan lewat ke tempat itu sengaja
+numpang istirahat melepas lelah dibawah rindanya pohon manggu sambil membuka
+timbel/nasi bekel yang ia bawa. Terifirasi dari nama itulah asal mula Karangmanggu diambil,
+dari pohon Manggu dan Karang/halaman yang bahasanya diesederhanakan lagi menjadi
+KARANGMANGU.</p>
+<p>Desa Karangmangu dipimpin oleh seorang kuwu, entah tahun berapa desa ini lahir</p>
+
+entah siapa orang yang pertama memimpin tidak ada ada informasi yang jelas, Periode-
+periode kuwu yang bisa dihimpun sebagai berikut:
                     <ul class="list-disc list-inside space-y-1">
                         <li>Kuwu Tuba (–1925) <em>(tahun tidak tercatat)</em></li>
                         <li>Kuwu Sumarja (1925–1961)</li>
@@ -101,43 +266,6 @@
 
 
 
-<<<<<<< HEAD
-<!-- Visi & Misi Desa Karangmangu -->
-<div class="bg-white rounded-lg shadow-lg p-8">
-    <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Visi &amp; Misi Desa Karangmangu</h2>
-    
-    <div class="text-gray-700 leading-relaxed text-justify space-y-4 mb-8">
-      <p>
-        Demokratisasi memiliki makna bahwa penyelenggaraan pemerintahan dan pelaksanaan pembangunan di desa harus mengakomodasi aspirasi masyarakat melalui Badan Permusyawaratan Desa dan lembaga kemasyarakatan yang ada sebagai mitra Pemerintah Desa. Hal ini diharapkan mendorong peran aktif masyarakat sehingga setiap warga bertanggung jawab atas perkembangan kehidupan bersama, meningkatkan taraf hidup dan kesejahteraan melalui kebijakan, program, dan kegiatan yang sesuai esensi masalah serta prioritas kebutuhan masyarakat.
-      </p>
-      <p>
-        Berdasarkan pertimbangan tersebut, untuk jangka waktu 6 (enam) tahun ke depan, proses pembangunan desa, penyelenggaraan pemerintahan, pemberdayaan dan partisipasi masyarakat, serta tunjangan Operasional Pemerintah Desa, BPD, dan insentif RT/RW akan berlandaskan prinsip keterbukaan dan partisipasi. Dengan demikian, Desa Karangmangu diharapkan mengalami kemajuan dan kesejahteraan yang merata.
-      </p>
-    </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <!-- Visi -->
-      <div>
-        <h3 class="text-xl font-semibold text-green-700 mb-2">Visi</h3>
-        <p class="italic text-gray-700">
-          “TERCIPTANYA TATA KELOLA PEMERINTAHAN DESA YANG BAIK, BERSIH, DAN TRANSPARAN GUNA MEWUJUDKAN DESA KARANGMANGU YANG ADIL, MAKMUR, SEJAHTERA, DAN BERMARTABAT”
-        </p>
-      </div>
-      <!-- Misi -->
-      <div>
-        <h3 class="text-xl font-semibold text-green-700 mb-2">Misi</h3>
-        <ul class="list-disc list-inside space-y-2 text-gray-700">
-          <li>Meningkatkan pelayanan prima untuk seluruh masyarakat.</li>
-          <li>Menciptakan Pemerintah Desa yang tanggap terhadap aspirasi masyarakat.</li>
-          <li>Meningkatkan sarana dan prasarana umum guna mendukung kelancaran perekonomian masyarakat.</li>
-          <li>Pemerataan pembangunan fisik dan non-fisik agar tidak terjadi kesenjangan sosial.</li>
-          <li>Koordinasi dan kerja sama dengan semua unsur kelembagaan desa guna memberikan pelayanan terbaik kepada masyarakat.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  
-=======
             <!-- Visi & Misi Desa Karangmangu -->
             <div class="bg-white rounded-lg shadow-lg p-8">
                 <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Visi &amp; Misi Desa Karangmangu</h2>
@@ -184,7 +312,6 @@
                     </div>
                 </div>
             </div>
->>>>>>> bcc0c3d (feat: mempercantik halaman Lapak Desa dengan desain ala web olshop modern dan responsif)
 
 
             <!-- Struktur Organisasi -->
