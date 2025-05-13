@@ -221,7 +221,12 @@
         $jobStats = Resident::select('pekerjaan', DB::raw('COUNT(*) as count'))
             ->whereNotNull('pekerjaan')
             ->groupBy('pekerjaan')
-            ->get();
+            ->get()->map(function ($item) {
+                $item->pekerjaan = $item->pekerjaan == '' ? 'Belum Bekerja' : $item->pekerjaan;
+                return $item;
+            });
+
+
 
         //
         // Helpers: pilih emoji berdasarkan teks
@@ -314,23 +319,23 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
                         <div class="p-4 bg-green-50 rounded-lg text-center">
                             <p class="text-gray-700 font-medium">Total</p>
-                            <p class="text-green-700 text-2xl font-bold">{{ number_format($total, 0, ',', '.') }}
+                            <p class="text-green-700 text-2xl font-bold">{{ number_format($total - ($maleDeaths + $femaleDeaths), 0, ',', '.') }}
                             </p>
                         </div>
                         <div class="p-4 bg-blue-50 rounded-lg text-center">
                             <p class="text-gray-700 font-medium">Laki-laki</p>
-                            <p class="text-blue-700 text-2xl font-bold">{{ number_format($male, 0, ',', '.') }}</p>
+                            <p class="text-blue-700 text-2xl font-bold">{{ number_format($male - $maleDeaths, 0, ',', '.')}}</p>
                         </div>
                         <div class="p-4 bg-pink-50 rounded-lg text-center">
                             <p class="text-gray-700 font-medium">Perempuan</p>
-                            <p class="text-pink-700 text-2xl font-bold">{{ number_format($female, 0, ',', '.') }}
+                            <p class="text-pink-700 text-2xl font-bold">{{ number_format($female - $femaleDeaths, 0, ',', '.') }}
                             </p>
                         </div>
-                        <div class="p-4 bg-amber-50 rounded-lg text-center">
+                        {{-- <div class="p-4 bg-amber-50 rounded-lg text-center">
                             <p class="text-gray-700 font-medium">KK</p>
                             <p class="text-amber-700 text-2xl font-bold">{{ number_format($heads, 0, ',', '.') }}
                             </p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             @else
@@ -416,10 +421,9 @@
                 new Chart(document.getElementById('demografiChart'), {
                     type: 'doughnut',
                     data: {
-                        labels: ['Laki-laki', 'Perempuan', 'KK'],
+                        labels: ['Laki-laki', 'Perempuan'],
                         datasets: [{
-                            data: [{{ $male }}, {{ $female }},
-                                {{ $heads }}
+                            data: [{{ $male - $maleDeaths }}, {{ $female - $femaleDeaths }}
                             ],
                             backgroundColor: @json(array_slice($colors, 0, 3)),
                             borderColor: '#fff',
@@ -492,14 +496,13 @@
             @endif
         });
     </script>
-
     </div>
     </section>
 
     {{-- Chart Pendidikan --}}
     <section id="pendidikan" class="py-12 px-4 bg-white">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-2xl font-bold text-green-800 mb-6 text-center">Pendidikan & Gender</h2>
+            <h2 class="text-2xl font-bold text-green-800 mb-6 text-center">Pendidikan</h2>
             <canvas id="pendidikanChart"></canvas>
         </div>
     </section>
@@ -872,12 +875,12 @@
                     [$min, $max] = $range;
 
                     // Hitung jumlah laki-laki
-                    $maleCounts[] = Resident::where('jenis_kelamin', 'L')
+                    $maleCounts[] = Resident::where('jenis_kelamin', 'Laki-laki')
                         ->whereRaw('TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) BETWEEN ? AND ?', [$min, $max])
                         ->count();
 
                     // Hitung jumlah perempuan
-                    $femaleCounts[] = Resident::where('jenis_kelamin', 'P')
+                    $femaleCounts[] = Resident::where('jenis_kelamin', 'Perempuan')
                         ->whereRaw('TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) BETWEEN ? AND ?', [$min, $max])
                         ->count();
                 }
@@ -901,6 +904,7 @@
                     labels: @json($labels),
                     datasets: [{
                             label: 'Laki-laki',
+                            // data: @json($maleCounts),
                             data: @json($maleCounts),
                             backgroundColor: 'rgba(54, 162, 235, 0.6)',
                             borderColor: 'rgba(54, 162, 235, 1)',

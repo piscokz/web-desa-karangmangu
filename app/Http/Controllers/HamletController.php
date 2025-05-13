@@ -10,11 +10,23 @@ class HamletController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $dusuns = Hamlet::latest()->paginate(10); // Ambil semua data dusun dengan pagination
-        return view('admin.content.hamlet.index', compact('dusuns')); // Kirim data ke view
+        // Ambil keyword dari query string ?search=...
+        $keyword = $request->get('search');
+
+        // Query model dengan kondisi jika ada keyword
+        $dusuns = Hamlet::when($keyword, function ($query, $keyword) {
+            return $query->where('nama_dusun', 'like', "%{$keyword}%");
+        })
+            ->latest()
+            ->paginate(10)
+            // Pastikan query string 'search' tetap ada di pagination links
+            ->appends(['search' => $keyword]);
+
+        return view('admin.content.hamlet.index', compact('dusuns', 'keyword'));
     }
+
 
     /**
      * Show the form for creating a new resource.

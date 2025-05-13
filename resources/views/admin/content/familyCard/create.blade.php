@@ -7,7 +7,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-6">
     <div class="flex items-center mb-6 space-x-4">
-        <img src="{{ asset('images/logo-kuningan.png') }}" alt="Logo Kuningan" class="h-12">
+        <img src="{{ asset('images/Logo_Kabupaten_kuningan.png') }}" alt="Logo Kuningan" class="h-12">
         <h1 class="text-2xl font-bold">Tambah Kartu Keluarga</h1>
     </div>
 

@@ -313,6 +313,78 @@ periode kuwu yang bisa dihimpun sebagai berikut:
                 </div>
             </div>
 
+            <!-- Demografi -->
+<div class="bg-white rounded-lg shadow-lg p-8">
+    <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Demografi Desa Karangmangu</h2>
+    <div class="text-gray-700 leading-relaxed text-justify space-y-4">
+
+        <!-- 2.1 Letak Geografis -->
+        <h3 class="text-xl font-semibold text-green-700">2.1. Letak Geografis</h3>
+        <p>Desa Karangmangu terletak di Kecamatan Kramatmulya, Kabupaten Kuningan, dengan luas wilayah 223,165 hektar. Terdiri dari 4 dusun/blok, 8 Rukun Warga (RW), dan 20 Rukun Tetangga (RT). Batas wilayah Desa Karangmangu adalah sebagai berikut:</p>
+        <ul class="list-disc list-inside">
+            <li>Sebelah Utara: Desa Ciniru, Kecamatan Jalaksana</li>
+            <li>Sebelah Selatan: Desa Cikaso, Kecamatan Kramatmulya</li>
+            <li>Sebelah Timur: Desa Sindangbarang, Kecamatan Jalaksana</li>
+            <li>Sebelah Barat: Desa Nanggerang, Kecamatan Jalaksana</li>
+        </ul>
+        <p>Secara visualisasi, wilayah administratif dapat dilihat dalam peta wilayah Desa Karangmangu.</p>
+
+        <!-- 2.2 Topografi -->
+        <h3 class="text-xl font-semibold text-green-700">2.2. Topografi</h3>
+        <p>Desa Karangmangu berada di dataran tinggi dengan ketinggian 500–550 meter di atas permukaan laut (DPL), memiliki kontur tanah yang datar dan sebagian berbukit. Suhu rata-rata harian berkisar antara 29°C hingga 35°C, dengan curah hujan rata-rata 2.800 mm per tahun.</p>
+        <p>Jarak orbitasi desa ini yaitu 2 km ke ibu kota kecamatan, 6 km ke ibu kota kabupaten, 235 km ke ibu kota provinsi, dan 540 km ke ibu kota negara. Sebagian besar wilayahnya adalah lahan pertanian seperti sawah dan tegalan.</p>
+
+        <!-- 2.3 Hidrologi dan Klimatologi -->
+        <h3 class="text-xl font-semibold text-green-700">2.3. Hidrologi dan Klimatologi</h3>
+        <p>Wilayah Desa Karangmangu memiliki sistem hidrologi yang penting dalam pengaturan tata air, dengan aliran sungai dan selokan berdebit besar, sedang, dan kecil, di antaranya Sungai Cilengkrang. Namun, belakangan ini terjadi perubahan cuaca yang memengaruhi ketidakstabilan debit air karena sebagian besar wilayah adalah daerah irigasi setengah teknis.</p>
+
+        <!-- 2.4 Luas dan Sebaran Penggunaan Lahan -->
+        <h3 class="text-xl font-semibold text-green-700">2.4. Luas dan Sebaran Penggunaan Lahan</h3>
+        <p>Lahan di Desa Karangmangu umumnya dimanfaatkan secara produktif, terutama untuk pertanian karena tanahnya yang subur. Hanya sebagian kecil lahan yang tidak dimanfaatkan. Hal ini menunjukkan bahwa desa memiliki sumber daya alam yang memadai.</p>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full mt-4 table-auto border border-gray-300 text-sm text-left">
+                <thead class="bg-green-100 text-green-900">
+                    <tr>
+                        <th class="px-4 py-2 border">Jenis Lahan</th>
+                        <th class="px-4 py-2 border">Luas (Ha)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white">
+                        <td class="px-4 py-2 border">Sawah Teknis</td>
+                        <td class="px-4 py-2 border">2</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-2 border">Sawah Setengah Teknis</td>
+                        <td class="px-4 py-2 border">58</td>
+                    </tr>
+                    <tr class="bg-white">
+                        <td class="px-4 py-2 border">Sawah Pasang Surut</td>
+                        <td class="px-4 py-2 border">-</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-2 border">Lahan Pemukiman</td>
+                        <td class="px-4 py-2 border">65</td>
+                    </tr>
+                    <tr class="bg-white">
+                        <td class="px-4 py-2 border">Lahan Perkantoran</td>
+                        <td class="px-4 py-2 border">-</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                        <td class="px-4 py-2 border">Perkebunan</td>
+                        <td class="px-4 py-2 border">50</td>
+                    </tr>
+                    <tr class="bg-white">
+                        <td class="px-4 py-2 border">Lahan Lainnya</td>
+                        <td class="px-4 py-2 border">48</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
 
             <!-- Struktur Organisasi -->
             <div class="bg-white rounded-lg shadow-lg p-8">

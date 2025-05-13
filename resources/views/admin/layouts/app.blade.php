@@ -8,6 +8,8 @@
     <title>Desa Karangmangu Admin Dashboard</title>
 
     <!-- Tailwind CSS -->
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -114,21 +116,6 @@
                         d="M16 11V7.5A1.5 1.5 0 0014.5 6h-5A1.5 1.5 0 008 7.5V11M3 11h18l-1 10a1 1 0 01-1 1H5a1 1 0 01-1-1L3 11z" />
                 </svg>
                 Lapak Desa
-            </a>
-
-            {{-- Pengaduan --}}
-            <a href="{{ route('admin.pengaduan.index') }}"
-                class="relative flex items-center py-2 px-4 rounded transition duration-200 {{ request()->routeIs('admin.pengaduan.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M8 10h.01M12 10h.01M16 10h.01M9 16h6M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                Pengaduan
-                @if ($cnt)
-                    <span
-                        class="absolute top-2 right-3 bg-red-500 text-xs text-white rounded-full px-1">{{ $cnt }}</span>
-                @endif
             </a>
 
             {{-- Penduduk --}}
@@ -312,22 +299,6 @@
                 Lapak Desa
             </a>
 
-
-            <!-- Pengaduan -->
-            <a href="{{ route('admin.pengaduan.index') }}"
-                class="relative flex items-center py-2 px-4 rounded transition-all duration-200 {{ request()->routeIs('admin.pengaduan.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M8 10h.01M12 10h.01M16 10h.01M9 16h6M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                Pengaduan
-                @if ($cnt)
-                    <span
-                        class="absolute top-2 right-3 bg-red-500 text-xs text-white rounded-full px-1">{{ $cnt }}</span>
-                @endif
-            </a>
-
             <!-- Penduduk -->
             <a href="{{ route('penduduk.index') }}"
                 class="flex items-center py-2 px-4 rounded transition-all duration-200 {{ request()->routeIs('penduduk.*') ? 'bg-[#facc15] text-black font-semibold' : 'hover:bg-[#facc15] hover:text-black' }}">
@@ -494,6 +465,12 @@
             once: true
         });
     </script>
+    <!-- jQuery (wajib untuk Select2) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 </body>
 
 </html>

@@ -13,32 +13,38 @@
     use App\Models\GalleryItem;
     use App\Models\Contact;
     use App\Models\Article;
+    use App\Models\VillageStall;
+    use App\Models\PopulationDeath;
     use Illuminate\Support\Facades\DB;
 
     // Counts
-    $totalResidents = Resident::count();
-    $totalFamilies  = FamilyCard::count();
-    $totalRt        = Rt::count();
-    $totalRw        = Rw::count();
-    $totalDusun     = Hamlet::count();
-    $totalGallery   = GalleryItem::count();
-    $totalContacts  = Contact::count();
-    $totalArticles  = Article::count();
+    $totalResidents        = Resident::whereDoesntHave('populationDeath')->count();
+    $totalFamilies         = FamilyCard::count();
+    $totalRt               = Rt::count();
+    $totalRw               = Rw::count();
+    $totalDusun            = Hamlet::count();
+    $totalGallery          = GalleryItem::count();
+    $totalContacts         = Contact::count();
+    $totalArticles         = Article::count();
+    $totalVillageStalls    = VillageStall::count();
+    $totalPopulationDeaths = PopulationDeath::count();
 
     // Gender distribution
-    $maleCount   = Resident::where('jenis_kelamin','Laki-laki')->count();
-    $femaleCount = Resident::where('jenis_kelamin','Perempuan')->count();
+    $maleCount   = Resident::where('jenis_kelamin', 'Laki-laki')->count();
+    $femaleCount = Resident::where('jenis_kelamin', 'Perempuan')->count();
     $genderSum   = $maleCount + $femaleCount;
 
     // Religion distribution
-    $religionStats = Resident::select('agama', DB::raw('COUNT(*) as count'))
-                             ->groupBy('agama')->get();
+    $religionStats  = Resident::select('agama', DB::raw('COUNT(*) as count'))
+                              ->groupBy('agama')->get();
     $religionLabels = $religionStats->pluck('agama')->toArray();
     $religionData   = $religionStats->pluck('count')->toArray();
     $religionSum    = array_sum($religionData);
-    $palette        = ['#22C55E','#3B82F6','#F59E0B','#EC4899','#8B5CF6','#F97316'];
+
+    // Generate colors for each religion
+    $palette        = ['#22C55E', '#3B82F6', '#F59E0B', '#EC4899', '#8B5CF6', '#F97316'];
     $religionColors = [];
-    foreach($religionData as $i => $val) {
+    foreach ($religionData as $i => $val) {
         $religionColors[] = $palette[$i % count($palette)];
     }
 
@@ -55,81 +61,109 @@
         📊 Dashboard Admin Desa Karangmangu
     </h1>
 
-    {{-- Summary Tiles --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
-        <a href="{{ route('penduduk.index') }}" class="block bg-gradient-to-br from-blue-200 to-blue-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
-            <div class="flex items-center">
-                <div class="text-4xl mr-3">👥</div>
-                <div>
-                    <p class="text-sm text-gray-700 uppercase">Total Penduduk</p>
-                    <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ number_format($totalResidents) }}</p>
-                </div>
+{{-- Summary Tiles --}}
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mb-10">
+
+    {{-- Total Penduduk --}}
+    <a href="{{ route('penduduk.index') }}" class="block bg-gradient-to-br from-blue-200 to-blue-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
+        <div class="flex items-center">
+            <div class="text-4xl mr-3">👥</div>
+            <div>
+                <p class="text-sm text-gray-700 uppercase">Total Penduduk</p>
+                <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ number_format($totalResidents) }}</p>
             </div>
-        </a>
-        <a href="{{ route('kk.index') }}" class="block bg-gradient-to-br from-green-200 to-green-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
-            <div class="flex items-center">
-                <div class="text-4xl mr-3">🏠</div>
-                <div>
-                    <p class="text-sm text-gray-700 uppercase">Total KK</p>
-                    <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ number_format($totalFamilies) }}</p>
-                </div>
+        </div>
+    </a>
+
+    {{-- Total KK --}}
+    <a href="{{ route('kk.index') }}" class="block bg-gradient-to-br from-green-200 to-green-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
+        <div class="flex items-center">
+            <div class="text-4xl mr-3">🏠</div>
+            <div>
+                <p class="text-sm text-gray-700 uppercase">Total KK</p>
+                <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ number_format($totalFamilies) }}</p>
             </div>
-        </a>
-        <a href="{{ route('dusun.index') }}" class="block bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
-            <div class="flex items-center">
-                <div class="text-4xl mr-3">🌳</div>
-                <div>
-                    <p class="text-sm text-gray-700 uppercase">Dusun</p>
-                    <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ $totalDusun }}</p>
-                </div>
+        </div>
+    </a>
+
+    {{-- Dusun --}}
+    <a href="{{ route('dusun.index') }}" class="block bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
+        <div class="flex items-center">
+            <div class="text-4xl mr-3">🌳</div>
+            <div>
+                <p class="text-sm text-gray-700 uppercase">Dusun</p>
+                <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ $totalDusun }}</p>
             </div>
-        </a>
-        <a href="{{ route('rw.index') }}" class="block bg-gradient-to-br from-purple-200 to-purple-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
-            <div class="flex items-center">
-                <div class="text-4xl mr-3">🛡️</div>
-                <div>
-                    <p class="text-sm text-gray-700 uppercase">RW</p>
-                    <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ $totalRw }}</p>
-                </div>
+        </div>
+    </a>
+
+    {{-- RW --}}
+    <a href="{{ route('rw.index') }}" class="block bg-gradient-to-br from-purple-200 to-purple-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
+        <div class="flex items-center">
+            <div class="text-4xl mr-3">🛡️</div>
+            <div>
+                <p class="text-sm text-gray-700 uppercase">RW</p>
+                <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ $totalRw }}</p>
             </div>
-        </a>
-        <a href="{{ route('rt.index') }}" class="block bg-gradient-to-br from-red-200 to-red-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
-            <div class="flex items-center">
-                <div class="text-4xl mr-3">🚩</div>
-                <div>
-                    <p class="text-sm text-gray-700 uppercase">RT</p>
-                    <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ $totalRt }}</p>
-                </div>
+        </div>
+    </a>
+
+    {{-- RT --}}
+    <a href="{{ route('rt.index') }}" class="block bg-gradient-to-br from-red-200 to-red-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
+        <div class="flex items-center">
+            <div class="text-4xl mr-3">🚩</div>
+            <div>
+                <p class="text-sm text-gray-700 uppercase">RT</p>
+                <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ $totalRt }}</p>
             </div>
-        </a>
-        <a href="{{ route('admin.gallery.index') }}" class="block bg-gradient-to-br from-indigo-200 to-indigo-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
-            <div class="flex items-center">
-                <div class="text-4xl mr-3">🖼️</div>
-                <div>
-                    <p class="text-sm text-gray-700 uppercase">Gallery</p>
-                    <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ $totalGallery }}</p>
-                </div>
+        </div>
+    </a>
+
+    {{-- Lapak Desa --}}
+    <a href="{{ route('lapak_desa.index') }}" class="block bg-gradient-to-br from-teal-200 to-teal-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
+        <div class="flex items-center">
+            <div class="text-4xl mr-3">🏪</div>
+            <div>
+                <p class="text-sm text-gray-700 uppercase">Village Stalls</p>
+                <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ $totalVillageStalls }}</p>
             </div>
-        </a>
-        <a href="{{ route('admin.pengaduan.index') }}" class="block bg-gradient-to-br from-pink-200 to-pink-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
-            <div class="flex items-center">
-                <div class="text-4xl mr-3">📬</div>
-                <div>
-                    <p class="text-sm text-gray-700 uppercase">Pesan Masuk</p>
-                    <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ $totalContacts }}</p>
-                </div>
+        </div>
+    </a>
+
+    {{-- Kematian --}}
+    <a href="{{ route('kematian.index') }}" class="block bg-gradient-to-br from-indigo-200 to-indigo-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
+        <div class="flex items-center">
+            <div class="text-4xl mr-3">⚰️</div>
+            <div>
+                <p class="text-sm text-gray-700 uppercase">Population Deaths</p>
+                <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ $totalPopulationDeaths }}</p>
             </div>
-        </a>
-        <a href="{{ route('admin.article.index') }}" class="block bg-gradient-to-br from-teal-200 to-teal-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
-            <div class="flex items-center">
-                <div class="text-4xl mr-3">📰</div>
-                <div>
-                    <p class="text-sm text-gray-700 uppercase">Artikel</p>
-                    <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ $totalArticles }}</p>
-                </div>
+        </div>
+    </a>
+
+    {{-- Galeri --}}
+    <a href="{{ route('admin.gallery.index') }}" class="block bg-gradient-to-br from-indigo-200 to-indigo-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
+        <div class="flex items-center">
+            <div class="text-4xl mr-3">🖼️</div>
+            <div>
+                <p class="text-sm text-gray-700 uppercase">Gallery</p>
+                <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ $totalGallery }}</p>
             </div>
-        </a>
-    </div>
+        </div>
+    </a>
+
+    {{-- Artikel --}}
+    <a href="{{ route('admin.article.index') }}" class="block bg-gradient-to-br from-teal-200 to-teal-400 rounded-2xl shadow-lg p-6 hover:scale-105 transform transition duration-300">
+        <div class="flex items-center">
+            <div class="text-4xl mr-3">📰</div>
+            <div>
+                <p class="text-sm text-gray-700 uppercase">Artikel</p>
+                <p class="text-2xl sm:text-3xl font-extrabold text-gray-900">{{ $totalArticles }}</p>
+            </div>
+        </div>
+    </a>
+
+</div>
 
     {{-- Charts & Trending --}}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -186,7 +220,7 @@
                 cutout: '60%', responsive: true,
                 plugins: {
                     datalabels: {
-                        formatter: v => ((v / {{ $genderSum }})*100).toFixed(1)+'%',
+                        formatter: v => ((v / {{ $genderSum }}) * 100).toFixed(1) + '%',
                         color: '#fff', font: { weight: '600', size: 11 }
                     },
                     legend: { position: 'bottom' }
@@ -210,7 +244,7 @@
                 plugins: {
                     datalabels: {
                         anchor: 'end', align: 'end',
-                        formatter: v => ((v / {{ $religionSum }})*100).toFixed(1)+'%',
+                        formatter: v => ((v / {{ $religionSum }}) * 100).toFixed(1) + '%',
                         color: '#000', font: { weight: '600', size: 10 }
                     },
                     legend: { display: false }

@@ -45,18 +45,37 @@
              oninput="formatPrice(this)" />
     </div>
 
-    {{-- Pemilik --}}
-    <div>
-      <label class="block text-gray-700 font-medium mb-1">Pemilik (Penduduk)</label>
-      <select name="id_penduduk" class="form-input">
-        <option value="">-- Pilih Penduduk --</option>
-        @foreach($penduduks as $p)
-          <option value="{{ $p->id }}" {{ old('id_penduduk')==$p->id?'selected':'' }}>
-            {{ $p->nik }} — {{ $p->nama_lengkap }}
-          </option>
-        @endforeach
-      </select>
-    </div>
+{{-- di <head> --}}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+{{-- sebelum </body> --}}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+@stack('scripts')
+{{-- Pemilik --}}
+<div>
+  <label class="block text-gray-700 font-medium mb-1">Pemilik (Penduduk)</label>
+  <select name="id_penduduk" id="penduduk-select" class="form-input w-full">
+    <option value="">-- Pilih Penduduk --</option>
+    @foreach($penduduks as $p)
+      <option value="{{ $p->id }}" {{ old('id_penduduk') == $p->id ? 'selected' : '' }}>
+        {{ $p->nik }} — {{ $p->nama_lengkap }}
+      </option>
+    @endforeach
+  </select>
+</div>
+{{-- @push('scripts') --}}
+<script>
+  $(document).ready(function() {
+    $('#penduduk-select').select2({
+      placeholder: "-- Pilih Penduduk --",
+      allowClear: true,
+      width: '100%'
+    });
+  });
+</script>
+{{-- @endpush --}}
+
 
     {{-- No Telepon --}}
     <div>

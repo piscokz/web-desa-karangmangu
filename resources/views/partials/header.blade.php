@@ -54,7 +54,7 @@
     </div>
 </nav>
 
-<nav id="stickyNav" class="bg-green-700 hidden animate__animated animate__fadeInDown z-50 fixed w-full top-0">
+<nav id="stickyNav" class="bg-green-700 hidden animate__animated animate__fadeInDown  fixed w-full top-0" style="z-index: 99999">
     <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         <div class="flex items-center">
             <img src="{{ asset('images/Logo_Kabupaten_kuningan.png') }}" alt="Logo Kabupaten Kuningan"

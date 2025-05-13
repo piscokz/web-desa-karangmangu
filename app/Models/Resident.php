@@ -41,6 +41,12 @@ class Resident extends Model
         return $this->belongsTo(FamilyCard::class, 'id_kk');
     }
 
+    // App\Models\Resident.php
+    public function populationDeath()
+    {
+        return $this->hasOne(PopulationDeath::class, 'penduduk_id');
+    }
+
     public function death()
     {
         return $this->hasOne(PopulationDeath::class, 'penduduk_id');

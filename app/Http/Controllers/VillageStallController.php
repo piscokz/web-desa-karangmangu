@@ -10,12 +10,33 @@ use Illuminate\Support\Str;          // ← import Str facade
 
 class VillageStallController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $lapak = VillageStall::with('resident')->get();
-        return view('admin.content.village_stalls.index', compact('lapak'));
-    }
+        // Ambil daftar kategori unik untuk dropdown filter
+        $categories = VillageStall::select('kategori')
+            ->distinct()
+            ->orderBy('kategori')
+            ->pluck('kategori');
 
+        // Bangun query dasar dengan relasi dan urutan terbaru
+        $query = VillageStall::with('resident')
+            ->orderBy('created_at', 'desc');
+
+        // Filter pencarian nama produk
+        if ($request->filled('search')) {
+            $query->where('nama_produk', 'like', '%' . $request->search . '%');
+        }
+
+        // Filter berdasarkan kategori
+        if ($request->filled('kategori')) {
+            $query->where('kategori', $request->kategori);
+        }
+
+        // Dapatkan hasil
+        $lapak = $query->get();
+
+        return view('admin.content.village_stalls.index', compact('lapak', 'categories'));
+    }
     public function create()
     {
         $penduduks = Resident::latest()->get();
@@ -25,23 +46,23 @@ class VillageStallController extends Controller
     public function store(Request $request)
     {
         $messages = [
-            'nama_produk.required'   => 'Nama produk wajib diisi.',
-            'id_penduduk.required'   => 'Anda harus memilih pemilik produk.',
-            'no_telepon.required'    => 'Nomor telepon wajib diisi.',
+            'nama_produk.required' => 'Nama produk wajib diisi.',
+            'id_penduduk.required' => 'Anda harus memilih pemilik produk.',
+            'no_telepon.required' => 'Nomor telepon wajib diisi.',
             'gambar_produk.required' => 'Gambar produk wajib diunggah.',
-            'gambar_produk.image'    => 'File yang diunggah harus berupa gambar.',
-            'deskripsi.required'     => 'Deskripsi produk wajib diisi.',
-            'harga_produk.required'  => 'Harga produk wajib diisi.',
+            'gambar_produk.image' => 'File yang diunggah harus berupa gambar.',
+            'deskripsi.required' => 'Deskripsi produk wajib diisi.',
+            'harga_produk.required' => 'Harga produk wajib diisi.',
         ];
 
         $data = $request->validate([
-            'nama_produk'   => 'required',
-            'id_penduduk'   => 'required',
-            'no_telepon'    => 'required',
-            'harga_produk'  => 'required',
-            'kategori'      => 'nullable',
+            'nama_produk' => 'required',
+            'id_penduduk' => 'required',
+            'no_telepon' => 'required',
+            'harga_produk' => 'required',
+            'kategori' => 'nullable',
             'gambar_produk' => 'required|image',
-            'deskripsi'     => 'required',
+            'deskripsi' => 'required',
         ], $messages);
 
         $data['gambar_produk'] = $request
@@ -73,29 +94,29 @@ class VillageStallController extends Controller
         $penduduks = Resident::latest()->get();
         return view('admin.content.village_stalls.edit', [
             'village_stall' => $lapak_desa,
-            'penduduks'     => $penduduks,
+            'penduduks' => $penduduks,
         ]);
     }
 
     public function update(Request $request, VillageStall $lapak_desa)
     {
         $messages = [
-            'nama_produk.required'   => 'Nama produk wajib diisi.',
-            'id_penduduk.required'   => 'Anda harus memilih pemilik produk.',
-            'no_telepon.required'    => 'Nomor telepon wajib diisi.',
-            'gambar_produk.image'    => 'File yang diunggah harus berupa gambar.',
-            'deskripsi.required'     => 'Deskripsi produk wajib diisi.',
-            'harga_produk.required'  => 'Harga produk wajib diisi.',
+            'nama_produk.required' => 'Nama produk wajib diisi.',
+            'id_penduduk.required' => 'Anda harus memilih pemilik produk.',
+            'no_telepon.required' => 'Nomor telepon wajib diisi.',
+            'gambar_produk.image' => 'File yang diunggah harus berupa gambar.',
+            'deskripsi.required' => 'Deskripsi produk wajib diisi.',
+            'harga_produk.required' => 'Harga produk wajib diisi.',
         ];
 
         $data = $request->validate([
-            'nama_produk'   => 'required',
-            'id_penduduk'   => 'required',
-            'no_telepon'    => 'required',
-            'kategori'      => 'nullable',
-            'harga_produk'  => 'required',
+            'nama_produk' => 'required',
+            'id_penduduk' => 'required',
+            'no_telepon' => 'required',
+            'kategori' => 'nullable',
+            'harga_produk' => 'required',
             'gambar_produk' => 'nullable|image',
-            'deskripsi'     => 'required',
+            'deskripsi' => 'required',
         ], $messages);
 
         if ($request->hasFile('gambar_produk')) {
@@ -125,44 +146,48 @@ class VillageStallController extends Controller
     public function bySellery($id_penduduk)
     {
         $resident = Resident::findOrFail($id_penduduk);
-        $stalls   = VillageStall::where('id_penduduk', $id_penduduk)
-                    ->latest()
-                    ->get();
-    
+        $stalls = VillageStall::where('id_penduduk', $id_penduduk)
+            ->latest()
+            ->get();
+
         // kategori unik
         $categories = $stalls
             ->pluck('kategori')
             ->filter()
             ->unique()
             ->values();
-    
+
         return view('admin.content.village_stalls.bySellery', compact(
-            'resident', 'stalls', 'categories'
+            'resident',
+            'stalls',
+            'categories'
         ));
     }
 
     public function bySeller($id_penduduk)
     {
         $resident = Resident::findOrFail($id_penduduk);
-        $stalls   = VillageStall::where('id_penduduk', $id_penduduk)
-                    ->latest()
-                    ->get();
-    
+        $stalls = VillageStall::where('id_penduduk', $id_penduduk)
+            ->latest()
+            ->get();
+
         // kategori unik
         $categories = $stalls
             ->pluck('kategori')
             ->filter()
             ->unique()
             ->values();
-    
+
         return view('admin.content.village_stalls.bySeller', compact(
-            'resident', 'stalls', 'categories'
+            'resident',
+            'stalls',
+            'categories'
         ));
     }
 
     public function FrontIndex(Request $request)
     {
-        $stalls     = VillageStall::with('resident')->paginate(12);
+        $stalls = VillageStall::with('resident')->paginate(12);
         $categories = $stalls
             ->pluck('kategori')
             ->filter()

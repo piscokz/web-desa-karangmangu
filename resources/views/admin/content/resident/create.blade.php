@@ -124,7 +124,30 @@
                         </template>
                     </div>
 
-                    {{-- Pekerjaan --}}
+                    {{-- no_telp --}}
+                    <div>
+                        <label for="no_telp" class="block text-gray-700 font-medium mb-1">no_telp</label>
+                        <input type="text" name="no_telp" id="no_telp" value="{{ old('no_telp') }}"
+                            placeholder="Masukkan no_telp"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
+                    </div>
+
+                    {{-- nama_ayah --}}
+                    <div>
+                        <label for="nama_ayah" class="block text-gray-700 font-medium mb-1">nama_ayah</label>
+                        <input type="text" name="nama_ayah" id="nama_ayah" value="{{ old('nama_ayah') }}"
+                            placeholder="Masukkan nama_ayah"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
+                    </div>
+
+                    {{-- nama_ibu --}}
+                    <div>
+                        <label for="nama_ibu" class="block text-gray-700 font-medium mb-1">nama_ibu</label>
+                        <input type="text" name="nama_ibu" id="nama_ibu" value="{{ old('nama_ibu') }}"
+                            placeholder="Masukkan nama_ibu"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
+                    </div>
+
                     <div>
                         <label for="pekerjaan" class="block text-gray-700 font-medium mb-1">Pekerjaan</label>
                         <input type="text" name="pekerjaan" id="pekerjaan" value="{{ old('pekerjaan') }}"
@@ -174,24 +197,29 @@
 
                     {{-- SHDK --}}
                     <div>
-                        <label for="shdk" class="block text-gray-700 font-medium mb-1">SHDK</label>
+                        <label for="shdk" class="block text-gray-700 font-medium mb-1">Status Hubungan Dalam Keluarga
+                            (SHDK)</label>
                         <select name="shdk" id="shdk" x-model="shdk" required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200">
-                            <option value="" disabled>Pilih SHDK</option>
-                            @foreach (['Kepala Keluarga', 'Istri', 'Anak', 'Orang Tua'] as $sh)
+                            <option value="" disabled>Pilih Status Hubungan Dalam Keluarga</option>
+                            @foreach (['Kepala Keluarga', 'Istri', 'Suami', 'Anak Kandung', 'Anak Angkat', 'Orang Tua Kandung', 'Mertua', 'Adik Kandung', 'Saudara', 'Cucu', 'Kakek', 'Nenek', 'Pembantu Rumah Tangga', 'Lainnya'] as $sh)
                                 <option value="{{ $sh }}">{{ $sh }}</option>
                             @endforeach
-                            <option value="Lainnya">Lainnya</option>
                         </select>
                         <template x-if="shdk === 'Lainnya'">
-                            <input type="text" name="shdk_other" placeholder="Masukkan manual..."
+                            <input type="text" name="shdk_other" placeholder="Masukkan hubungan lain secara manual..."
                                 value="{{ old('shdk_other') }}"
                                 class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
                         </template>
                     </div>
 
-                    {{-- No KK --}}
+
+                    {{-- No KK (Select2 di dalam div yang sama) --}}
                     <div>
+                        {{-- CDN Select2 CSS --}}
+                        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+                            rel="stylesheet" />
+
                         <label for="id_kk" class="block text-gray-700 font-medium mb-1">No. Kartu Keluarga</label>
                         <select name="id_kk" id="id_kk" required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200">
@@ -202,6 +230,20 @@
                                 </option>
                             @endforeach
                         </select>
+
+                        {{-- jQuery & Select2 JS --}}
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+                        {{-- Inisialisasi Select2 --}}
+                        <script>
+                            $(document).ready(function() {
+                                $('#id_kk').select2({
+                                    placeholder: 'Pilih Kartu Keluarga',
+                                    width: '100%'
+                                });
+                            });
+                        </script>
                     </div>
 
                     {{-- Disabilitas --}}
