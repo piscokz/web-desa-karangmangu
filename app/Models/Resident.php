@@ -26,9 +26,9 @@ class Resident extends Model
         'nama_ayah',
         'nama_ibu',
         'disabilitas',
-        'organisasi',
-        'foto',
         'kematian',
+        // 'organisasi',
+        // 'foto',
         // 'nik_ayah', 'nik_ibu'
     ];
 
@@ -41,7 +41,11 @@ class Resident extends Model
         return $this->belongsTo(FamilyCard::class, 'id_kk');
     }
 
-    // App\Models\Resident.php
+    public function familyCardHead()
+    {
+        return $this->hasOne(FamilyCard::class, 'id', 'id_kk')->where('kepala_keluarga', 1);
+    }
+
     public function populationDeath()
     {
         return $this->hasOne(PopulationDeath::class, 'penduduk_id');
@@ -58,8 +62,8 @@ class Resident extends Model
     }
 
     // Scope untuk filter organisasi
-    public function scopeFilterByOrganisasi(Builder $query, $organisasi)
-    {
-        return $query->where('organisasi', 'like', '%' . $organisasi . '%');
-    }
+    // public function scopeFilterByOrganisasi(Builder $query, $organisasi)
+    // {
+    //     return $query->where('organisasi', 'like', '%' . $organisasi . '%');
+    // }
 }

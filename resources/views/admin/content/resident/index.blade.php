@@ -13,7 +13,7 @@
                 <input type="text" name="search" placeholder="Cari NIK / Nama / No KK" value="{{ request('search') }}"
                     class="px-3 py-2 border rounded-md">
 
-                <select name="organisasi" class="px-3 py-2 border rounded-md">
+                {{-- <select name="organisasi" class="px-3 py-2 border rounded-md">
                     <option value="">Semua</option>
                     <option value="penduduk" {{ request('organisasi') == 'penduduk'  ? 'selected' : '' }}>
                       Penduduk</option>
@@ -21,7 +21,7 @@
                         <option value="{{ $item }}" {{ request('organisasi') == $item ? 'selected' : '' }}>
                             {{ $item }}</option>
                     @endforeach
-                </select>
+                </select> --}}
 
                 <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md">Filter</button>
             </form>

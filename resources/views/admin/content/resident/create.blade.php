@@ -134,7 +134,7 @@
 
                     {{-- nama_ayah --}}
                     <div>
-                        <label for="nama_ayah" class="block text-gray-700 font-medium mb-1">nama_ayah</label>
+                        <label for="nama_ayah" class="block text-gray-700 font-medium mb-1">nama ayah</label>
                         <input type="text" name="nama_ayah" id="nama_ayah" value="{{ old('nama_ayah') }}"
                             placeholder="Masukkan nama_ayah"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
@@ -142,7 +142,7 @@
 
                     {{-- nama_ibu --}}
                     <div>
-                        <label for="nama_ibu" class="block text-gray-700 font-medium mb-1">nama_ibu</label>
+                        <label for="nama_ibu" class="block text-gray-700 font-medium mb-1">nama ibu</label>
                         <input type="text" name="nama_ibu" id="nama_ibu" value="{{ old('nama_ibu') }}"
                             placeholder="Masukkan nama_ibu"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
@@ -166,12 +166,13 @@
                             <option value="SD" {{ old('pendidikan') == 'SD' ? 'selected' : '' }}>SD</option>
                             <option value="SMP" {{ old('pendidikan') == 'SMP' ? 'selected' : '' }}>SMP</option>
                             <option value="SMA" {{ old('pendidikan') == 'SMA' ? 'selected' : '' }}>SMA</option>
-                            <option value="DIPLOMA" {{ old('pendidikan') == 'DIPLOMA' ? 'selected' : '' }}>DIPLOMA
-                            </option>
+                            <option value="DIPLOMA 1" {{ old('pendidikan') == 'DIPLOMA 1' ? 'selected' : '' }}>DIPLOMA 1</option>
+                            <option value="DIPLOMA 2" {{ old('pendidikan') == 'DIPLOMA 2' ? 'selected' : '' }}>DIPLOMA 2</option>
+                            <option value="DIPLOMA 3" {{ old('pendidikan') == 'DIPLOMA 3' ? 'selected' : '' }}>DIPLOMA 3</option>
                             <option value="SARJANA (S1)" {{ old('pendidikan') == 'SARJANA (S1)' ? 'selected' : '' }}>
                                 SARJANA (S1)</option>
-                            <option value="MAJISTER (S2)" {{ old('pendidikan') == 'MAJISTER (S2)' ? 'selected' : '' }}>
-                                MAJISTER (S2)</option>
+                            <option value="MAGISTER (S2)" {{ old('pendidikan') == 'MAGISTER (S2)' ? 'selected' : '' }}>
+                                MAGISTER (S2)</option>
                             <option value="DOKTOR (S3)" {{ old('pendidikan') == 'DOKTOR (S3)' ? 'selected' : '' }}>DOKTOR
                                 (S3)</option>
                         </select>
@@ -264,7 +265,7 @@
                         </template>
                     </div>
 
-                    {{-- Organisasi --}}
+                    {{-- Organisasi
                     <div>
                         <label for="organisasi" class="block text-gray-700 font-medium mb-1">Organisasi</label>
                         <select name="organisasi" id="organisasi" x-model="organisasi"
@@ -287,7 +288,7 @@
                                 class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-200" />
                         </template>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="pt-4 border-t border-gray-200 text-right">
                     <a href="{{ route('penduduk.index') }}" class="mr-4 text-gray-600 hover:underline">Batal</a>
