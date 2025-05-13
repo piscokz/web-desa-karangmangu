@@ -16,6 +16,7 @@ use App\Http\Controllers\{
     VillageStallController,
     UmkmController,
     VillageContactController,
+    VillageMemberController,
 };
 
 Route::get('/', function () {
@@ -72,7 +73,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('admin/content/gallery', GalleryItemController::class)->names('admin.gallery');
     Route::resource('admin/content/lapak-desa', VillageStallController::class)->names('lapak_desa');
     Route::resource('admin/content/kematian-penduduk', PopulationDeathController::class)->names('kematian');
+    Route::resource('admin/content/anggota-desa', VillageMemberController::class)->names('anggota_desa');
     Route::get('admin/content/lapak-desa/seller/{id}', [VillageStallController::class, 'bySeller'])->name('lapak_desa.bySeller');
+
 
     Route::get('admin/content/kontak-desa', [VillageContactController::class, 'edit'])->name('kontak.edit');
     Route::put('admin/content/kontak-desa', [VillageContactController::class, 'update'])->name('kontak.update');

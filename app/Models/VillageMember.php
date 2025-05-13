@@ -12,7 +12,7 @@ class VillageMember extends Model
         'nama',
         'jabatan',
         'jenis_kelamin',
-        'umur',
+        'tanggal_lahir',
         'alamat',
         'foto',
     ];

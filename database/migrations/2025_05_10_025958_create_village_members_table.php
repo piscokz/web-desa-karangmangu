@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('jabatan');
             $table->string('jenis_kelamin');
-            $table->date('umur');
+            $table->date('tanggal_lahir');
             $table->text('alamat');
             $table->string('foto')->nullable();
             $table->timestamps();
