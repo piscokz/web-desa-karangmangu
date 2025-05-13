@@ -101,8 +101,8 @@
                             <div class="bg-green-100 text-green-600 rounded-full p-2 flex-shrink-0">
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L9 11.586 5.707 8.293a1
-                                                 1 0 00-1.414 1.414l4 4a1 1 0 001.414
-                                                 0l7-7a1 1 0 000-1.414z" clip-rule="evenodd" />
+                                                     1 0 00-1.414 1.414l4 4a1 1 0 001.414
+                                                     0l7-7a1 1 0 000-1.414z" clip-rule="evenodd" />
                                 </svg>
                             </div>
                             <p class="text-gray-700 text-lg font-medium">{{ $item }}</p>
@@ -263,84 +263,79 @@
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     @endpush
 
+@php
+    // ambil 8 item galeri terbaru
+    $galleryItems = \App\Models\GalleryItem::orderByDesc('date')
+        ->take(8)
+        ->get();
+@endphp
+
+<section id="gallery" class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <h3 class="text-4xl font-bold text-center text-green-800 mb-12 relative inline-block">
+      Galeri Desa
+      <span class="block w-24 h-1 bg-green-300 mt-2 mx-auto rounded-full"></span>
+    </h3>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      @foreach($galleryItems as $item)
+        <div class="relative group overflow-hidden rounded-xl shadow-lg bg-white">
+          <a href="{{ $item->image_url }}" target="_blank" class="block">
+            <img src="{{ $item->image_url }}" 
+                 alt="{{ $item->title }}" 
+                 class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110">
+            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 
+                        group-hover:opacity-100 transition-opacity duration-300"></div>
+          </a>
+          <div class="p-4">
+            <h4 class="text-lg font-semibold text-gray-800 truncate">{{ $item->title }}</h4>
+            <p class="text-xs text-gray-500 mt-1">{{ $item->category }}</p>
+            <p class="text-xs text-gray-500">{{ $item->date->format('d M Y') }}</p>
+          </div>
+        </div>
+      @endforeach
+    </div>
+
+    <div class="mt-12 text-center">
+      <a href="{{ route('galeri') }}" 
+         class="inline-block px-8 py-3 bg-green-600 text-white font-medium rounded-full shadow hover:bg-green-700 transition">
+        Lihat Semua Galeri
+      </a>
+    </div>
+  </div>
+</section>
 
 
     {{-- resources/views/partials/berita_section.blade.php --}}
     @php
         use App\Models\Article;
-        // ambil 3 berita terbaru berdasarkan kolom date
+        use App\Models\GalleryItem;
         $latestArticles = Article::orderByDesc('date')->take(3)->get();
+        $galleryItems = GalleryItem::orderByDesc('date')->take(6)->get();
     @endphp
-
-    <section class="bg-gray-50 border-t border-green-200 py-20">
-        <div class="max-w-7xl mx-auto px-4">
-            <h3 class="text-4xl font-bold text-center text-green-800 mb-16 relative inline-block">
-                Berita Desa
-                <span class="block w-20 h-1 bg-green-300 mt-2 mx-auto rounded-full"></span>
-            </h3>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                @foreach ($latestArticles as $idx => $article)
-                    <a href="{{ route('article.show', $article) }}" data-aos="fade-up"
-                        data-aos-delay="{{ $idx * 100 }}"
-                        class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group block">
-
-                        {{-- Thumbnail --}}
-                        <div class="relative">
-                            <img src="{{ $article->image ? asset('storage/' . $article->image) : 'https://via.placeholder.com/600x400' }}"
-                                alt="{{ $article->title }}"
-                                class="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105">
-                            <div
-                                class="absolute bottom-2 left-2 bg-green-700 text-white text-xs px-3 py-1 rounded-full shadow">
-                                {{ \Carbon\Carbon::parse($article->date)->format('d M Y') }}
-                            </div>
-                        </div>
-
-                        {{-- Content --}}
-                        <div class="p-6 space-y-3">
-                            <span
-                                class="inline-block text-xs font-medium uppercase tracking-wide text-green-700 bg-green-100 px-2 py-1 rounded-full">
-                                {{ $article->category }}
-                            </span>
-                            <h4 class="text-lg font-semibold text-gray-800 group-hover:text-green-700 transition-colors">
-                                {{ \Illuminate\Support\Str::limit($article->title, 50) }}
-                            </h4>
-
-                            <div class="text-gray-600 text-sm leading-relaxed prose max-w-none">
-                                {!! \Illuminate\Support\Str::limit($article->content, 200) !!}
-                            </div>
-
-                            <div class="mt-4">
-                                <span
-                                    class="text-green-700 font-medium inline-flex items-center hover:underline transition">
-                                    Baca Selengkapnya
-                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" stroke-width="2"
-                                        viewBox="0 0 24 24">
-                                        <path d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </span>
-                            </div>
-                        </div>
-
-                    </a>
-                @endforeach
-            </div>
-        </div>
-    </section>
 
     @php
         use App\Models\Resident;
         use App\Models\FamilyCard;
 
-        $totalResidents = Resident::count();
+        // Hitung penduduk hidup saja
+        $totalResidents = Resident::whereDoesntHave('populationDeath')->count();
+
+        // Total KK tetap dihitung semua (jika KK tidak terpengaruh kematian)
         $totalFamilies = FamilyCard::count();
-        $maleCount = Resident::where('jenis_kelamin', 'Laki-Laki')->count();
-        $femaleCount = Resident::where('jenis_kelamin', 'Perempuan')->count();
+
+        // Hitung jenis kelamin hanya untuk penduduk yang masih hidup
+        $maleCount = Resident::whereDoesntHave('populationDeath')->where('jenis_kelamin', 'Laki-Laki')->count();
+
+        $femaleCount = Resident::whereDoesntHave('populationDeath')->where('jenis_kelamin', 'Perempuan')->count();
+
+        // Persentase keluarga terhadap penduduk hidup
         $familyPct = $totalResidents ? round(($totalFamilies / $totalResidents) * 100) : 0;
     @endphp
 
+
     {{-- Section Statistik Penduduk --}}
-    <section id="statistik" class="py-20 bg-gradient-to-br from-white to-green-50 border-t border-green-200"
+    <section id="statistik" class="py-20 bg-gradient-to-br from-white to-green-50 border-t border-b border-green-200"
         data-aos="fade-up">
         <div class="max-w-screen-xl mx-auto px-6 lg:px-8 text-center">
             <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
@@ -598,6 +593,8 @@
         });
     </script>
 
+
+
     {{-- @endpush --}}
     <section class="bg-gray-50 border-t border-green-200 py-20">
         <div class="max-w-7xl mx-auto px-4">
@@ -654,7 +651,6 @@
             </div>
         </div>
     </section>
-
 
     <!-- Leaflet CSS (di <head> atau sebelum penggunaan map) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
