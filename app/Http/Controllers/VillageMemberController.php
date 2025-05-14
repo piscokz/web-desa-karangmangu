@@ -90,7 +90,7 @@ class VillageMemberController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'jabatan' => 'required|string|max:255',
-            'organisasi' => 'required',
+            'organisasi' => 'required|string|max:255',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'tanggal_lahir' => 'required|date',
             'alamat' => 'required|string',
@@ -98,22 +98,33 @@ class VillageMemberController extends Controller
         ]);
 
         $member = VillageMember::findOrFail($id);
-        $member->fill($request->all());
 
+        // Jika ada file baru diunggah
         if ($request->hasFile('foto')) {
-            if ($member->foto) {
+            // Hapus foto lama jika ada
+            if ($member->foto && file_exists(public_path('images/' . $member->foto))) {
                 unlink(public_path('images/' . $member->foto));
             }
+
             $file = $request->file('foto');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('images'), $filename);
             $member->foto = $filename;
         }
 
+        // Update field lainnya kecuali 'foto'
+        $member->nama = $request->nama;
+        $member->jabatan = $request->jabatan;
+        $member->organisasi = $request->organisasi;
+        $member->jenis_kelamin = $request->jenis_kelamin;
+        $member->tanggal_lahir = $request->tanggal_lahir;
+        $member->alamat = $request->alamat;
+
         $member->save();
 
         return redirect()->route('anggota_desa.index')->with('success', 'Berhasil memperbarui data anggota desa.');
     }
+
 
     /**
      * Remove the specified resource from storage.
