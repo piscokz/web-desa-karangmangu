@@ -8,22 +8,35 @@
     <!-- Hero Slider -->
     <section x-data="{
         slides: [
-            'https://picsum.photos/1200/500?random=21',
-            'https://picsum.photos/1200/500?random=22',
-            'https://picsum.photos/1200/500?random=23'
+            { src: '{{ asset('images/Banner/TAMPAKDEPAN.jpeg') }}', title: 'LPM (Lembaga Pemberdayaan Masyarakat)' },
+            { src: '{{ asset('images/Banner/SAMPINGKANAN.jpeg') }}', title: 'Karang Taruna' },
+            { src: '{{ asset('images/Banner/SAMPINGKIRI.jpeg') }}', title: 'PKK (Pemberdayaan Kesejahteraan Keluarga)' }
         ],
         current: 0,
-        init() { setInterval(() => this.current = (this.current + 1) % this.slides.length, 5000) },
-        prev() { this.current = (this.current - 1 + this.slides.length) % this.slides.length },
-        next() { this.current = (this.current + 1) % this.slides.length }
+        init() {
+            setInterval(() => {
+                this.current = (this.current + 1) % this.slides.length
+            }, 5000)
+        },
+        prev() {
+            this.current = (this.current - 1 + this.slides.length) % this.slides.length
+        },
+        next() {
+            this.current = (this.current + 1) % this.slides.length
+        }
     }" x-init="init()" class="relative h-64 md:h-96 overflow-hidden">
-        <template x-for="(src,i) in slides" :key="i">
-            <div x-show="current===i" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
-                :style="background - image::url($ { src });"></div>
+        <!-- Slides -->
+        <template x-for="(slide, i) in slides" :key="i">
+            <div x-show="current === i" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
+                x-bind:style="`background-image: url('${slide.src}');`"></div>
         </template>
+
+        <!-- Overlay Content -->
         <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white px-4">
             <h1 class="text-3xl md:text-5xl font-bold">Profil Desa Karangmangu</h1>
             <p class="mt-2 text-sm md:text-lg">Temukan informasi lengkap tentang desa kita</p>
+
+            <!-- Navigation Buttons -->
             <div class="flex space-x-4 mt-4">
                 <button @click="prev()" class="p-2 bg-green-700 rounded-full hover:bg-green-600 transition">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor"
@@ -38,14 +51,17 @@
                     </svg>
                 </button>
             </div>
+
+            <!-- Indicators -->
             <div class="flex space-x-2 mt-4">
-                <template x-for="(_,i) in slides" :key="i">
+                <template x-for="(_, i) in slides" :key="i">
                     <button class="w-2 h-2 rounded-full" :class="i === current ? 'bg-white' : 'bg-white bg-opacity-50'"
-                        @click="current=i"></button>
+                        @click="current = i"></button>
                 </template>
             </div>
         </div>
     </section>
+
 
     <section class="bg-green-50 py-16 space-y-16">
         <div class="max-w-4xl mx-auto px-4 space-y-16">
@@ -210,40 +226,40 @@
                 <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Sejarah Desa Karangmangu</h2>
                 <div class="text-gray-700 leading-relaxed text-justify space-y-4">
                     <p>Desa Karangmangu merupakan salah satu desa diwilayah Kecamatan Kramatmulya
-dari 14 desa yang ada. Dari jaman dahulu hingga sekarang, Desa Karangmangu terkenal
-dengan home indurstrinya yaitu pengrajin bata merah dan kupat/ketupat terbesar
-dikabupaten Kuningan. Bicara tentang asal mula Desa Karangmangu, sampai saat ini tidak
-ada informasi yang jelas tentang kapan dan bagaimana desa ini lahir. Para penggagas
-berdirinya atau orang yang dianggap tahu bagaimana Desa Karangmangu ini ada tidak
-sumber informasi yang jelas, yang ada hanya cerita orang tua ”katanya-katanya” saja, penulis
-akan mencoba menulis Ringkasan sejarah Desa Karangmangu yang berdasarakan sumber
-dari “katan-katanya” itu.</p>
-<p>Desa Karangmangu asalnya adalah wilayah desa Cikaso, dalam sejarah singkat yang
-sempat penulis baca Desa Cikaso itu asalnya bukan desa melainkan sebuah pemerintahan
-besar yang dipimpin oleh seorang tumenggung/bupati yang bergelar Tumenggung
-“ARGAWIJAYA” dengan pendampingnya patih “NAGAREJA”. Salah satu bukti Karangmangu
-merupakan bagian dari Desa Cikaso yaitu kedua tokoh besar itu yakni Tumenggung
-ARGAWIJAYA dan Patih NAGAREJA makam/kuburannya berada di Desa Karangmangu
-yang sekarang dikeramatkan dan banyak dijiarahi orang terutama orang yang berhasrat ingin
-menjadi Kuwu/Kepala Desa. Bahkan untuk mengabadikan nama tokoh besar tersebut tempat
-dimana makam itu berada kini diabadikan dengan dengan istilah BLOK TUMENGGUNG,
-tempat itu tercatat pada catatan DHKP (Daftar Himpunan Ketetapan Pajak) desa dan
-kabupaten.</p>
-<p>Pada saat desa karangmangu lahir mungkin karena cakupan desa Cikaso yang luas
-atau mungkin ada sebab lain sehingga Desa Karangmangu ini lahir tidak penting untuk
-diperdebatklan, yang jelas katanya Karangmangu berasal dari Karangmanggu, konon katanya
-ditengah-tengah desa ada sebuah pohon manggu yang besar dan di disekitar pohon manggu
-tersebut ada sebuah halaman atau karang yang bersih, luas, rindang dan nyaman. karena
-rasa sejuk dan rindangnya pohon manggu terebut tempat ini dipakai sarana tempat bermain
-anak-anak bahkan juga tak jarang para pedagang yang kebetulan lewat ke tempat itu sengaja
-numpang istirahat melepas lelah dibawah rindanya pohon manggu sambil membuka
-timbel/nasi bekel yang ia bawa. Terifirasi dari nama itulah asal mula Karangmanggu diambil,
-dari pohon Manggu dan Karang/halaman yang bahasanya diesederhanakan lagi menjadi
-KARANGMANGU.</p>
-<p>Desa Karangmangu dipimpin oleh seorang kuwu, entah tahun berapa desa ini lahir</p>
+                        dari 14 desa yang ada. Dari jaman dahulu hingga sekarang, Desa Karangmangu terkenal
+                        dengan home indurstrinya yaitu pengrajin bata merah dan kupat/ketupat terbesar
+                        dikabupaten Kuningan. Bicara tentang asal mula Desa Karangmangu, sampai saat ini tidak
+                        ada informasi yang jelas tentang kapan dan bagaimana desa ini lahir. Para penggagas
+                        berdirinya atau orang yang dianggap tahu bagaimana Desa Karangmangu ini ada tidak
+                        sumber informasi yang jelas, yang ada hanya cerita orang tua ”katanya-katanya” saja, penulis
+                        akan mencoba menulis Ringkasan sejarah Desa Karangmangu yang berdasarakan sumber
+                        dari “katan-katanya” itu.</p>
+                    <p>Desa Karangmangu asalnya adalah wilayah desa Cikaso, dalam sejarah singkat yang
+                        sempat penulis baca Desa Cikaso itu asalnya bukan desa melainkan sebuah pemerintahan
+                        besar yang dipimpin oleh seorang tumenggung/bupati yang bergelar Tumenggung
+                        “ARGAWIJAYA” dengan pendampingnya patih “NAGAREJA”. Salah satu bukti Karangmangu
+                        merupakan bagian dari Desa Cikaso yaitu kedua tokoh besar itu yakni Tumenggung
+                        ARGAWIJAYA dan Patih NAGAREJA makam/kuburannya berada di Desa Karangmangu
+                        yang sekarang dikeramatkan dan banyak dijiarahi orang terutama orang yang berhasrat ingin
+                        menjadi Kuwu/Kepala Desa. Bahkan untuk mengabadikan nama tokoh besar tersebut tempat
+                        dimana makam itu berada kini diabadikan dengan dengan istilah BLOK TUMENGGUNG,
+                        tempat itu tercatat pada catatan DHKP (Daftar Himpunan Ketetapan Pajak) desa dan
+                        kabupaten.</p>
+                    <p>Pada saat desa karangmangu lahir mungkin karena cakupan desa Cikaso yang luas
+                        atau mungkin ada sebab lain sehingga Desa Karangmangu ini lahir tidak penting untuk
+                        diperdebatklan, yang jelas katanya Karangmangu berasal dari Karangmanggu, konon katanya
+                        ditengah-tengah desa ada sebuah pohon manggu yang besar dan di disekitar pohon manggu
+                        tersebut ada sebuah halaman atau karang yang bersih, luas, rindang dan nyaman. karena
+                        rasa sejuk dan rindangnya pohon manggu terebut tempat ini dipakai sarana tempat bermain
+                        anak-anak bahkan juga tak jarang para pedagang yang kebetulan lewat ke tempat itu sengaja
+                        numpang istirahat melepas lelah dibawah rindanya pohon manggu sambil membuka
+                        timbel/nasi bekel yang ia bawa. Terifirasi dari nama itulah asal mula Karangmanggu diambil,
+                        dari pohon Manggu dan Karang/halaman yang bahasanya diesederhanakan lagi menjadi
+                        KARANGMANGU.</p>
+                    <p>Desa Karangmangu dipimpin oleh seorang kuwu, entah tahun berapa desa ini lahir</p>
 
-entah siapa orang yang pertama memimpin tidak ada ada informasi yang jelas, Periode-
-periode kuwu yang bisa dihimpun sebagai berikut:
+                    entah siapa orang yang pertama memimpin tidak ada ada informasi yang jelas, Periode-
+                    periode kuwu yang bisa dihimpun sebagai berikut:
                     <ul class="list-disc list-inside space-y-1">
                         <li>Kuwu Tuba (–1925) <em>(tahun tidak tercatat)</em></li>
                         <li>Kuwu Sumarja (1925–1961)</li>
@@ -314,77 +330,88 @@ periode kuwu yang bisa dihimpun sebagai berikut:
             </div>
 
             <!-- Demografi -->
-<div class="bg-white rounded-lg shadow-lg p-8">
-    <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Demografi Desa Karangmangu</h2>
-    <div class="text-gray-700 leading-relaxed text-justify space-y-4">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Demografi Desa Karangmangu</h2>
+                <div class="text-gray-700 leading-relaxed text-justify space-y-4">
 
-        <!-- 2.1 Letak Geografis -->
-        <h3 class="text-xl font-semibold text-green-700">2.1. Letak Geografis</h3>
-        <p>Desa Karangmangu terletak di Kecamatan Kramatmulya, Kabupaten Kuningan, dengan luas wilayah 223,165 hektar. Terdiri dari 4 dusun/blok, 8 Rukun Warga (RW), dan 20 Rukun Tetangga (RT). Batas wilayah Desa Karangmangu adalah sebagai berikut:</p>
-        <ul class="list-disc list-inside">
-            <li>Sebelah Utara: Desa Ciniru, Kecamatan Jalaksana</li>
-            <li>Sebelah Selatan: Desa Cikaso, Kecamatan Kramatmulya</li>
-            <li>Sebelah Timur: Desa Sindangbarang, Kecamatan Jalaksana</li>
-            <li>Sebelah Barat: Desa Nanggerang, Kecamatan Jalaksana</li>
-        </ul>
-        <p>Secara visualisasi, wilayah administratif dapat dilihat dalam peta wilayah Desa Karangmangu.</p>
+                    <!-- 2.1 Letak Geografis -->
+                    <h3 class="text-xl font-semibold text-green-700">2.1. Letak Geografis</h3>
+                    <p>Desa Karangmangu terletak di Kecamatan Kramatmulya, Kabupaten Kuningan, dengan luas wilayah 223,165
+                        hektar. Terdiri dari 4 dusun/blok, 8 Rukun Warga (RW), dan 20 Rukun Tetangga (RT). Batas wilayah
+                        Desa Karangmangu adalah sebagai berikut:</p>
+                    <ul class="list-disc list-inside">
+                        <li>Sebelah Utara: Desa Ciniru, Kecamatan Jalaksana</li>
+                        <li>Sebelah Selatan: Desa Cikaso, Kecamatan Kramatmulya</li>
+                        <li>Sebelah Timur: Desa Sindangbarang, Kecamatan Jalaksana</li>
+                        <li>Sebelah Barat: Desa Nanggerang, Kecamatan Jalaksana</li>
+                    </ul>
+                    <p>Secara visualisasi, wilayah administratif dapat dilihat dalam peta wilayah Desa Karangmangu.</p>
 
-        <!-- 2.2 Topografi -->
-        <h3 class="text-xl font-semibold text-green-700">2.2. Topografi</h3>
-        <p>Desa Karangmangu berada di dataran tinggi dengan ketinggian 500–550 meter di atas permukaan laut (DPL), memiliki kontur tanah yang datar dan sebagian berbukit. Suhu rata-rata harian berkisar antara 29°C hingga 35°C, dengan curah hujan rata-rata 2.800 mm per tahun.</p>
-        <p>Jarak orbitasi desa ini yaitu 2 km ke ibu kota kecamatan, 6 km ke ibu kota kabupaten, 235 km ke ibu kota provinsi, dan 540 km ke ibu kota negara. Sebagian besar wilayahnya adalah lahan pertanian seperti sawah dan tegalan.</p>
+                    <!-- 2.2 Topografi -->
+                    <h3 class="text-xl font-semibold text-green-700">2.2. Topografi</h3>
+                    <p>Desa Karangmangu berada di dataran tinggi dengan ketinggian 500–550 meter di atas permukaan laut
+                        (DPL), memiliki kontur tanah yang datar dan sebagian berbukit. Suhu rata-rata harian berkisar antara
+                        29°C hingga 35°C, dengan curah hujan rata-rata 2.800 mm per tahun.</p>
+                    <p>Jarak orbitasi desa ini yaitu 2 km ke ibu kota kecamatan, 6 km ke ibu kota kabupaten, 235 km ke ibu
+                        kota provinsi, dan 540 km ke ibu kota negara. Sebagian besar wilayahnya adalah lahan pertanian
+                        seperti sawah dan tegalan.</p>
 
-        <!-- 2.3 Hidrologi dan Klimatologi -->
-        <h3 class="text-xl font-semibold text-green-700">2.3. Hidrologi dan Klimatologi</h3>
-        <p>Wilayah Desa Karangmangu memiliki sistem hidrologi yang penting dalam pengaturan tata air, dengan aliran sungai dan selokan berdebit besar, sedang, dan kecil, di antaranya Sungai Cilengkrang. Namun, belakangan ini terjadi perubahan cuaca yang memengaruhi ketidakstabilan debit air karena sebagian besar wilayah adalah daerah irigasi setengah teknis.</p>
+                    <!-- 2.3 Hidrologi dan Klimatologi -->
+                    <h3 class="text-xl font-semibold text-green-700">2.3. Hidrologi dan Klimatologi</h3>
+                    <p>Wilayah Desa Karangmangu memiliki sistem hidrologi yang penting dalam pengaturan tata air, dengan
+                        aliran sungai dan selokan berdebit besar, sedang, dan kecil, di antaranya Sungai Cilengkrang. Namun,
+                        belakangan ini terjadi perubahan cuaca yang memengaruhi ketidakstabilan debit air karena sebagian
+                        besar wilayah adalah daerah irigasi setengah teknis.</p>
 
-        <!-- 2.4 Luas dan Sebaran Penggunaan Lahan -->
-        <h3 class="text-xl font-semibold text-green-700">2.4. Luas dan Sebaran Penggunaan Lahan</h3>
-        <p>Lahan di Desa Karangmangu umumnya dimanfaatkan secara produktif, terutama untuk pertanian karena tanahnya yang subur. Hanya sebagian kecil lahan yang tidak dimanfaatkan. Hal ini menunjukkan bahwa desa memiliki sumber daya alam yang memadai.</p>
+                    <!-- 2.4 Luas dan Sebaran Penggunaan Lahan -->
+                    <h3 class="text-xl font-semibold text-green-700">2.4. Luas dan Sebaran Penggunaan Lahan</h3>
+                    <p>Lahan di Desa Karangmangu umumnya dimanfaatkan secara produktif, terutama untuk pertanian karena
+                        tanahnya yang subur. Hanya sebagian kecil lahan yang tidak dimanfaatkan. Hal ini menunjukkan bahwa
+                        desa memiliki sumber daya alam yang memadai.</p>
 
-        <div class="overflow-x-auto">
-            <table class="min-w-full mt-4 table-auto border border-gray-300 text-sm text-left">
-                <thead class="bg-green-100 text-green-900">
-                    <tr>
-                        <th class="px-4 py-2 border">Jenis Lahan</th>
-                        <th class="px-4 py-2 border">Luas (Ha)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="bg-white">
-                        <td class="px-4 py-2 border">Sawah Teknis</td>
-                        <td class="px-4 py-2 border">2</td>
-                    </tr>
-                    <tr class="bg-gray-50">
-                        <td class="px-4 py-2 border">Sawah Setengah Teknis</td>
-                        <td class="px-4 py-2 border">58</td>
-                    </tr>
-                    <tr class="bg-white">
-                        <td class="px-4 py-2 border">Sawah Pasang Surut</td>
-                        <td class="px-4 py-2 border">-</td>
-                    </tr>
-                    <tr class="bg-gray-50">
-                        <td class="px-4 py-2 border">Lahan Pemukiman</td>
-                        <td class="px-4 py-2 border">65</td>
-                    </tr>
-                    <tr class="bg-white">
-                        <td class="px-4 py-2 border">Lahan Perkantoran</td>
-                        <td class="px-4 py-2 border">-</td>
-                    </tr>
-                    <tr class="bg-gray-50">
-                        <td class="px-4 py-2 border">Perkebunan</td>
-                        <td class="px-4 py-2 border">50</td>
-                    </tr>
-                    <tr class="bg-white">
-                        <td class="px-4 py-2 border">Lahan Lainnya</td>
-                        <td class="px-4 py-2 border">48</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full mt-4 table-auto border border-gray-300 text-sm text-left">
+                            <thead class="bg-green-100 text-green-900">
+                                <tr>
+                                    <th class="px-4 py-2 border">Jenis Lahan</th>
+                                    <th class="px-4 py-2 border">Luas (Ha)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white">
+                                    <td class="px-4 py-2 border">Sawah Teknis</td>
+                                    <td class="px-4 py-2 border">2</td>
+                                </tr>
+                                <tr class="bg-gray-50">
+                                    <td class="px-4 py-2 border">Sawah Setengah Teknis</td>
+                                    <td class="px-4 py-2 border">58</td>
+                                </tr>
+                                <tr class="bg-white">
+                                    <td class="px-4 py-2 border">Sawah Pasang Surut</td>
+                                    <td class="px-4 py-2 border">-</td>
+                                </tr>
+                                <tr class="bg-gray-50">
+                                    <td class="px-4 py-2 border">Lahan Pemukiman</td>
+                                    <td class="px-4 py-2 border">65</td>
+                                </tr>
+                                <tr class="bg-white">
+                                    <td class="px-4 py-2 border">Lahan Perkantoran</td>
+                                    <td class="px-4 py-2 border">-</td>
+                                </tr>
+                                <tr class="bg-gray-50">
+                                    <td class="px-4 py-2 border">Perkebunan</td>
+                                    <td class="px-4 py-2 border">50</td>
+                                </tr>
+                                <tr class="bg-white">
+                                    <td class="px-4 py-2 border">Lahan Lainnya</td>
+                                    <td class="px-4 py-2 border">48</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-    </div>
-</div>
+                </div>
+            </div>
 
             <!-- Struktur Organisasi -->
             <div class="bg-white rounded-lg shadow-lg p-8">

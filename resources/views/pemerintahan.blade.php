@@ -6,11 +6,11 @@
 @section('content')
     <!-- Hero Slider -->
     <section x-data="{
-        slides: [
-            { src: 'https://picsum.photos/1200/400?random=1', title: 'LPM (Lembaga Pemberdayaan Masyarakat)' },
-            { src: 'https://picsum.photos/1200/400?random=2', title: 'Karang Taruna' },
-            { src: 'https://picsum.photos/1200/400?random=3', title: 'PKK (Pemberdayaan Kesejahteraan Keluarga)' }
-        ],
+    slides: [
+        { src: '{{ asset('images/Banner/1.jpeg') }}', title: 'LPM (Lembaga Pemberdayaan Masyarakat)' },
+        { src: '{{ asset('images/Banner/SAMPINGKANAN.jpeg') }}', title: 'Karang Taruna' },
+        { src: '{{ asset('images/Banner/SAMPINGKIRI.jpeg') }}', title: 'PKK (Pemberdayaan Kesejahteraan Keluarga)' }
+    ],
         current: 0,
         init() { setInterval(this.next, 5000) },
         prev() { this.current = (this.current - 1 + this.slides.length) % this.slides.length },
@@ -57,11 +57,11 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @php
                     $officers = [
-                        ['Lurah Winduherang', 'H. Ikin Sodikin, S.Sn'],
-                        ['Sekretaris Kelurahan', 'N. Dedeh Kurniaish, SE'],
-                        ['Ka. Seksi Pemerintahan & Trantibum', 'Toto Herianto, S.I.P'],
-                        ['Ka. Seksi Perekonomian, Pembangunan & Pemberdayaan Masyarakat', 'Anis Nopriyani'],
-                        ['Ka. Seksi Kesejahteraan Rakyat', 'Dini Heridiani, SE'],
+                        ['Lurah karangmangu', 'H.Uja Azizi'],
+                        ['Sekretaris Kelurahan', 'Nanda Sunanda'],
+                        ['Ka. Seksi Pemerintahan', 'Iwan Gunawan'],
+                        ['Ka. Seksi Pelayanan', 'M.Sahuri'],
+                        ['Ka. Seksi Kesejahteraan', 'Ugi Sugiharto'],
                     ];
                 @endphp
 
@@ -117,7 +117,29 @@
         use Carbon\Carbon;
         // 1) Tahun sekarang
 
-        $bloodStats = Resident::select('gol_darah as type', DB::raw('count(*) as count'))->groupBy('gol_darah')->get();
+        $bloodStats = Resident::select('gol_darah as type', DB::raw('COUNT(*) as count'))
+            ->whereDoesntHave('populationDeath') // hanya yang masih hidup
+            ->whereNotNull('gol_darah') // bukan NULL
+            ->whereNotIn('gol_darah', ['', 'null']) // bukan '' atau 'null' (string)
+            ->groupBy('gol_darah')
+            ->get();
+
+        // 2) Hitung yang hidup tapi **tidak** punya data golongan darah
+        $unknownCount = Resident::whereDoesntHave('populationDeath')
+            ->where(function ($q) {
+                $q->whereNull('gol_darah')->orWhere('gol_darah', '')->orWhere('gol_darah', 'null');
+            })
+            ->count();
+
+        // 3) Tambahkan kategori “Tidak Diketahui” jika ada
+        if ($unknownCount > 0) {
+            $bloodStats->push(
+                (object) [
+                    'type' => 'Tidak Diketahui',
+                    'count' => $unknownCount,
+                ],
+            );
+        }
         $total = Resident::count();
         // Total kematian
         $totalDeaths = PopulationDeath::count();
@@ -190,18 +212,55 @@
         $ageLabels = $ageData->keys()->toArray();
         $ageCounts = $ageData->values()->toArray();
 
+        // 1) Statistik untuk yang punya data pendidikan (hidup dan bukan 'null' string)
         $eduStats = Resident::select(
             'pendidikan',
             DB::raw("SUM(CASE WHEN jenis_kelamin = 'Laki-laki' THEN 1 ELSE 0 END) as male"),
             DB::raw("SUM(CASE WHEN jenis_kelamin = 'Perempuan' THEN 1 ELSE 0 END) as female"),
         )
-            ->whereNotNull('pendidikan')
+            ->whereDoesntHave('populationDeath') // hanya yang hidup
+            ->whereNotNull('pendidikan') // bukan NULL
+            ->whereNotIn('pendidikan', ['', 'null']) // bukan '' ataupun 'null'
             ->groupBy('pendidikan')
             ->orderByRaw(
-                "FIELD(pendidikan, 'TK/PAUD','SD','SMP','SMA','DIPLOMA','SARJANA (S1)','MAJISTER (S2)','DOKTOR (S3)')",
+                "
+        FIELD(pendidikan, 
+            'Tidak/Belum Sekolah', 
+            'TK/PAUD', 
+            'SD', 
+            'SMP', 
+            'SMA/SMK', 
+            'Diploma', 
+            'Sarjana', 
+            'Magister', 
+            'Doktor')
+    ",
             )
             ->get();
 
+        // 2) Statistik untuk yang **tidak** punya data pendidikan
+        $missingStats = Resident::select(
+            DB::raw("SUM(CASE WHEN jenis_kelamin = 'Laki-laki' THEN 1 ELSE 0 END) as male"),
+            DB::raw("SUM(CASE WHEN jenis_kelamin = 'Perempuan' THEN 1 ELSE 0 END) as female"),
+        )
+            ->whereDoesntHave('populationDeath') // hanya yang hidup
+            ->where(function ($q) {
+                $q->whereNull('pendidikan')->orWhere('pendidikan', '')->orWhere('pendidikan', 'null'); // include literal 'null'
+            })
+            ->first();
+
+        // 3) Tambahkan kategori “Belum Ada Data” kalau perlu
+        if ($missingStats->male + $missingStats->female > 0) {
+            $eduStats->push(
+                (object) [
+                    'pendidikan' => 'Belum Ada Data',
+                    'male' => (int) $missingStats->male,
+                    'female' => (int) $missingStats->female,
+                ],
+            );
+        }
+
+        // 4) Siapkan array untuk Chart.js
         $eduLabels = $eduStats->pluck('pendidikan');
         $eduMaleData = $eduStats->pluck('male');
         $eduFemaleData = $eduStats->pluck('female');
@@ -213,20 +272,22 @@
         //
         // 2) Data Agama
         //
-        $religionStats = Resident::select('agama', DB::raw('COUNT(*) as count'))->groupBy('agama')->get();
-
+        // $religionStats = Resident::select('agama', DB::raw('COUNT(*) as count'))->groupBy('agama')->get();
+        $religionStats = Resident::whereDoesntHave('populationDeath')
+            ->select('agama', DB::raw('COUNT(*) as count'))
+            ->groupBy('agama')
+            ->get();
         //
         // 3) Data Pekerjaan
-        //
         $jobStats = Resident::select('pekerjaan', DB::raw('COUNT(*) as count'))
             ->whereNotNull('pekerjaan')
+            ->whereDoesntHave('populationDeath') // hanya yang belum meninggal
             ->groupBy('pekerjaan')
-            ->get()->map(function ($item) {
-                $item->pekerjaan = $item->pekerjaan == '' ? 'Belum Bekerja' : $item->pekerjaan;
+            ->get()
+            ->map(function ($item) {
+                $item->pekerjaan = $item->pekerjaan === '' ? 'Belum Bekerja' : $item->pekerjaan;
                 return $item;
             });
-
-
 
         //
         // Helpers: pilih emoji berdasarkan teks
@@ -319,16 +380,19 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
                         <div class="p-4 bg-green-50 rounded-lg text-center">
                             <p class="text-gray-700 font-medium">Total</p>
-                            <p class="text-green-700 text-2xl font-bold">{{ number_format($total - ($maleDeaths + $femaleDeaths), 0, ',', '.') }}
+                            <p class="text-green-700 text-2xl font-bold">
+                                {{ number_format($total - ($maleDeaths + $femaleDeaths), 0, ',', '.') }}
                             </p>
                         </div>
                         <div class="p-4 bg-blue-50 rounded-lg text-center">
                             <p class="text-gray-700 font-medium">Laki-laki</p>
-                            <p class="text-blue-700 text-2xl font-bold">{{ number_format($male - $maleDeaths, 0, ',', '.')}}</p>
+                            <p class="text-blue-700 text-2xl font-bold">
+                                {{ number_format($male - $maleDeaths, 0, ',', '.') }}</p>
                         </div>
                         <div class="p-4 bg-pink-50 rounded-lg text-center">
                             <p class="text-gray-700 font-medium">Perempuan</p>
-                            <p class="text-pink-700 text-2xl font-bold">{{ number_format($female - $femaleDeaths, 0, ',', '.') }}
+                            <p class="text-pink-700 text-2xl font-bold">
+                                {{ number_format($female - $femaleDeaths, 0, ',', '.') }}
                             </p>
                         </div>
                         {{-- <div class="p-4 bg-amber-50 rounded-lg text-center">
@@ -423,8 +487,7 @@
                     data: {
                         labels: ['Laki-laki', 'Perempuan'],
                         datasets: [{
-                            data: [{{ $male - $maleDeaths }}, {{ $female - $femaleDeaths }}
-                            ],
+                            data: [{{ $male - $maleDeaths }}, {{ $female - $femaleDeaths }}],
                             backgroundColor: @json(array_slice($colors, 0, 3)),
                             borderColor: '#fff',
                             borderWidth: 2,
@@ -651,8 +714,6 @@
         });
     </script>
 
-
-
     <!-- Alpine.js for slider -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
@@ -703,74 +764,83 @@
     {{-- =======================
  Section: Golongan Darah Penduduk
 ======================= --}}
-    <section id="blood-types" class="py-12 px-4 bg-gray-50">
-        <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6">
-            <h2 class="text-3xl font-bold text-green-800 text-center">Distribusi Golongan Darah</h2>
+    <!-- Improved Blood Types Section -->
+    <section id="blood-types" class="py-16 px-6 bg-gradient-to-r from-green-50 to-green-100">
+        <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 lg:p-12 space-y-8">
+            <h2 class="text-4xl font-extrabold text-green-800 text-center">Statistik Golongan Darah</h2>
 
             @if ($total > 0)
-                <div class="flex flex-col lg:flex-row items-center gap-8">
-                    {{-- Chart --}}
-                    <div class="w-full max-w-sm mx-auto">
-                        <canvas id="bloodTypeChart"></canvas>
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <!-- Chart -->
+                    <div class="w-full lg:w-1/2">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <canvas id="bloodTypeChart"></canvas>
+                        </div>
                     </div>
 
-                    {{-- Kartu ringkasan --}}
-                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 flex-1">
+                    <!-- Summary Cards -->
+                    <div class="w-full lg:w-1/2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
                         @foreach ($bloodStats as $stat)
-                            <div class="p-4 bg-white rounded-lg text-center shadow-sm border">
-                                <p class="text-gray-700 font-medium">Total Golongan {{ $stat->type }}</p>
-                                <p class="text-xl font-bold text-green-700">
-                                    {{ number_format($stat->count, 0, ',', '.') }}
-                                </p>
+                            <div
+                                class="p-4 bg-red-50 rounded-lg shadow-sm border-l-4 border-red-500 hover:shadow-lg transition-shadow">
+                                <p class="text-sm text-red-900 uppercase tracking-wide"> {{ $stat->type }}</p>
+                                <p class="mt-2 text-2xl font-bold text-green-800">
+                                    {{ number_format($stat->count, 0, ',', '.') }}</p>
                             </div>
                         @endforeach
                     </div>
                 </div>
             @else
-                <p class="text-center text-gray-500">Belum ada data golongan darah penduduk.</p>
+                <p class="text-center text-gray-500 italic">Belum ada data golongan darah penduduk.</p>
             @endif
         </div>
     </section>
-    <section id="death-stats" class="py-12 px-4 bg-gray-50">
-        <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6">
-            <h2 class="text-3xl font-bold text-red-800 text-center">Statistik Kematian Penduduk</h2>
+
+    <!-- Improved Death Stats Section -->
+    <section id="death-stats" class="py-16 px-6 bg-gradient-to-r from-red-50 to-red-100">
+        <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 lg:p-12 space-y-8">
+            <h2 class="text-4xl font-extrabold text-red-800 text-center">Statistik Kematian Penduduk</h2>
 
             @if ($totalDeaths > 0)
-                <div class="flex flex-col lg:flex-row items-center gap-8">
-                    {{-- Chart Persentase Gender --}}
-                    <div class="w-full max-w-sm mx-auto">
-                        <canvas id="deathGenderChart"></canvas>
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <!-- Gender Pie Chart -->
+                    <div class="w-full lg:w-1/2">
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <canvas id="deathGenderChart"></canvas>
+                        </div>
                     </div>
 
-                    {{-- Ringkasan --}}
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
-                        <div class="p-4 bg-red-50 rounded-lg text-center">
-                            <p class="text-gray-700 font-medium">Total Kematian</p>
-                            <p class="text-red-700 text-2xl font-bold">{{ number_format($totalDeaths, 0, ',', '.') }}</p>
-                        </div>
-                        <div class="p-4 bg-blue-50 rounded-lg text-center">
-                            <p class="text-gray-700 font-medium">Laki-laki</p>
-                            <p class="text-blue-700 text-2xl font-bold">{{ number_format($maleDeaths, 0, ',', '.') }}</p>
-                            <p class="text-sm text-gray-600">{{ $percentMale }}%</p>
-                        </div>
-                        <div class="p-4 bg-pink-50 rounded-lg text-center">
-                            <p class="text-gray-700 font-medium">Perempuan</p>
-                            <p class="text-pink-700 text-2xl font-bold">{{ number_format($femaleDeaths, 0, ',', '.') }}
+                    <!-- Facts -->
+                    <div class="w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="p-6 bg-red-50 rounded-lg shadow-sm border-l-4 border-red-500">
+                            <p class="text-sm text-red-700 uppercase tracking-wide">Total Kematian</p>
+                            <p class="mt-2 text-3xl font-bold text-red-800">{{ number_format($totalDeaths, 0, ',', '.') }}
                             </p>
-                            <p class="text-sm text-gray-600">{{ $percentFemale }}%</p>
+                        </div>
+                        <div class="p-6 bg-blue-50 rounded-lg shadow-sm border-l-4 border-blue-500">
+                            <p class="text-sm text-blue-700 uppercase tracking-wide">Laki-laki</p>
+                            <p class="mt-2 text-3xl font-bold text-blue-800">{{ number_format($maleDeaths, 0, ',', '.') }}
+                            </p>
+                            <p class="mt-1 text-sm text-gray-600">{{ $percentMale }}%</p>
+                        </div>
+                        <div class="p-6 bg-pink-50 rounded-lg shadow-sm border-l-4 border-pink-500">
+                            <p class="text-sm text-pink-700 uppercase tracking-wide">Perempuan</p>
+                            <p class="mt-2 text-3xl font-bold text-pink-800">
+                                {{ number_format($femaleDeaths, 0, ',', '.') }}</p>
+                            <p class="mt-1 text-sm text-gray-600">{{ $percentFemale }}%</p>
                         </div>
                     </div>
                 </div>
 
-                {{-- Chart Distribusi Umur --}}
+                <!-- Age Distribution Chart -->
                 <div class="mt-12">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Distribusi Umur Saat Meninggal</h3>
-                    <div class="w-full max-w-lg mx-auto">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Distribusi Umur Saat Meninggal</h3>
+                    <div class="w-full mx-auto max-w-lg bg-white p-6 rounded-lg shadow-md">
                         <canvas id="deathAgeChart"></canvas>
                     </div>
                 </div>
             @else
-                <p class="text-center text-gray-500">Belum ada data kematian yang tercatat.</p>
+                <p class="text-center text-gray-500 italic">Belum ada data kematian yang tercatat.</p>
             @endif
         </div>
     </section>
@@ -856,9 +926,8 @@
     <section id="age-range-chart" class="py-12 px-4 bg-gray-50">
         <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8">
             <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Distribusi Usia Penduduk</h2>
-
             @php
-                //   use App\Models\Resident;
+                // use App\Models\Resident;
 
                 // Definisikan rentang umur
                 $ageRanges = [
@@ -874,13 +943,14 @@
                 foreach ($ageRanges as $range) {
                     [$min, $max] = $range;
 
-                    // Hitung jumlah laki-laki
-                    $maleCounts[] = Resident::where('jenis_kelamin', 'Laki-laki')
+                    // Hanya yang masih hidup
+                    $maleCounts[] = Resident::whereDoesntHave('populationDeath')
+                        ->where('jenis_kelamin', 'Laki-laki')
                         ->whereRaw('TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) BETWEEN ? AND ?', [$min, $max])
                         ->count();
 
-                    // Hitung jumlah perempuan
-                    $femaleCounts[] = Resident::where('jenis_kelamin', 'Perempuan')
+                    $femaleCounts[] = Resident::whereDoesntHave('populationDeath')
+                        ->where('jenis_kelamin', 'Perempuan')
                         ->whereRaw('TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) BETWEEN ? AND ?', [$min, $max])
                         ->count();
                 }
@@ -1088,7 +1158,7 @@
     {{-- @endpush --}}
     {{-- resources/views/dashboard/marital-status.blade.php --}}
     @php
-        //   use App\Models\Resident;
+        // use App\Models\Resident;
 
         // 1) Definisikan kategori status perkawinan
         $statusCategories = [
@@ -1098,10 +1168,12 @@
             'Cerai Hidup' => 'Cerai Hidup',
         ];
 
-        // 2) Hitung jumlah & persentase tiap kategori
+        // 2) Hitung jumlah & persentase tiap kategori (hanya yang hidup)
         $counts = [];
-        foreach ($statusCategories as $key => $label) {
-            $counts[$label] = Resident::where('status_perkawinan', $label)->count();
+        foreach ($statusCategories as $label) {
+            $counts[$label] = Resident::whereDoesntHave('populationDeath') // hanya hidup
+                ->where('status_perkawinan', $label)
+                ->count();
         }
         $total = array_sum($counts);
 
@@ -1113,6 +1185,7 @@
         // 3) Warna chart
         $colors = ['#4CAF50', '#2196F3', '#FF9800', '#F44336'];
     @endphp
+
 
     <section id="marital-status" class="py-12 px-4 bg-gray-50">
         <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-8">
