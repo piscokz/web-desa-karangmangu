@@ -221,7 +221,56 @@
             </div>
 
 
-            <!-- Sejarah -->
+
+            <!-- Visi & Misi Desa Karangmangu -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Visi &amp; Misi Desa Karangmangu</h2>
+
+                <div class="text-gray-700 leading-relaxed text-justify space-y-4 mb-8">
+                    <p>
+                        Demokratisasi memiliki makna bahwa penyelenggaraan pemerintahan dan pelaksanaan pembangunan di desa
+                        harus mengakomodasi aspirasi masyarakat melalui Badan Permusyawaratan Desa dan lembaga
+                        kemasyarakatan yang ada sebagai mitra Pemerintah Desa. Hal ini diharapkan mendorong peran aktif
+                        masyarakat sehingga setiap warga bertanggung jawab atas perkembangan kehidupan bersama, meningkatkan
+                        taraf hidup dan kesejahteraan melalui kebijakan, program, dan kegiatan yang sesuai esensi masalah
+                        serta prioritas kebutuhan masyarakat.
+                    </p>
+                    <p>
+                        Berdasarkan pertimbangan tersebut, untuk jangka waktu 6 (enam) tahun ke depan, proses pembangunan
+                        desa, penyelenggaraan pemerintahan, pemberdayaan dan partisipasi masyarakat, serta tunjangan
+                        Operasional Pemerintah Desa, BPD, dan insentif RT/RW akan berlandaskan prinsip keterbukaan dan
+                        partisipasi. Dengan demikian, Desa Karangmangu diharapkan mengalami kemajuan dan kesejahteraan yang
+                        merata.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Visi -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-green-700 mb-2">Visi</h3>
+                        <p class="italic text-gray-700">
+                            “TERCIPTANYA TATA KELOLA PEMERINTAHAN DESA YANG BAIK, BERSIH, DAN TRANSPARAN GUNA MEWUJUDKAN
+                            DESA KARANGMANGU YANG ADIL, MAKMUR, SEJAHTERA, DAN BERMARTABAT”
+                        </p>
+                    </div>
+                    <!-- Misi -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-green-700 mb-2">Misi</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li>Meningkatkan pelayanan prima untuk seluruh masyarakat.</li>
+                            <li>Menciptakan Pemerintah Desa yang tanggap terhadap aspirasi masyarakat.</li>
+                            <li>Meningkatkan sarana dan prasarana umum guna mendukung kelancaran perekonomian masyarakat.
+                            </li>
+                            <li>Pemerataan pembangunan fisik dan non-fisik agar tidak terjadi kesenjangan sosial.</li>
+                            <li>Koordinasi dan kerja sama dengan semua unsur kelembagaan desa guna memberikan pelayanan
+                                terbaik kepada masyarakat.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+                        <!-- Sejarah -->
             <div class="bg-white rounded-lg shadow-lg p-8">
                 <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Sejarah Desa Karangmangu</h2>
                 <div class="text-gray-700 leading-relaxed text-justify space-y-4">
@@ -280,55 +329,6 @@
                 </div>
             </div>
 
-
-
-            <!-- Visi & Misi Desa Karangmangu -->
-            <div class="bg-white rounded-lg shadow-lg p-8">
-                <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Visi &amp; Misi Desa Karangmangu</h2>
-
-                <div class="text-gray-700 leading-relaxed text-justify space-y-4 mb-8">
-                    <p>
-                        Demokratisasi memiliki makna bahwa penyelenggaraan pemerintahan dan pelaksanaan pembangunan di desa
-                        harus mengakomodasi aspirasi masyarakat melalui Badan Permusyawaratan Desa dan lembaga
-                        kemasyarakatan yang ada sebagai mitra Pemerintah Desa. Hal ini diharapkan mendorong peran aktif
-                        masyarakat sehingga setiap warga bertanggung jawab atas perkembangan kehidupan bersama, meningkatkan
-                        taraf hidup dan kesejahteraan melalui kebijakan, program, dan kegiatan yang sesuai esensi masalah
-                        serta prioritas kebutuhan masyarakat.
-                    </p>
-                    <p>
-                        Berdasarkan pertimbangan tersebut, untuk jangka waktu 6 (enam) tahun ke depan, proses pembangunan
-                        desa, penyelenggaraan pemerintahan, pemberdayaan dan partisipasi masyarakat, serta tunjangan
-                        Operasional Pemerintah Desa, BPD, dan insentif RT/RW akan berlandaskan prinsip keterbukaan dan
-                        partisipasi. Dengan demikian, Desa Karangmangu diharapkan mengalami kemajuan dan kesejahteraan yang
-                        merata.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Visi -->
-                    <div>
-                        <h3 class="text-xl font-semibold text-green-700 mb-2">Visi</h3>
-                        <p class="italic text-gray-700">
-                            “TERCIPTANYA TATA KELOLA PEMERINTAHAN DESA YANG BAIK, BERSIH, DAN TRANSPARAN GUNA MEWUJUDKAN
-                            DESA KARANGMANGU YANG ADIL, MAKMUR, SEJAHTERA, DAN BERMARTABAT”
-                        </p>
-                    </div>
-                    <!-- Misi -->
-                    <div>
-                        <h3 class="text-xl font-semibold text-green-700 mb-2">Misi</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-700">
-                            <li>Meningkatkan pelayanan prima untuk seluruh masyarakat.</li>
-                            <li>Menciptakan Pemerintah Desa yang tanggap terhadap aspirasi masyarakat.</li>
-                            <li>Meningkatkan sarana dan prasarana umum guna mendukung kelancaran perekonomian masyarakat.
-                            </li>
-                            <li>Pemerataan pembangunan fisik dan non-fisik agar tidak terjadi kesenjangan sosial.</li>
-                            <li>Koordinasi dan kerja sama dengan semua unsur kelembagaan desa guna memberikan pelayanan
-                                terbaik kepada masyarakat.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
             <!-- Demografi -->
             <div class="bg-white rounded-lg shadow-lg p-8">
                 <h2 class="text-3xl font-bold text-green-800 text-center mb-6">Demografi Desa Karangmangu</h2>
@@ -339,6 +339,13 @@
                     <p>Desa Karangmangu terletak di Kecamatan Kramatmulya, Kabupaten Kuningan, dengan luas wilayah 223,165
                         hektar. Terdiri dari 4 dusun/blok, 8 Rukun Warga (RW), dan 20 Rukun Tetangga (RT). Batas wilayah
                         Desa Karangmangu adalah sebagai berikut:</p>
+                        <div class="flex justify-center">
+                    <div
+                        class="overflow-hidden rounded-xl shadow-xl hover:scale-105 transition-transform duration-300 ring-1 ring-green-200">
+                        <img src="{{ asset('images/geografi.png') }}" alt="Keadaan Geografis"
+                            class="object-contain w-full md:w-[700px]" />
+                    </div>
+                </div>
                     <ul class="list-disc list-inside">
                         <li>Sebelah Utara: Desa Ciniru, Kecamatan Jalaksana</li>
                         <li>Sebelah Selatan: Desa Cikaso, Kecamatan Kramatmulya</li>
