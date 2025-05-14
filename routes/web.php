@@ -56,6 +56,7 @@ Route::get('/pemerintahan-winduherang', function () {
 })->name('pemerintahan');
 
 Route::post('/pengaduan', [ContactController::class, 'store'])->name('pengaduan.store');
+// Route::get('/officers', [VillageMemberController::class, 'showOfficers'])->name('officers.index');
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -90,6 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.content.dashboard');
     })->name('admin.dashboard');
+
 
     Route::get('admin/pengaduan', [AdminPengaduanController::class, 'index'])
         ->name('admin.pengaduan.index');

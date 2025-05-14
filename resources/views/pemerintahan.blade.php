@@ -6,11 +6,11 @@
 @section('content')
     <!-- Hero Slider -->
     <section x-data="{
-    slides: [
-        { src: '{{ asset('images/Banner/1.jpeg') }}', title: 'LPM (Lembaga Pemberdayaan Masyarakat)' },
-        { src: '{{ asset('images/Banner/SAMPINGKANAN.jpeg') }}', title: 'Karang Taruna' },
-        { src: '{{ asset('images/Banner/SAMPINGKIRI.jpeg') }}', title: 'PKK (Pemberdayaan Kesejahteraan Keluarga)' }
-    ],
+        slides: [
+            { src: '{{ asset('images/Banner/1.jpeg') }}', title: 'LPM (Lembaga Pemberdayaan Masyarakat)' },
+            { src: '{{ asset('images/Banner/SAMPINGKANAN.jpeg') }}', title: 'Karang Taruna' },
+            { src: '{{ asset('images/Banner/SAMPINGKIRI.jpeg') }}', title: 'PKK (Pemberdayaan Kesejahteraan Keluarga)' }
+        ],
         current: 0,
         init() { setInterval(this.next, 5000) },
         prev() { this.current = (this.current - 1 + this.slides.length) % this.slides.length },
@@ -37,48 +37,113 @@
             </div>
             <div class="flex space-x-2 mt-6">
                 <template x-for="(_, i) in slides" :key="i">
-                    <button class="w-3 h-3 rounded-full" :class="i === current ? 'bg-white' : 'bg-white bg-opacity-50'"
-                        @click="go(i)"></button>
+                    <button class="w-4 h-4 rounded-full transition-all duration-300 ease-in-out"
+                        :class="i === current ? 'bg-green-600 shadow-lg scale-110' :
+                            'bg-white bg-opacity-50 hover:bg-opacity-75'"
+                        @click="go(i)"
+                        :style="{
+                            transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease'
+                        }"></button>
                 </template>
+
             </div>
         </div>
     </section>
-    {{-- Pejabat Utama Desa --}}
-    <section class="py-16 bg-gray-50 space-y-10">
+    <section class="relative py-16 bg-gray-50 space-y-10">
         <div class="max-w-6xl mx-auto px-4 space-y-8">
-
             <div class="text-center space-y-2">
                 <h2 class="text-3xl font-bold text-green-800 border-b-4 border-green-300 inline-block">
-                    Pejabat & Struktur Desa Winduherang
+                    Pejabat & Struktur Desa Karangmangu
                 </h2>
-                <p class="text-gray-700">Berikut adalah lima jabatan utama di Kelurahan Winduherang.</p>
+                <p class="text-gray-700">Berikut adalah lima jabatan utama di Kelurahan Karangmangu.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                @php
-                    $officers = [
-                        ['Lurah karangmangu', 'H.Uja Azizi'],
-                        ['Sekretaris Kelurahan', 'Nanda Sunanda'],
-                        ['Ka. Seksi Pemerintahan', 'Iwan Gunawan'],
-                        ['Ka. Seksi Pelayanan', 'M.Sahuri'],
-                        ['Ka. Seksi Kesejahteraan', 'Ugi Sugiharto'],
-                    ];
-                @endphp
+            @php
+                // Check if officers data exists
+                if (!isset($officers)) {
+                    $officers = App\Models\VillageMember::paginate(6); // You can add pagination here if needed
+                }
+            @endphp
 
-                @foreach ($officers as [$role, $name])
-                    <div class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-xl transition">
-                        <svg class="w-12 h-12 mx-auto mb-4 text-green-500" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5.121 17.804A4 4 0 0112 16a4 4 0 016.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <p class="text-lg font-semibold text-green-700">{{ $role }}</p>
-                        <p class="text-gray-600">{{ $name }}</p>
-                    </div>
-                @endforeach
+            <div class="relative overflow-hidden">
+                <div id="officer-carousel"
+                    class="flex gap-6 transition-transform overflow-x-auto scroll-smooth snap-x snap-mandatory">
+                    <!-- Loop through officers -->
+                    @foreach ($officers as $officer)
+                        <div class="flex-shrink-0 w-64 snap-start">
+                            <div class="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-xl transition">
+                                <img src="{{ $officer->foto ? asset('images/' . $officer->foto) : 'https://th.bing.com/th/id/OIP.5uKMkEV9Jgs_cs_r2wpv1gHaH0?rs=1&pid=ImgDetMain' }}"
+                                    alt="Foto {{ $officer->nama }}"
+                                    class="w-24 h-24 rounded-full object-cover shadow-md mx-auto">
+                                <p class="text-lg font-semibold text-green-700">{{ $officer->jabatan }}</p>
+                                <p class="text-gray-600">{{ $officer->nama }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <!-- Navigasi slide -->
+                <button onclick="moveSlide(-1)"
+                    class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition-all">
+                    &lt;
+                </button>
+                <button onclick="moveSlide(1)"
+                    class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition-all">
+                    &gt;
+                </button>
+            </div>
+
+            <!-- Pagination links -->
+            <div class="mt-8 flex justify-center">
+                {{ $officers->links() }} <!-- Display pagination links -->
             </div>
         </div>
     </section>
+
+    <script>
+        let currentSlide = 0;
+
+        // Fungsi untuk menggerakkan slide
+        function moveSlide(direction) {
+            const slides = document.getElementById('officer-carousel');
+            const totalSlides = slides.children.length;
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+            const offset = currentSlide * 270; // Adjusting the offset for the slide width
+            slides.scrollTo({
+                left: offset,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+    <style>
+        /* Memastikan tidak ada scrollbar */
+        #officer-carousel {
+            scroll-snap-type: x mandatory;
+            /* Mengunci slide saat scroll */
+            overflow-x: scroll;
+            /* Membolehkan scroll horizontal */
+            -webkit-overflow-scrolling: touch;
+            /* Membuat scroll halus di perangkat mobile */
+        }
+
+        .flex-shrink-0 {
+            scroll-snap-align: start;
+            /* Menjaga agar slide tetap terjaga posisinya */
+        }
+
+        /* Menghilangkan scrollbar */
+        #officer-carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        #officer-carousel {
+            -ms-overflow-style: none;
+            /* Menghilangkan scrollbar di IE */
+            scrollbar-width: none;
+            /* Menghilangkan scrollbar di Firefox */
+        }
+    </style>
 
     <section class="py-16">
         <div class="max-w-4xl mx-auto px-4">

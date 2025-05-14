@@ -11,9 +11,19 @@ class VillageMemberController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // app/Http/Controllers/VillageMemberController.php
+
+    public function index(Request $request)
     {
-        $members = VillageMember::latest()->get();
+        $query = VillageMember::latest();
+
+        if ($search = $request->q) {
+            $query->where('nama', 'like', "%{$search}%")
+                ->orWhere('jabatan', 'like', "%{$search}%");
+        }
+
+        $members = $query->paginate(10)->appends($request->only('q'));
+
         return view('admin.content.village_member.index', compact('members'));
     }
 
@@ -33,6 +43,7 @@ class VillageMemberController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'jabatan' => 'required|string|max:255',
+            'organisasi' => 'required|string',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'tanggal_lahir' => 'required|date',
             'alamat' => 'required|string',
@@ -79,8 +90,9 @@ class VillageMemberController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'jabatan' => 'required|string|max:255',
+            'organisasi' => 'required',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'umur' => 'required|date',
+            'tanggal_lahir' => 'required|date',
             'alamat' => 'required|string',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
@@ -89,6 +101,9 @@ class VillageMemberController extends Controller
         $member->fill($request->all());
 
         if ($request->hasFile('foto')) {
+            if ($member->foto) {
+                unlink(public_path('images/' . $member->foto));
+            }
             $file = $request->file('foto');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('images'), $filename);
@@ -97,7 +112,7 @@ class VillageMemberController extends Controller
 
         $member->save();
 
-        return redirect()->route('village_members.index')->with('success', 'Berhasil perbarui data anggota desa.');
+        return redirect()->route('anggota_desa.index')->with('success', 'Berhasil memperbarui data anggota desa.');
     }
 
     /**
