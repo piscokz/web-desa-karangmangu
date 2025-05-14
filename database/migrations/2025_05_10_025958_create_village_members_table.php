@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('jabatan');
             $table->string('jenis_kelamin');
+            $table->string('organisasi'); // Pemerintahan Desa, BPD, LPM, PKK, Lainnya
             $table->date('tanggal_lahir');
             $table->text('alamat');
             $table->string('foto')->nullable();

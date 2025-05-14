@@ -17,6 +17,12 @@
     </div>
 
     <div>
+        <label class="block">Organisasi</label>
+        <input type="text" name="organisasi" value="{{ old('organisasi', $member->organisasi ?? '') }}" class="w-full border px-3 py-2 rounded">
+        @error('organisasi') <div class="text-red-500 text-sm">{{ $message }}</div> @enderror
+    </div>
+
+    <div>
         <label class="block">Jenis Kelamin</label>
         <select name="jenis_kelamin" class="w-full border px-3 py-2 rounded">
             <option value="">-- Pilih --</option>
@@ -28,7 +34,7 @@
 
     <div>
         <label class="block">Tanggal Lahir</label>
-        <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', isset($member->tanggal_lahir) ? $member->tanggal_lahir->format('Y-m-d') : '') }}" class="w-full border px-3 py-2 rounded">
+        <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', isset($member->tanggal_lahir) ? \Carbon\Carbon::parse($member->tanggal_lahir)->format('d-m-Y') : '') }}" class="w-full border px-3 py-2 rounded">
         @error('tanggal_lahir') <div class="text-red-500 text-sm">{{ $message }}</div> @enderror
     </div>
 

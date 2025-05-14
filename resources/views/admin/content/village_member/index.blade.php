@@ -19,6 +19,7 @@
             <tr>
                 <th class="p-2 text-left">Nama</th>
                 <th class="p-2 text-left">Jabatan</th>
+                <th class="p-2 text-left">Organisasi</th>
                 <th class="p-2 text-left">Umur</th>
                 <th class="p-2 text-left">Jenis Kelamin</th>
                 <th class="p-2 text-left">Alamat</th>
@@ -30,6 +31,7 @@
             <tr class="border-t">
                 <td class="p-2">{{ $member->nama }}</td>
                 <td class="p-2">{{ $member->jabatan }}</td>
+                <td class="p-2">{{ $member->organisasi }}</td>
                 <td class="p-2">{{ \Carbon\Carbon::parse($member->tanggal_lahir)->age }}</td>
                 <td class="p-2">{{ $member->jenis_kelamin }}</td>
                 <td class="p-2">{{ $member->alamat }}</td>

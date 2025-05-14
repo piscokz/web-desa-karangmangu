@@ -7,6 +7,7 @@
     <div class="space-y-2">
         <p><strong>Nama:</strong> {{ $member->nama }}</p>
         <p><strong>Jabatan:</strong> {{ $member->jabatan }}</p>
+        <p><strong>Organisasi:</strong> {{ $member->organisasi }}</p>
         <p><strong>Jenis Kelamin:</strong> {{ $member->jenis_kelamin }}</p>
         <p><strong>Umur:</strong> {{ \Carbon\Carbon::parse($member->tanggal_lahir)->age }}</p>
         <p><strong>Alamat:</strong> {{ $member->alamat }}</p>
