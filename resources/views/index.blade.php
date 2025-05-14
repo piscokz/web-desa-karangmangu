@@ -746,7 +746,7 @@
 
             <!-- Map -->
             <div class="flex-1 h-[70vh] rounded-xl shadow border border-gray-200">
-                <div id="map" class="w-full h-full" style="min-height: 320px;"></div>
+                <div id="map" class="w-full h-full" style="min-height: 360px;"></div>
             </div>
         </div>
     </div>
