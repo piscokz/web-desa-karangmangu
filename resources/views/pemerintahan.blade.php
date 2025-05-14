@@ -6,11 +6,11 @@
 @section('content')
     <!-- Hero Slider -->
     <section x-data="{
-        slides: [
-            { src: 'https://picsum.photos/1200/400?random=1', title: 'LPM (Lembaga Pemberdayaan Masyarakat)' },
-            { src: 'https://picsum.photos/1200/400?random=2', title: 'Karang Taruna' },
-            { src: 'https://picsum.photos/1200/400?random=3', title: 'PKK (Pemberdayaan Kesejahteraan Keluarga)' }
-        ],
+    slides: [
+        { src: '{{ asset('images/Banner/1.jpeg') }}', title: 'LPM (Lembaga Pemberdayaan Masyarakat)' },
+        { src: '{{ asset('images/Banner/SAMPINGKANAN.jpeg') }}', title: 'Karang Taruna' },
+        { src: '{{ asset('images/Banner/SAMPINGKIRI.jpeg') }}', title: 'PKK (Pemberdayaan Kesejahteraan Keluarga)' }
+    ],
         current: 0,
         init() { setInterval(this.next, 5000) },
         prev() { this.current = (this.current - 1 + this.slides.length) % this.slides.length },
@@ -57,11 +57,11 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @php
                     $officers = [
-                        ['Lurah Winduherang', 'H. Ikin Sodikin, S.Sn'],
-                        ['Sekretaris Kelurahan', 'N. Dedeh Kurniaish, SE'],
-                        ['Ka. Seksi Pemerintahan & Trantibum', 'Toto Herianto, S.I.P'],
-                        ['Ka. Seksi Perekonomian, Pembangunan & Pemberdayaan Masyarakat', 'Anis Nopriyani'],
-                        ['Ka. Seksi Kesejahteraan Rakyat', 'Dini Heridiani, SE'],
+                        ['Lurah karangmangu', 'H.Uja Azizi'],
+                        ['Sekretaris Kelurahan', 'Nanda Sunanda'],
+                        ['Ka. Seksi Pemerintahan', 'Iwan Gunawan'],
+                        ['Ka. Seksi Pelayanan', 'M.Sahuri'],
+                        ['Ka. Seksi Kesejahteraan', 'Ugi Sugiharto'],
                     ];
                 @endphp
 
@@ -272,8 +272,11 @@
         //
         // 2) Data Agama
         //
-        $religionStats = Resident::select('agama', DB::raw('COUNT(*) as count'))->groupBy('agama')->get();
-
+        // $religionStats = Resident::select('agama', DB::raw('COUNT(*) as count'))->groupBy('agama')->get();
+        $religionStats = Resident::whereDoesntHave('populationDeath')
+            ->select('agama', DB::raw('COUNT(*) as count'))
+            ->groupBy('agama')
+            ->get();
         //
         // 3) Data Pekerjaan
         $jobStats = Resident::select('pekerjaan', DB::raw('COUNT(*) as count'))

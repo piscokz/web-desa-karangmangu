@@ -4,59 +4,78 @@
 @section('title', 'Kelurahan Karangmangu')
 
 @section('content')
-    <!-- Hero Slider Section -->
-    <section x-data="{
-        slides: [
-            'https://picsum.photos/1200/600?random=1',
-            'https://picsum.photos/1200/600?random=2',
-            'https://picsum.photos/1200/600?random=3'
-        ],
-        current: 0,
-        init() { this.auto = setInterval(this.next, 5000) },
-        next() { this.current = (this.current + 1) % this.slides.length },
-        prev() { this.current = (this.current - 1 + this.slides.length) % this.slides.length },
-        go(i) { this.current = i }
-    }" x-init="init()" class="relative h-screen overflow-hidden font-sans">
-        <!-- Slides -->
-        <template x-for="(src, i) in slides" :key="i">
-            <div x-show="current === i" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
-                :style="background - image::url($ { src });"></div>
-        </template>
+<!-- Hero Slider Section -->
+<section
+  x-data="{
+    slides: [
+      { src: '{{ asset("images/Banner/TAMPAKDEPAN.jpeg") }}', title: 'LPM (Lembaga Pemberdayaan Masyarakat)' },
+      { src: '{{ asset("images/Banner/SAMPINGKANAN.jpeg") }}', title: 'Karang Taruna' },
+      { src: '{{ asset("images/Banner/SAMPINGKIRI.jpeg") }}', title: 'PKK (Pemberdayaan Kesejahteraan Keluarga)' }
+    ],
+    current: 0,
+    init() {
+      this.auto = setInterval(() => this.next(), 5000)
+    },
+    next() {
+      this.current = (this.current + 1) % this.slides.length
+    },
+    prev() {
+      this.current = (this.current - 1 + this.slides.length) % this.slides.length
+    },
+    go(i) {
+      this.current = i
+    }
+  }"
+  x-init="init()"
+  class="relative h-screen overflow-hidden font-sans"
+>
+  <!-- Slides -->
+  <template x-for="(slide, i) in slides" :key="i">
+    <div
+      x-show="current === i"
+      class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
+      :style="`background-image: url('${slide.src}')`"
+    ></div>
+  </template>
 
-        <!-- Overlay -->
-        <div
-            class="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center text-center text-white px-4">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">
-                Wilujeng Sumping di <span class="text-green-400">Kelurahan Karangmangu</span>
-            </h1>
-            <p class="text-lg md:text-2xl mb-6 italic">Ngawilujengkeun kadatangan anjeun ka lembur nu rahayu</p>
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center text-center text-white px-4">
+    <h1 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">
+      Wilujeng Sumping di <span class="text-green-400">Kelurahan Karangmangu</span>
+    </h1>
+    <p class="text-lg md:text-2xl mb-6 italic">
+      Ngawilujengkeun kadatangan anjeun ka lembur nu rahayu
+    </p>
 
-            <!-- Navigation Buttons -->
-            <div class="flex items-center space-x-4">
-                <button @click="prev()"
-                    class="p-3 bg-green-600 rounded-full hover:bg-green-500 transform hover:scale-110 transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                <button @click="next()"
-                    class="p-3 bg-green-600 rounded-full hover:bg-green-500 transform hover:scale-110 transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-            </div>
+    <!-- Navigation Buttons -->
+    <div class="flex items-center space-x-4">
+      <button @click="prev()"
+        class="p-3 bg-green-600 rounded-full hover:bg-green-500 transform hover:scale-110 transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button @click="next()"
+        class="p-3 bg-green-600 rounded-full hover:bg-green-500 transform hover:scale-110 transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
 
-            <!-- Pagination Dots -->
-            <div class="flex space-x-2 mt-8">
-                <template x-for="(_, i) in slides" :key="i">
-                    <button class="w-3 h-3 rounded-full transition"
-                        :class="i === current ? 'bg-white scale-110' : 'bg-white bg-opacity-50 hover:scale-110'"
-                        @click="go(i)"></button>
-                </template>
-            </div>
-        </div>
-    </section>
+    <!-- Pagination Dots -->
+    <div class="flex space-x-2 mt-8">
+      <template x-for="(_, i) in slides" :key="i">
+        <button
+          class="w-3 h-3 rounded-full transition"
+          :class="i === current ? 'bg-white scale-110' : 'bg-white bg-opacity-50 hover:scale-110'"
+          @click="go(i)"
+        ></button>
+      </template>
+    </div>
+  </div>
+</section>
+
 
     {{-- In your layouts/app.blade.php, be sure Alpine.js is included: --}}
     @push('scripts')
@@ -84,12 +103,12 @@
                 {{-- Galeri Foto --}}
                 <div class="space-y-6">
                     <div class="grid grid-cols-2 gap-4">
-                        <img src="{{ asset('images/visimisi1.jpg') }}" alt="Kegiatan 1"
+                        <img src="{{ asset('images/Banner/sayur-gratis.jpg') }}" alt="Kegiatan 1"
                             class="rounded-xl shadow-lg object-cover h-40 w-full hover:scale-105 transition">
-                        <img src="{{ asset('images/visimisi2.jpg') }}" alt="Kegiatan 2"
+                        <img src="{{ asset('images/Banner/mancing-di-sungai.jpg') }}" alt="Kegiatan 2"
                             class="rounded-xl shadow-lg object-cover h-40 w-full hover:scale-105 transition">
                     </div>
-                    <img src="{{ asset('images/visimisi3.jpg') }}" alt="Kegiatan 3"
+                    <img src="{{ asset('images/banner/image.png') }}" alt="Kegiatan 3"
                         class="rounded-xl shadow-lg object-cover h-40 w-full hover:scale-105 transition">
                 </div>
 
@@ -101,8 +120,8 @@
                             <div class="bg-green-100 text-green-600 rounded-full p-2 flex-shrink-0">
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L9 11.586 5.707 8.293a1
-                                                     1 0 00-1.414 1.414l4 4a1 1 0 001.414
-                                                     0l7-7a1 1 0 000-1.414z" clip-rule="evenodd" />
+                                                         1 0 00-1.414 1.414l4 4a1 1 0 001.414
+                                                         0l7-7a1 1 0 000-1.414z" clip-rule="evenodd" />
                                 </svg>
                             </div>
                             <p class="text-gray-700 text-lg font-medium">{{ $item }}</p>
@@ -119,68 +138,92 @@
             </div>
         </div>
 
-        {{-- Modal Overlay --}}
-        <div x-show="showModal" x-transition.opacity
-            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-            @click.self="showModal = false">
+        <!-- Modal Overlay dengan overflow-y-auto -->
+        <div x-show="showModal" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50 z-50 overflow-y-auto"
+            style="z-index: 99999" @click.self="showModal = false">
+            <!-- Wrapper untuk vertical centering + padding atas-bawah -->
+            <div class="min-h-screen px-4 text-center">
+                <!-- Hack untuk align-middle -->
+                <span class="inline-block h-screen align-middle" aria-hidden="true">&#8203;</span>
 
-            {{-- Modal Content --}}
-            <div x-show="showModal" x-transition.scale.origin.center
-                class="bg-white w-11/12 max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl shadow-xl p-6 relative">
-                {{-- Close Button --}}
-                <button @click="showModal = false" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                <!-- Modal Content -->
+                <div x-show="showModal" x-transition.scale.origin.center
+                    class="inline-block align-middle bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl shadow-xl p-6 relative">
+                    <!-- Close Button -->
+                    <button @click="showModal = false" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
 
-                {{-- Modal Header --}}
-                <h3 class="text-2xl font-bold text-green-800 mb-4">Visi dan Misi Desa Karangmangu</h3>
+                    <!-- Header -->
+                    <h3 class="text-2xl font-bold text-green-800 mb-4">Visi dan Misi Desa Karangmangu</h3>
 
-                {{-- Modal Body --}}
-                <div class="space-y-4 text-gray-700 text-base leading-relaxed">
-                    <p>Demokratisasi memiliki makna bahwa penyelenggaraan pemerintahan dan pelaksanaan pembangunan di desa
-                        harus mengakomodasi aspirasi dari masyarakat melalui Badan Permusyawaratan Desa dan Lembaga
-                        Kemasyarakatan yang ada sebagai mitra Pemerintah Desa yang mampu mewujudkan peran aktif masyarakat
-                        agar masyarakat senantiasa memiliki dan turut serta bertanggung jawab terhadap perkembangan
-                        kehidupan bersama sebagai sesama warga desa sehingga diharapkan adanya peningkatan taraf hidup dan
-                        kesejahteraan masyarakat melalui penetapan kebijakan program dan kegiatan yang sesuai dengan esensi
-                        masalah dan prioritas kebutuhan masyarakat.</p>
+                    <!-- Body: akan scroll ketika terlalu panjang -->
+                    <div class="space-y-4 text-gray-700 text-base leading-relaxed">
+                        <!-- ... semua isi teks di sini ... -->
+                        {{-- Modal Body --}}
+                        <div class="space-y-4 text-gray-700 text-base leading-relaxed">
+                            <p>Demokratisasi memiliki makna bahwa penyelenggaraan pemerintahan dan pelaksanaan pembangunan
+                                di desa
+                                harus mengakomodasi aspirasi dari masyarakat melalui Badan Permusyawaratan Desa dan Lembaga
+                                Kemasyarakatan yang ada sebagai mitra Pemerintah Desa yang mampu mewujudkan peran aktif
+                                masyarakat
+                                agar masyarakat senantiasa memiliki dan turut serta bertanggung jawab terhadap perkembangan
+                                kehidupan bersama sebagai sesama warga desa sehingga diharapkan adanya peningkatan taraf
+                                hidup dan
+                                kesejahteraan masyarakat melalui penetapan kebijakan program dan kegiatan yang sesuai dengan
+                                esensi
+                                masalah dan prioritas kebutuhan masyarakat.</p>
 
-                    <p>Atas dasar pertimbangan tersebut di atas, maka untuk jangka 6 (enam) tahun ke depan diharapkan proses
-                        pembangunan di Desa, penyelenggaraan pemerintahan di desa, pemberdayaan masyarakat di desa,
-                        partisipasi masyarakat di desa, siltap kepala desa dan perangkat, operasional pemerintahan desa,
-                        tunjangan operasional BPD dan insentif RT/RW dapat benar-benar mendasarkan pada prinsip keterbukaan
-                        dan partisipasi masyarakat sehingga secara bertahap Desa Karangmangu dapat mengalami kemajuan.</p>
+                            <p>Atas dasar pertimbangan tersebut di atas, maka untuk jangka 6 (enam) tahun ke depan
+                                diharapkan proses
+                                pembangunan di Desa, penyelenggaraan pemerintahan di desa, pemberdayaan masyarakat di desa,
+                                partisipasi masyarakat di desa, siltap kepala desa dan perangkat, operasional pemerintahan
+                                desa,
+                                tunjangan operasional BPD dan insentif RT/RW dapat benar-benar mendasarkan pada prinsip
+                                keterbukaan
+                                dan partisipasi masyarakat sehingga secara bertahap Desa Karangmangu dapat mengalami
+                                kemajuan.</p>
 
-                    <h4 class="mt-4 font-semibold text-green-700">VISI</h4>
-                    <blockquote class="pl-4 border-l-4 border-green-600 italic">
-                        “TERCIPTANYA TATA KELOLA PEMERINTAHAN DESA YANG BAIK, BERSIH DAN TRANSPARAN GUNA MEWUJUDKAN DESA
-                        KARANGMANGU YANG ADIL MAKMUR SEJAHTERA DAN BERMARTABAT”
-                    </blockquote>
+                            <h4 class="mt-4 font-semibold text-green-700">VISI</h4>
+                            <blockquote class="pl-4 border-l-4 border-green-600 italic">
+                                “TERCIPTANYA TATA KELOLA PEMERINTAHAN DESA YANG BAIK, BERSIH DAN TRANSPARAN GUNA MEWUJUDKAN
+                                DESA
+                                KARANGMANGU YANG ADIL MAKMUR SEJAHTERA DAN BERMARTABAT”
+                            </blockquote>
 
-                    <p>Rumusan visi tersebut merupakan ungkapan niat luhur untuk memperbaiki penyelenggaraan pemerintahan
-                        dan pembangunan di Desa Karangmangu sehingga dalam 6 (enam) tahun ke depan terjadi perubahan yang
-                        lebih baik dan peningkatan kesejahteraan masyarakat, dilandasi semangat kebersamaan.</p>
+                            <p>Rumusan visi tersebut merupakan ungkapan niat luhur untuk memperbaiki penyelenggaraan
+                                pemerintahan
+                                dan pembangunan di Desa Karangmangu sehingga dalam 6 (enam) tahun ke depan terjadi perubahan
+                                yang
+                                lebih baik dan peningkatan kesejahteraan masyarakat, dilandasi semangat kebersamaan.</p>
 
-                    <h4 class="mt-4 font-semibold text-green-700">MISI</h4>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>Meningkatkan pelayanan prima untuk seluruh masyarakat</li>
-                        <li>Menciptakan Pemerintah Desa yang tanggap terhadap aspirasi masyarakat</li>
-                        <li>Meningkatkan sarana dan prasarana umum guna mendukung kelancaran perekonomian masyarakat</li>
-                        <li>Pemerataan pembangunan fisik dan non-fisik agar tidak terjadi kesenjangan sosial</li>
-                        <li>Koordinasi dan bekerja sama dengan semua unsur kelembagaan desa guna memberikan pelayanan
-                            terbaik</li>
-                    </ul>
+                            <h4 class="mt-4 font-semibold text-green-700">MISI</h4>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li>Meningkatkan pelayanan prima untuk seluruh masyarakat</li>
+                                <li>Menciptakan Pemerintah Desa yang tanggap terhadap aspirasi masyarakat</li>
+                                <li>Meningkatkan sarana dan prasarana umum guna mendukung kelancaran perekonomian masyarakat
+                                </li>
+                                <li>Pemerataan pembangunan fisik dan non-fisik agar tidak terjadi kesenjangan sosial</li>
+                                <li>Koordinasi dan bekerja sama dengan semua unsur kelembagaan desa guna memberikan
+                                    pelayanan
+                                    terbaik</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
     </section>
 
     {{-- Section Sejarah Desa Karangmangu --}}
     <section id="sejarah" class="relative py-20 bg-white overflow-hidden" data-aos="fade-up">
         <!-- Ornamen Latar -->
-        <svg class="absolute top-0 right-0 opacity-10 w-96 h-96 text-green-100 -z-10" fill="none" viewBox="0 0 500 500">
+        <svg class="absolute top-0 right-0 opacity-10 w-96 h-96 text-green-100 -z-10" fill="none"
+            viewBox="0 0 500 500">
             <path fill="currentColor"
                 d="M437.5,123.1c33.3,48.1,45.4,118.8,6.1,173.1s-130.4,87.1-210.4,79.1s-153.6-53.8-187.5-108.2S2.7,123.5,68.8,67.5S404.2,75,437.5,123.1z" />
         </svg>
@@ -263,47 +306,46 @@
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     @endpush
 
-@php
-    // ambil 8 item galeri terbaru
-    $galleryItems = \App\Models\GalleryItem::orderByDesc('date')
-        ->take(8)
-        ->get();
-@endphp
+    @php
+        // ambil 8 item galeri terbaru
+        $galleryItems = \App\Models\GalleryItem::orderByDesc('date')->take(8)->get();
+    @endphp
 
-<section id="gallery" class="py-20 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4">
-    <h3 class="text-4xl font-bold text-center text-green-800 mb-12 relative inline-block">
-      Galeri Desa
-      <span class="block w-24 h-1 bg-green-300 mt-2 mx-auto rounded-full"></span>
-    </h3>
+    <section id="gallery" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h3 class="text-4xl font-bold text-center text-green-800 mb-12 relative inline-block">
+                Galeri Desa
+                <span class="block w-24 h-1 bg-green-300 mt-2 mx-auto rounded-full"></span>
+            </h3>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      @foreach($galleryItems as $item)
-        <div class="relative group overflow-hidden rounded-xl shadow-lg bg-white">
-          <a href="{{ $item->image_url }}" target="_blank" class="block">
-            <img src="{{ $item->image_url }}" 
-                 alt="{{ $item->title }}" 
-                 class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110">
-            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 
-                        group-hover:opacity-100 transition-opacity duration-300"></div>
-          </a>
-          <div class="p-4">
-            <h4 class="text-lg font-semibold text-gray-800 truncate">{{ $item->title }}</h4>
-            <p class="text-xs text-gray-500 mt-1">{{ $item->category }}</p>
-            <p class="text-xs text-gray-500">{{ $item->date->format('d M Y') }}</p>
-          </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                @foreach ($galleryItems as $item)
+                    <div class="relative group overflow-hidden rounded-xl shadow-lg bg-white">
+                        <a href="{{ $item->image_url }}" target="_blank" class="block">
+                            <img src="{{ $item->image_url }}" alt="{{ $item->title }}"
+                                class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110">
+                            <div
+                                class="absolute inset-0 bg-black bg-opacity-40 opacity-0 
+                        group-hover:opacity-100 transition-opacity duration-300">
+                            </div>
+                        </a>
+                        <div class="p-4">
+                            <h4 class="text-lg font-semibold text-gray-800 truncate">{{ $item->title }}</h4>
+                            <p class="text-xs text-gray-500 mt-1">{{ $item->category }}</p>
+                            <p class="text-xs text-gray-500">{{ $item->date->format('d M Y') }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="mt-12 text-center">
+                <a href="{{ route('galeri') }}"
+                    class="inline-block px-8 py-3 bg-green-600 text-white font-medium rounded-full shadow hover:bg-green-700 transition">
+                    Lihat Semua Galeri
+                </a>
+            </div>
         </div>
-      @endforeach
-    </div>
-
-    <div class="mt-12 text-center">
-      <a href="{{ route('galeri') }}" 
-         class="inline-block px-8 py-3 bg-green-600 text-white font-medium rounded-full shadow hover:bg-green-700 transition">
-        Lihat Semua Galeri
-      </a>
-    </div>
-  </div>
-</section>
+    </section>
 
 
     {{-- resources/views/partials/berita_section.blade.php --}}
